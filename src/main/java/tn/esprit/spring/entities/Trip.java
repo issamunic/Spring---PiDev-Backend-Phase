@@ -30,6 +30,7 @@ public class Trip implements Serializable {
 	Long idTest;
 
 	String description; 
+	String Name;
 
 
 }
