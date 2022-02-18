@@ -37,5 +37,7 @@ public class User {
 	String profilePicture;
 	String name;
 	String logo;
-	Float poids;
+	Float taille;
+	Float xxx;
+	String hello;
 }
