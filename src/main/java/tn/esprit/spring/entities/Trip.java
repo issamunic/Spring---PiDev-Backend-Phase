@@ -27,7 +27,7 @@ public class Trip implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long idTest;
+	Long TripId;
 
 	String description; 
 	String Name;
