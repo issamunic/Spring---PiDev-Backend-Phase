@@ -38,4 +38,5 @@ public class User {
 	String name;
 	String logo;
 	Float taille;
+	Float xxx;
 }
