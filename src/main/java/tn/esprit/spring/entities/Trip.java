@@ -35,6 +35,9 @@ public class Trip implements Serializable {
 	Date startDate ;
 	Date endDate ;
 	String purpose ;
+
+
 	Long longitude;
 	Long latitude;
+
 }
