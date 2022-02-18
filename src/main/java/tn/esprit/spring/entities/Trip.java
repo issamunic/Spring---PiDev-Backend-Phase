@@ -42,5 +42,5 @@ public class Trip implements Serializable {
 	
 	int num;
 	int issam2;
-
+	int hamma;
 }
