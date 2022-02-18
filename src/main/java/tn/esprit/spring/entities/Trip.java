@@ -1,6 +1,7 @@
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,8 +30,10 @@ public class Trip implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long TripId;
 
-	String description; 
-	String Name;
-
+	String destination ;
+	Integer duration ;
+	Date startDate ;
+	Date endDate ;
+	String purpose ;
 
 }
