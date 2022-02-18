@@ -35,5 +35,6 @@ public class User {
 	Date BirthDate;
 	String socialStatus;
 	String profilePicture;
-	
+	String name;
+	String logo;
 }
