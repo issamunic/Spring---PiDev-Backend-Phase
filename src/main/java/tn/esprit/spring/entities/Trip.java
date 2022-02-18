@@ -41,6 +41,6 @@ public class Trip implements Serializable {
 	Long latitude;
 	
 	int num;
-	
+	int issam;
 
 }
