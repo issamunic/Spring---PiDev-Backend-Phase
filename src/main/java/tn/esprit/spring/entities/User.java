@@ -37,6 +37,4 @@ public class User {
 	String profilePicture;
 	String name;
 	String logo;
-	String carteEtudiant;
-	Integer age;
 }
