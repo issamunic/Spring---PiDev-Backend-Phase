@@ -40,6 +40,6 @@ public class Trip implements Serializable {
 	Long longitude;
 	Long latitude;
 	
-	int nada;
+	
 	
 }
