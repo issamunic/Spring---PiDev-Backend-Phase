@@ -51,7 +51,7 @@ public class TripRestController {
 	
 	
 	@ApiOperation(value = "deleteTrip")
-	@PutMapping("/delete")
+	@DeleteMapping("/delete")
 	@ResponseBody
 	public void delete(@RequestBody Long id) {
 		 tripService.delete(id);
