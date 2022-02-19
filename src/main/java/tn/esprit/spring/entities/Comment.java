@@ -22,18 +22,15 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @ToString
-public class Post implements Serializable {/**
+public class Comment implements Serializable {/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long idPost;
+	Long idComment;
 	String content;
-	String country;
-	String city;
-	String stateOrProvince;
-
+	String sentiment;
 
 }

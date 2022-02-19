@@ -22,18 +22,16 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @ToString
-public class Post implements Serializable {/**
+public class React implements Serializable {/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long idPost;
-	String content;
-	String country;
-	String city;
-	String stateOrProvince;
-
+	Long idReact;
+	ReactType reactType;
+	
 
 }
