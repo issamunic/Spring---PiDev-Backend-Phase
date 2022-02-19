@@ -2,15 +2,16 @@ package tn.esprit.spring.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -25,25 +26,31 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Entity
 @ToString
-public class User implements  Serializable {
-
+@Entity
+public class Report implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long userId;
-	private String login;
-	private String password;
-	private Integer registrationNumber; 
-	private String FirstName;
-	private String LastName;
-	private Date BirthDate;
-	private String socialStatus;
-	private String profilePicture;
-	private String name;
-	private String logo;
+	public int reclamId;
+	@Enumerated(EnumType.STRING)
+	private ReclamType type;
+	@Enumerated(EnumType.STRING)
+	private ReclamStatus Staus;
+	private String other;
+	private int severity;
+	
+	@JsonIgnore
+	@ManyToOne
+	private User utilisateur;
 	
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="utilisateur")
-	private List<Report> reclamations;
+	
+	
+	
+
 }
