@@ -36,9 +36,10 @@ public class TripRestController {
 	}
 	
 	@ApiOperation(value = "getById")
-	@GetMapping("/getById")
+	@GetMapping("/getById/{trip-id}")
 	@ResponseBody
-	public Trip getById(@RequestBody Long id) {
+	public Trip getById(@PathVariable("trip-id") Long id) {
+		System.out.println("********************"+id+"**********");
 		return tripService.getById(id);
 	}
 	
@@ -51,9 +52,9 @@ public class TripRestController {
 	
 	
 	@ApiOperation(value = "deleteTrip")
-	@DeleteMapping("/delete")
+	@DeleteMapping("/delete/{trip-id}")
 	@ResponseBody
-	public void delete(@RequestBody Long id) {
+	public void delete(@PathVariable("trip-id") Long id) {
 		 tripService.delete(id);
 	}
 	
