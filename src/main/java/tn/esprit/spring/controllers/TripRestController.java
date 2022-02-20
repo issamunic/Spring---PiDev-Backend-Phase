@@ -1,5 +1,6 @@
 package tn.esprit.spring.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,22 @@ public class TripRestController {
 	public void delete(@PathVariable("trip-id") Long id) {
 		 tripService.delete(id);
 	}
+	
+	
+	@ApiOperation(value = "getTripsByStartDate")
+	@GetMapping("/getTripsByStartDate/{dateInf}/{dateSup}")
+	@ResponseBody
+	public List<Trip> getTripsByStartDate(@PathVariable("dateInf") Date dateInf,@PathVariable("dateSup") Date dateSup) {
+		return tripService.getTripByDate(dateInf, dateSup);
+	}
+	
+	@ApiOperation(value = "getTripsInPeriod")
+	@GetMapping("/getTripsInPeriod/{dateInf}/{dateSup}")
+	@ResponseBody
+	public List<Trip> getTripsInPeriod(@PathVariable("dateInf") Date dateInf,@PathVariable("dateSup") Date dateSup) {
+		return tripService.getTripInPeriod(dateInf, dateSup);
+	}
+	
 	
 	
 	

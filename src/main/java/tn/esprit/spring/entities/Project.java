@@ -2,11 +2,15 @@ package tn.esprit.spring.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -31,24 +35,14 @@ public class Project implements Serializable {
 	Long projectId;
 
 	String name;
-	
 	String description;
-	
-	
-	
-	
-	
 	Date creationDate ;
-
-	Date startDate ;
-	
+	Date startDate ;	
 	Date endDate ;
-
-
-
-	
-	
 	String image;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy="project")
+	List<Task> tasks;
 	
 }

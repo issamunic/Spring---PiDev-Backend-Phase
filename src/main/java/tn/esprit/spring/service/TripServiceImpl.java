@@ -1,5 +1,6 @@
 package tn.esprit.spring.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,18 @@ public class TripServiceImpl implements ITripService {
 			log.info(e.getMessage());
 			return null;
 		}
+	}
+
+	
+
+	@Override
+	public List<Trip> getTripByDate(Date dateInf, Date dateSup) {
+		return tripRepo.getTripByStartDate(dateInf, dateSup);
+	}
+
+	@Override
+	public List<Trip> getTripInPeriod(Date dateInf, Date dateSup) {
+		return tripRepo.getTripInPeriod(dateInf, dateSup);
 	}
 
 }
