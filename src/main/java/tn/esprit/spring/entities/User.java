@@ -7,10 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-<<<<<<< HEAD
 import javax.persistence.OneToMany;
-=======
->>>>>>> mohamed
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,12 +24,13 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @ToString
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long userId;
 	String login;
 	String password;
-<<<<<<< HEAD
 	Integer registrationNumber; 
 	String FirstName;
 	String LastName;
@@ -45,6 +43,4 @@ import lombok.experimental.FieldDefaults;
 	
 	@OneToMany
 	List<Trip> trips;
-=======
->>>>>>> mohamed
 }
