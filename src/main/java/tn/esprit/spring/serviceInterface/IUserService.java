@@ -2,6 +2,7 @@ package tn.esprit.spring.serviceInterface;
 
 import java.util.List;
 
+import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.User;
 
 public interface IUserService {
@@ -19,4 +20,10 @@ public interface IUserService {
 	public abstract void assignUserToDomain(Long idUser,Long idDomain);
 	
 	public abstract void assignUserToProfession(Long idUser,Long idProfession);
+	
+	public List<User> findUsersByRole(Role role);
+	
+	public List<User> getCompanysByName(String name);
+	
+	//public List<User> findEmployesByFirstName(String FirstNameEmploye);
 }

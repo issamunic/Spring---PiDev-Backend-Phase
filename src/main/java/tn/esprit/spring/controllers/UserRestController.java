@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.serviceInterface.IUserService;
 
@@ -73,5 +74,19 @@ public class UserRestController {
 	@ResponseBody
 	public void assignUserToProfession(@PathVariable("user-id")Long idUser,@PathVariable("profession-id") Long idProfession) {
 		userService.assignUserToProfession(idUser, idProfession);
+	}
+	
+	@ApiOperation(value = "get users by role")
+	@GetMapping("/retrieve-users-with-role/{role}")
+	@ResponseBody
+	public List<User> getUsersWithRole(@PathVariable("role")Role role) {
+		return userService.findUsersByRole(role);
+	}
+	
+	@ApiOperation(value = "get companys by name")
+	@GetMapping("/retrieve-companys-by-name/{name}")
+	@ResponseBody
+	public List<User> getUsersWithRole(@PathVariable("name")String name) {
+		return userService.getCompanysByName(name);
 	}
 }

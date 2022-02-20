@@ -123,4 +123,36 @@ public class UserServiceImpl implements IUserService{
 		}
 	}
 
+	@Override
+	public List<User> findUsersByRole(Role role) {
+		try {
+			List<User> users = userRepository.findByRole(role);
+			for(User user:users) {
+				log.info("user by role : "+user);
+			}
+			return users;
+		}
+		catch(Exception e) {
+			log.info("erreur findUsersByRole : "+e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public List<User> getCompanysByName(String name) {
+		try {
+			List<User> users = userRepository.findCompanysByName(name);
+			for(User user:users) {
+				log.info("company by name : "+user);
+			}
+			return users;
+		}
+		catch(Exception e) {
+			log.info("erreur getCompanysByName : "+e.getMessage());
+			return null;
+		}
+	}
+	
+	
+
 }
