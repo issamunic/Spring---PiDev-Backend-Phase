@@ -51,4 +51,6 @@ public class User implements Serializable{
 	
 	@ManyToOne
 	Domain domain;
+	
+	int x;
 }
