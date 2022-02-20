@@ -1,11 +1,16 @@
 package tn.esprit.spring.entities;
 
+import static javax.persistence.FetchType.LAZY;
+
 import java.io.Serializable;
+import java.time.Instant;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -14,6 +19,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
+
 
 @Getter
 @Setter
@@ -30,7 +36,11 @@ public class Comment implements Serializable {/**
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long idComment;
-	String content;
+	String text;
+	Instant createdDate;
 	String sentiment;
+	@ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    private User user;
 
 }
