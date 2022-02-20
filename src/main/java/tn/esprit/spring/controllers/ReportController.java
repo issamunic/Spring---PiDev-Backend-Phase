@@ -69,6 +69,12 @@ public class ReportController {
 		 return ReportService.NombreDesReclamParMois();
 	}
 	
+	@GetMapping("/Reclamationtest3")
+	public Map<String, Integer> NombreDesReclamParAn()
+	{
+		 return ReportService.NombreDesReclamParAn();
+	}
+	
 	
 	
 

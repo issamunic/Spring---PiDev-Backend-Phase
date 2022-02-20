@@ -116,12 +116,46 @@ public class ReportService implements IReportService {
 			 
 
 			 
-			 
-			
 			return mapReclamweek;
 
 		
 	}
+	
+	@Override
+	public  Map<String, Integer> NombreDesReclamParAn() {
+		
+
+		
+		 Map<String, Integer> mapReclamweek = new HashMap<String, Integer>();
+		 
+		 
+		 
+		 Date date = new Date(System.currentTimeMillis());
+			Calendar cal = Calendar.getInstance();
+			
+			for(int i=1;i<13;i++) {
+			cal.setTime(date);
+			cal.add(Calendar.DATE, -30*i);
+
+			Date date1 = cal.getTime();
+			
+			SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+			
+			System.out.println(formater.format(date)+"**********"+formater.format(date1));
+			 List<Report> listReport = (List<Report>) repoRecalam.ListReportOfweekAgo(date1,date);
+			 mapReclamweek.put("month"+i, listReport.size());
+			 date = date1;
+			}
+			 
+
+			 
+			return mapReclamweek;
+
+		
+	}
+	
+	
+	
 	
 	
 	
