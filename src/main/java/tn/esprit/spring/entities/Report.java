@@ -43,6 +43,9 @@ public class Report implements Serializable {
 	private ReclamStatus Staus;
 	private String other;
 	private int severity;
+	private Date dateReport;
+	
+	
 	
 	@JsonIgnore
 	@ManyToOne

@@ -56,6 +56,12 @@ public class ReportController {
 		return ReportService.findReclamByUser(id);
 	}
 	
+	@GetMapping("/Reclamationtest")
+	public void test()
+	{
+		 ReportService.testing();
+	}
+	
 	
 	
 

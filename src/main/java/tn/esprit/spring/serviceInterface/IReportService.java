@@ -11,6 +11,7 @@ public interface IReportService {
 	public void updateReclamation(Report r);
 	public List<Report> RecalamationList(); 
 	public List<Report>findReclamByUser(long  id);
+	void testing();
 	
 		
 	
