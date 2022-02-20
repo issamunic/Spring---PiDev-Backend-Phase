@@ -49,9 +49,8 @@ public class ReportService implements IReportService {
 		
 	}
 	
-	@SuppressWarnings("unlikely-arg-type")
 	@Override
-	public void testing() {
+	public Map<String, Integer> NombreDesReclamParSemaine() {
 		 Map<String, Integer> mapReclamweek = new HashMap<String, Integer>();
 		 Date date = new Date(System.currentTimeMillis());
 			Calendar cal = Calendar.getInstance();
@@ -71,7 +70,7 @@ public class ReportService implements IReportService {
 			 
 			 //System.out.println(report.getDateReport());
 			 if(!mapReclamweek.containsKey(formater.format(report.getDateReport()))) {
-				 mapReclamweek.put(formater.format(report.getDateReport()), 1);
+				 mapReclamweek.put(formater.format(report.getDateReport()), 0);
 				 
 			 }
 			 if(mapReclamweek.containsKey(formater.format(report.getDateReport()))) {
@@ -80,57 +79,42 @@ public class ReportService implements IReportService {
 				 
 			 }
 			 
-			 
-				
-				
 			}
 		 
-			System.out.println(mapReclamweek.toString());
 
-		 
-		 
-		 
-		 
-		/*	List<Report> listReport = (List<Report>) repoRecalam.findAll();
 
-		
-		
-		Date date = new Date(System.currentTimeMillis());
-		Calendar cal = Calendar.getInstance();
-		
-		cal.setTime(date);
-		for(int i=0;i<=6;i++) {
-		cal.add(Calendar.DATE, -i);
-
-		Date date1 = cal.getTime();
-
-		int x = 0 ;
-		for(Report r : listReport) {
-			System.out.println("d5al lel for");
-			System.out.println("***********1"+r.getDateReport());
-			System.out.println("***********2"+date1);
-			System.out.println("d5al lel for");
-
-			if((date1.getDay()==r.getDateReport().getDay())&&(date1.getMonth()==r.getDateReport().getMonth())&&(date1.getYear()==r.getDateReport().getYear())) {
-				System.out.println("d5al lel if");
-
-				x=x+1;
-				mapReclamweek.put(date1, x);
-			}
+			return mapReclamweek;
 			
-		}
-		x=0;
-		
-		
-		
-		
-	}
-		System.out.println(mapReclamweek.toString());
-		
-		*/
 		 
 		 
 	}
+	
+	@Override
+	public  Map<String, Integer> NombreDesReclamParMois() {
+		
+		 Map<String, Integer> mapReclamweek = new HashMap<String, Integer>();
+		 Date date = new Date(System.currentTimeMillis());
+			Calendar cal = Calendar.getInstance();
+			
+			cal.setTime(date);
+			cal.add(Calendar.DATE, -30);
+
+			Date date1 = cal.getTime();
+			
+			SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+			
+			System.out.println(formater.format(date)+"**********"+formater.format(date1));
+			 List<Report> listReport = (List<Report>) repoRecalam.ListReportOfweekAgo(date1,date);
+			 
+			 
+			
+			return mapReclamweek;
+
+		
+	}
+	
+	
+	
 	
 	
 	
