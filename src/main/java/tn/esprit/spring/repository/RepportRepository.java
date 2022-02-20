@@ -15,7 +15,7 @@ import tn.esprit.spring.entities.Report;
 public interface RepportRepository extends CrudRepository<Report, Integer> {
 	
 	@Query
-	("SELECT r From Report r Where r.dateReport BETWEEN :date1 AND :date2 ORDER BY r.dateReport")
+	("SELECT r From Report r Where r.dateReport BETWEEN :date1 AND :date2 ORDER BY r.dateReport ASC")
 	List<Report> ListReportOfweekAgo(@Param("date1") Date date1,@Param("date2") Date date2);
 
 }

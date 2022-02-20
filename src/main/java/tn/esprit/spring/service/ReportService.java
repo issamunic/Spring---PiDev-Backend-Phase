@@ -67,6 +67,7 @@ public class ReportService implements IReportService {
 		 
 		 List<Report> listReport = (List<Report>) repoRecalam.ListReportOfweekAgo(date1,date);
 		 for(Report report : listReport) {
+			 System.out.println(report.getDateReport());
 			 
 			 //System.out.println(report.getDateReport());
 			 if(!mapReclamweek.containsKey(formater.format(report.getDateReport()))) {
@@ -93,11 +94,15 @@ public class ReportService implements IReportService {
 	public  Map<String, Integer> NombreDesReclamParMois() {
 		
 		 Map<String, Integer> mapReclamweek = new HashMap<String, Integer>();
+		 
+		 
+		 
 		 Date date = new Date(System.currentTimeMillis());
 			Calendar cal = Calendar.getInstance();
 			
+			for(int i=1;i<5;i++) {
 			cal.setTime(date);
-			cal.add(Calendar.DATE, -30);
+			cal.add(Calendar.DATE, -7*i);
 
 			Date date1 = cal.getTime();
 			
@@ -105,6 +110,11 @@ public class ReportService implements IReportService {
 			
 			System.out.println(formater.format(date)+"**********"+formater.format(date1));
 			 List<Report> listReport = (List<Report>) repoRecalam.ListReportOfweekAgo(date1,date);
+			 mapReclamweek.put("Week "+i , listReport.size());
+			 date = date1;
+			}
+			 
+
 			 
 			 
 			
