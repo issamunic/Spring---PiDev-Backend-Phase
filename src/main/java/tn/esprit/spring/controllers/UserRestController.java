@@ -60,4 +60,18 @@ public class UserRestController {
 	public User updateUser(@RequestBody User user){
 		return userService.updateUser(user);
 	}
+	
+	@ApiOperation(value = "assign user to domain")
+	@PutMapping("/assign-user-to-domain/{user-id}/{domain-id}")
+	@ResponseBody
+	public void assignUserToDomain(@PathVariable("user-id")Long idUser,@PathVariable("domain-id") Long idDomain) {
+		userService.assignUserToDomain(idUser, idDomain);
+	}
+	
+	@ApiOperation(value = "assign user to profession")
+	@PutMapping("/assign-user-to-profession/{user-id}/{profession-id}")
+	@ResponseBody
+	public void assignUserToProfession(@PathVariable("user-id")Long idUser,@PathVariable("profession-id") Long idProfession) {
+		userService.assignUserToProfession(idUser, idProfession);
+	}
 }

@@ -16,4 +16,7 @@ public interface IUserService {
 
 	public abstract User retrieveUser(Long id);
 	
+	public abstract void assignUserToDomain(Long idUser,Long idDomain);
+	
+	public abstract void assignUserToProfession(Long idUser,Long idProfession);
 }

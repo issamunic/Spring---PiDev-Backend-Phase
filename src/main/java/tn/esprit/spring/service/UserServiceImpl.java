@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import tn.esprit.spring.entities.Domain;
+import tn.esprit.spring.entities.Profession;
 import tn.esprit.spring.entities.User;
+import tn.esprit.spring.repository.DomainRepository;
+import tn.esprit.spring.repository.ProfessionRepository;
 import tn.esprit.spring.repository.UserRepository;
 import tn.esprit.spring.serviceInterface.IUserService;
 
@@ -16,6 +20,12 @@ public class UserServiceImpl implements IUserService{
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	DomainRepository domainRepository;
+	
+	@Autowired
+	ProfessionRepository professionRepository;
 	
 	@Override
 	public List<User> retrieveAllUsers() {
@@ -73,6 +83,38 @@ public class UserServiceImpl implements IUserService{
 		catch(Exception e) {
 			log.info("erreur user retrieve : "+e.getMessage());
 			return null;
+		}
+	}
+
+	@Override
+	public void assignUserToDomain(Long idUser, Long idDomain) {
+		try {
+			User user=userRepository.findById(idUser).orElse(null);
+			Domain domain=domainRepository.findById(idDomain).orElse(null);
+			if(user!=null && domain!=null) {
+				user.setDomain(domain);
+				User userUpdated=userRepository.save(user);
+				log.info("assign user to domain : "+userUpdated);
+			}
+		}
+		catch(Exception e) {
+			log.info("erreur to assign user to domain : "+e.getMessage());
+		}
+	}
+	
+	@Override
+	public void assignUserToProfession(Long idUser,Long idProfession) {
+		try {
+			User user=userRepository.findById(idUser).orElse(null);
+			Profession profession=professionRepository.findById(idProfession).orElse(null);
+			if(user!=null && profession!=null) {
+				user.setProfession(profession);
+				User userUpdated=userRepository.save(user);
+				log.info("assign user to profession : "+userUpdated);
+			}
+		}
+		catch(Exception e) {
+			log.info("erreur to assign user to profession : "+e.getMessage());
 		}
 	}
 
