@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-//@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy
 @EnableScheduling
 @SpringBootApplication
 public class ExamenBlancApplication {

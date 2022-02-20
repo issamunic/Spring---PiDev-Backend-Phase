@@ -1,11 +1,13 @@
 package tn.esprit.spring.entities;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -37,4 +39,8 @@ public class User {
 	String profilePicture;
 	String name;
 	String logo;
+	
+	
+	@OneToMany
+	List<Trip> trips;
 }
