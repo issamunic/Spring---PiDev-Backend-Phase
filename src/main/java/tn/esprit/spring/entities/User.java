@@ -24,11 +24,9 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @ToString
-public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long userId;
 	String login;
 	String password;
 	Integer registrationNumber; 
