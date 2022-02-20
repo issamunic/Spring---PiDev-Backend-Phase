@@ -22,7 +22,7 @@ public class TripServiceImpl implements ITripService {
 		try {
 			List<Trip> trips = (List<Trip>) tripRepo.findAll();
 			for (Trip trip : trips) {
-				//log.info(" Trip : " + trip);
+				log.info(" Trip : " + trip);
 			}
 			return trips;
 		} catch (Exception e) {
@@ -63,9 +63,7 @@ public class TripServiceImpl implements ITripService {
 	@Override
 	public Trip getById(Long tripid) {
 		try {
-			Trip trip = tripRepo.getById(tripid);
-			System.out.println("********************mmmmmmmmmmmmmmmmm"+trip.getTripId()+"**********");
-
+			Trip trip = tripRepo.findById(tripid).orElse(null);
 			return trip;
 		}catch(Exception e) {
 			log.info(e.getMessage());
