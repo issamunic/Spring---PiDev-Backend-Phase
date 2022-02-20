@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Domain;
 import tn.esprit.spring.entities.Profession;
+import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repository.DomainRepository;
 import tn.esprit.spring.repository.ProfessionRepository;
@@ -92,9 +93,11 @@ public class UserServiceImpl implements IUserService{
 			User user=userRepository.findById(idUser).orElse(null);
 			Domain domain=domainRepository.findById(idDomain).orElse(null);
 			if(user!=null && domain!=null) {
-				user.setDomain(domain);
-				User userUpdated=userRepository.save(user);
-				log.info("assign user to domain : "+userUpdated);
+				if(user.getRole().equals(Role.company)) {
+					user.setDomain(domain);
+					User userUpdated=userRepository.save(user);
+					log.info("assign user to domain : "+userUpdated);
+				}
 			}
 		}
 		catch(Exception e) {
@@ -108,9 +111,11 @@ public class UserServiceImpl implements IUserService{
 			User user=userRepository.findById(idUser).orElse(null);
 			Profession profession=professionRepository.findById(idProfession).orElse(null);
 			if(user!=null && profession!=null) {
-				user.setProfession(profession);
-				User userUpdated=userRepository.save(user);
-				log.info("assign user to profession : "+userUpdated);
+				if(user.getRole().equals(Role.employe)) {
+					user.setProfession(profession);
+					User userUpdated=userRepository.save(user);
+					log.info("assign user to profession : "+userUpdated);
+				}
 			}
 		}
 		catch(Exception e) {
