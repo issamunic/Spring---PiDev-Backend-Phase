@@ -23,24 +23,30 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @ToString
-public class Trip implements Serializable {
+public class Task implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long TripId;
+	Long projectId;
 
-	String destination ;
-	Integer duration ;
-	Date startDate ;
-	Date endDate ;
-	String purpose ;
-
-
-	Long longitude;
-	Long latitude;
+	String name;
 	
-	String image;
+	String description;
+	
+
+	
+	Date creationDate ;
+
+	Date startDate ;
+	
+	Date endDate ;
+
+	String color;
+
+	
+	
 	
 	
 }
+

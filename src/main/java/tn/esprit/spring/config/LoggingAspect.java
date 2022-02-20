@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Aspect
 @Slf4j
 public class LoggingAspect {
-
+/*
 	@Before("execution(public * tn.esprit.spring.service.*.* (..))")
 	public void logMethodEntry(JoinPoint joinPoint) {
 		log.info("In method : " + joinPoint.getSignature().getName() + " : ");
@@ -36,4 +36,5 @@ public class LoggingAspect {
 		String name = joinPoint.getSignature().getName();
 		log.info("Out of method : " + name );
 	}
+	*/
 }
