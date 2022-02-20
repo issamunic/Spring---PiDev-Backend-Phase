@@ -1,13 +1,15 @@
 package tn.esprit.spring.entities;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -24,23 +26,29 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @ToString
-public class User {
+public class User implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long userId;
+	Long idUser;
+	
 	String login;
 	String password;
-	Integer registrationNumber; 
-	String FirstName;
-	String LastName;
-	Date BirthDate;
-	String socialStatus;
-	String profilePicture;
-	String name;
-	String logo;
+	Integer registrationNumberEmploye; 
+	String FirstNameEmploye;
+	String LastNameEmploye;
 	
+	@Temporal(TemporalType.DATE)
+	Date BirthDateEmploye;
 	
-	@OneToMany
-	List<Trip> trips;
+	String socialStatusEmploye;
+	String profilePictureEmploye;
+	String nameCompany;
+	String logoCompany;
+	
+	@ManyToOne
+	Profession profession;
+	
+	@ManyToOne
+	Domain domain;
 }
