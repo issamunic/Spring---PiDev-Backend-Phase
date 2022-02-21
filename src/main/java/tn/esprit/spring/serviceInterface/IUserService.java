@@ -26,4 +26,6 @@ public interface IUserService {
 	public List<User> getCompanysByName(String name);
 	
 	public List<User> findEmployesByName(String nameEmp);
+	
+	public List<User> findEmployesWithProfession(Long idProfession);
 }

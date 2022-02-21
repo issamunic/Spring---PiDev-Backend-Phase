@@ -96,4 +96,11 @@ public class UserRestController {
 	public List<User> getEmployesWithName(@PathVariable("name")String name) {
 		return userService.findEmployesByName(name);
 	}
+	
+	@ApiOperation(value = "get employes by profession")
+	@GetMapping("/retrieve-employes-by-profession/{idProfession}")
+	@ResponseBody
+	public List<User> getEmployesWithProfession(@PathVariable("idProfession")Long idProfession) {
+		return userService.findEmployesWithProfession(idProfession);
+	}
 }

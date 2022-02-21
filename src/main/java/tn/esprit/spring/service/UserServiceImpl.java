@@ -1,5 +1,6 @@
 package tn.esprit.spring.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -164,6 +165,32 @@ public class UserServiceImpl implements IUserService{
 		}
 		catch(Exception e) {
 			log.info("erreur findEmployesByName : "+e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public List<User> findEmployesWithProfession(Long idProfession) {
+		try {
+			Profession profession=professionRepository.findById(idProfession).orElse(null);
+			if(profession!=null) {
+				List<User> listUsers=userRepository.findAll();
+				List<User> usersByProfession=new ArrayList<>();
+				for(User user:listUsers) {
+					if(user.getProfession()!=null) {
+						if(user.getProfession().equals(profession)) {
+							usersByProfession.add(user);
+							log.info("employe by profession : "+user);
+						}
+					}
+				}
+				return usersByProfession;
+			}
+			log.info("profession does not exist");
+			return null;
+		}
+		catch(Exception e) {
+			log.info("erreur findEmployesWithProfession : "+e.getMessage());
 			return null;
 		}
 	}
