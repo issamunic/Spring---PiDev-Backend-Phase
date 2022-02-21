@@ -2,39 +2,72 @@ package tn.esprit.spring.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.TripPlan;
+import tn.esprit.spring.repository.TripPlanRepo;
 import tn.esprit.spring.serviceInterface.ITripPlanService;
 
+@Service
+@Slf4j
 public class TripPlanService implements ITripPlanService {
+	
+	@Autowired
+	TripPlanRepo TripPlanRepo;
 
 	@Override
 	public List<TripPlan> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			List<TripPlan> TripPlans = (List<TripPlan>) TripPlanRepo.findAll();
+			for (TripPlan TripPlan : TripPlans) {
+				log.info(" TripPlan : " + TripPlan);
+			}
+			return TripPlans;
+		} catch (Exception e) {
+			return null;
+		}
 	}
-
 	@Override
 	public TripPlan add(TripPlan TripPlan) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return TripPlanRepo.save(TripPlan);
+		} catch (Exception e) {
+			log.info(e.getMessage());
+			return null;
+		}
 	}
 
 	@Override
 	public TripPlan update(TripPlan TripPlan) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			TripPlanRepo.save(TripPlan);
+			return TripPlan;
+		} catch (Exception e) {
+			log.info(e.getMessage());
+			return null;
+		}
 	}
 
 	@Override
 	public void delete(Long TripPlanid) {
-		// TODO Auto-generated method stub
-		
+		try {
+			TripPlanRepo.deleteById(TripPlanid);
+		} catch (Exception e) {
+			log.info(e.getMessage());
+		}
 	}
 
 	@Override
 	public TripPlan getById(Long TripPlanid) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			TripPlan TripPlan = TripPlanRepo.findById(TripPlanid).orElse(null);
+			return TripPlan;
+		}catch(Exception e) {
+			log.info(e.getMessage());
+			return null;
+		}
 	}
 
 }
