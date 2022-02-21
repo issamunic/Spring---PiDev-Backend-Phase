@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Websockets Chat App</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+    <script type="text/javascript" src="https://momentjs.com/downloads/moment.min.js"></script>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-16x16.png">
+<style>
+body,html {
+    margin: 0;
+    background-color: rgba(40, 42, 54, 1) !important;
+}
+
+.card {
+    height: 500px;
+    border-radius: 15px !important;
+    background-color: rgba(0,0,0,0.4) !important;
+}
+
+.card-body {
+    overflow-y: auto;
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+    border-bottom: 0 !important;
+}
+
+.card-footer {
+    border-radius: 0 0 15px 15px !important;
+    border-top: 0 !important;
+}
+
+.user_img {
+    height: 70px;
+    width: 70px;
+    border:1.5px solid #f5f6fa;
+}
+
+
+.img_cont_msg {
+    height: 40px;
+    width: 40px;
+}
+
+.chat-summary {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 15px;
+}
+
+.chat-summary span {
+    font-size: 20px;
+    color: white;
+}
+
+.chat-summary p {
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+}
+
+.msg_container_send {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 10px;
+    border-radius: 25px;
+    padding: 10px;
+    position: relative;
+    color:white;
+}
+
+.msg_time_send {
+    position: absolute;
+    right:0;
+    bottom: -20px;
+    color: rgba(255,255,255,0.5);
+    font-size: 10px;
+    width: max-content;
+}
+
+.all-input {
+    background-color: rgba(0,0,0,0.3) !important;
+    border:0 !important;
+    color:white !important;
+    height: 60px !important;
+    overflow-y: auto;
+}
+
+
+.all-input:focus {
+   box-shadow:none !important;
+   outline:0px !important;
+}
+
+button {
+    background-color: rgba(0,0,0,0.3) !important;
+    border:0 !important;
+    color:white !important;
+    border-radius: 0 5px 5px 0 !important;
+}
+
+.hide {
+    display:none;
+}
+
+.login {
+    padding: 10px;
+}
+
+.main {
+    margin: 30px auto;
+}
+
+.circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: white;
+  text-align: center;
+  font-size: 1.5em;
+  vertical-align: middle;
+  margin:3px;
+  border:1.5px solid #f5f6fa;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container-fluid h-100">
+
+    <div id="status" class="login">
+
+    </div>
+
+    <div id="login">
+        <div class="main row justify-content-center h-100">
+            <form id="login-form" name="login-form">
+                <div class="input-group">
+                    <input id="username" type="text" class="form-control all-input" autocomplete="off" placeholder="Username" />
+                    <div class="input-group-append">
+                        <button class="fas fa-location-arrow" type="submit"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="chat-page" class="hide main">
+        <div class="row justify-content-center h-100">
+
+            <div class="col-md-8 col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex bd-highlight">
+                            <div class="chat-summary">
+                                <span>Web Sockets with Spring Boot Chat</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div id="chat">
+
+                        </div>
+
+                    </div>
+
+                    <form id="message-controls" name="message-controls" class="card-footer">
+                        <div class="input-group">
+                            <textarea id="message" class="form-control all-input" placeholder="Type your message..."></textarea>
+                            <div class="input-group-append">
+                                <button class="fas fa-location-arrow" type="submit"></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script >
+'use strict'
+
+let stompClient
+let username
+
+const connect = (event) => {
+    username = document.querySelector('#username').value.trim()
+
+    if (username) {
+        const login = document.querySelector('#login')
+        login.classList.add('hide')
+
+        const chatPage = document.querySelector('#chat-page')
+        chatPage.classList.remove('hide')
+
+        const socket = new SockJS('/chat-example')
+        stompClient = Stomp.over(socket)
+        stompClient.connect({}, onConnected, onError)
+    }
+    event.preventDefault()
+}
+
+const onConnected = () => {
+    stompClient.subscribe('/topic/public', onMessageReceived)
+    stompClient.send("/app/chat.newUser",
+        {},
+        JSON.stringify({sender: username, type: 'CONNECT'})
+    )
+    const status = document.querySelector('#status')
+    status.className = 'hide'
+}
+
+const onError = (error) => {
+    const status = document.querySelector('#status')
+    status.innerHTML = 'Could not find the connection you were looking for. Move along. Or, Refresh the page!'
+    status.style.color = 'red'
+}
+
+const sendMessage = (event) => {
+    const messageInput = document.querySelector('#message')
+    const messageContent = messageInput.value.trim()
+
+    if (messageContent && stompClient) {
+        const chatMessage = {
+            sender: username,
+            content: messageInput.value,
+            type: 'CHAT',
+            time: moment().calendar()
+        }
+        stompClient.send("/app/chat.send/1", {}, JSON.stringify(chatMessage))
+        messageInput.value = ''
+    }
+    event.preventDefault();
+}
+
+
+const onMessageReceived = (payload) => {
+    const message = JSON.parse(payload.body);
+
+    const chatCard = document.createElement('div')
+    chatCard.className = 'card-body'
+
+    const flexBox = document.createElement('div')
+    flexBox.className = 'd-flex justify-content-end mb-4'
+    chatCard.appendChild(flexBox)
+
+    const messageElement = document.createElement('div')
+    messageElement.className = 'msg_container_send'
+
+    flexBox.appendChild(messageElement)
+
+    if (message.type === 'CONNECT') {
+        messageElement.classList.add('event-message')
+        message.content = message.sender + ' connected!'
+    } else if (message.type === 'DISCONNECT') {
+        messageElement.classList.add('event-message')
+        message.content = message.sender + ' left!'
+    } else {
+        messageElement.classList.add('chat-message')
+
+        const avatarContainer = document.createElement('div')
+        avatarContainer.className = 'img_cont_msg'
+        const avatarElement = document.createElement('div')
+        avatarElement.className = 'circle user_img_msg'
+        const avatarText = document.createTextNode(message.sender[0])
+        avatarElement.appendChild(avatarText);
+        avatarElement.style['background-color'] = getAvatarColor(message.sender)
+        avatarContainer.appendChild(avatarElement)
+
+        messageElement.style['background-color'] = getAvatarColor(message.sender)
+
+        flexBox.appendChild(avatarContainer)
+
+        const time = document.createElement('span')
+        time.className = 'msg_time_send'
+        time.innerHTML = message.time
+        messageElement.appendChild(time)
+
+    }
+
+    messageElement.innerHTML = message.content
+
+    const chat = document.querySelector('#chat')
+    chat.appendChild(flexBox)
+    chat.scrollTop = chat.scrollHeight
+}
+
+const hashCode = (str) => {
+    let hash = 0
+    for (let i = 0; i < str.length; i++) {
+       hash = str.charCodeAt(i) + ((hash << 5) - hash)
+    }
+    return hash
+}
+
+
+const getAvatarColor = (messageSender) => {
+    const colours = ['#2196F3', '#32c787', '#1BC6B4', '#A1B4C4']
+    const index = Math.abs(hashCode(messageSender) % colours.length)
+    return colours[index]
+}
+
+const loginForm = document.querySelector('#login-form')
+loginForm.addEventListener('submit', connect, true)
+const messageControls = document.querySelector('#message-controls')
+messageControls.addEventListener('submit', sendMessage, true)
+</script>
+
+</body>
+</html>
