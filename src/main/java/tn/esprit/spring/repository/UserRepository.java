@@ -1,5 +1,6 @@
 package tn.esprit.spring.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,11 +17,16 @@ public interface UserRepository extends JpaRepository<User, Long>{
 
 	public List<User> findByRole(Role role);
 	
-	public List<User> findByDomain(Domain domain);
-	
 	@Query("SELECT u FROM User u WHERE u.nameCompany LIKE %:name%")
 	public List<User> findCompanysByName(@Param("name") String nameCompany);
 	
 	@Query("SELECT u FROM User u WHERE u.FirstNameEmploye LIKE %:name% OR u.LastNameEmploye LIKE %:name%")
 	public List<User> findEmployesByName(@Param("name") String nameEmploye);
+	
+	public List<User> findByDomain(Domain domain);
+	
+	//@Query("SELECT u FROM User u WHERE u.BirthDateEmploye BETWEEN :dateDeb AND :dateFin AND u.role LIKE employe")
+	@Query("SELECT u FROM User u WHERE u.BirthDateEmploye BETWEEN :dateDeb AND :dateFin AND u.role LIKE 'employe'")
+	public List<User> getEmployesByDateRange(@Param("dateDeb") Date dateDebut,@Param("dateFin") Date dateFin);
+	 
 }

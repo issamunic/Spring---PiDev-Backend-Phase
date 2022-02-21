@@ -1,5 +1,6 @@
 package tn.esprit.spring.serviceInterface;
 
+import java.util.Date;
 import java.util.List;
 
 import tn.esprit.spring.entities.Role;
@@ -30,4 +31,6 @@ public interface IUserService {
 	public List<User> findEmployesWithProfession(Long idProfession);
 	
 	public List<User> findCompanysWithDomain(Long idDomain);
+	
+	public List<User> findCompanysWithBirthDate(Date dateInf,Date dateDeb);
 }

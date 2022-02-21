@@ -1,5 +1,8 @@
 package tn.esprit.spring.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,5 +112,16 @@ public class UserRestController {
 	@ResponseBody
 	public List<User> getCompanysWithDomain(@PathVariable("idDomain")Long idDomain) {
 		return userService.findCompanysWithDomain(idDomain);
+	}
+	
+	@ApiOperation(value = "get companys by birthDate")
+	@GetMapping("/retrieve-employes-by-birthDate/{startDate}/{endDate}")
+	@ResponseBody
+	public List<User> getEmployesWithBirthDate(@PathVariable("startDate") String startDate,
+			@PathVariable("endDate") String endDate) throws ParseException{
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date dateDebut = dateFormat.parse(startDate);
+		Date dateFin = dateFormat.parse(endDate);
+		return userService.findCompanysWithBirthDate(dateDebut,dateFin);
 	}
 }

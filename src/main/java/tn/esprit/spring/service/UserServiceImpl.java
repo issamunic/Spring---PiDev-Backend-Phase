@@ -1,6 +1,7 @@
 package tn.esprit.spring.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -211,6 +212,21 @@ public class UserServiceImpl implements IUserService{
 		}
 		catch(Exception e) {
 			log.info("erreur findCompanysWithDomain : "+e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public List<User> findCompanysWithBirthDate(Date dateInf, Date dateDeb) {
+		try {
+			List<User> users=userRepository.getEmployesByDateRange(dateInf,dateDeb);
+			for(User user:users) {
+				log.info("company by birthDate : "+user);
+			}
+			return users;
+		}
+		catch(Exception e) {
+			log.info("erreur findCompanysWithBirthDate : "+e.getMessage());
 			return null;
 		}
 	}
