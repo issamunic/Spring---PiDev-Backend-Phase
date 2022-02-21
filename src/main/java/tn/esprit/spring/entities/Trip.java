@@ -48,6 +48,5 @@ public class Trip implements Serializable {
 	
 	@OneToOne
 	private TripPlan tripPlan;
-	@ManyToOne
-	private Activity activity;
+	
 }

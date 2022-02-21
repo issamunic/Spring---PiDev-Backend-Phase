@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -33,5 +36,9 @@ public class Activity implements Serializable {
 	private String activityDescription;
 	private Date startActivity;
 	private Date endActivity;
-
+	
+	@JsonIgnore
+	@ManyToOne
+	private TripPlan tripPlan;
+	
 }

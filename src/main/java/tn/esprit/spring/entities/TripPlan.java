@@ -40,7 +40,7 @@ public class TripPlan implements Serializable {
 	@OneToOne(mappedBy="tripPlan")
 	private Trip trip;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="activity")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="tripPlan")
 	private List<Activity> activities;
 	
 	
