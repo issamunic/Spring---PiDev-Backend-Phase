@@ -53,9 +53,17 @@ public class InvitationRestController {
 	
 	
 	@ApiOperation(value = "deleteProject")
-	@DeleteMapping("/delete/{project-id}")
+	@DeleteMapping("/delete/{invitation-id}")
 	@ResponseBody
-	public void delete(@PathVariable("project-id") Long id) {
+	public void delete(@PathVariable("invitation-id") Long id) {
 		invitationService.delete(id);
+	}
+	
+	@ApiOperation(value = "SetinvitationAccepted")
+	@PutMapping("/SetinvitationAccepted/{invitation-id}")
+	@ResponseBody
+	public Invitation SetinvitationAccepted(@PathVariable("invitation-id") Long id) {
+		System.out.println("********************"+id+"**********");
+		return invitationService.SetinvitationAccepted(id);
 	}
 }

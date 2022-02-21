@@ -18,4 +18,6 @@ public interface IInvitationService {
 	
 	public Invitation getById(Long Invitationid);
 
+	Invitation SetinvitationAccepted(Long Invitationid);
+
 }
