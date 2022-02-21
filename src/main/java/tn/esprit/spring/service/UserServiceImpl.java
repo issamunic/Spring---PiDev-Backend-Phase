@@ -152,6 +152,21 @@ public class UserServiceImpl implements IUserService{
 			return null;
 		}
 	}
+
+	@Override
+	public List<User> findEmployesByName(String nameEmp) {
+		try {
+			List<User> users=userRepository.findEmployesByName(nameEmp);
+			for(User user:users) {
+				log.info("employe by name : "+user);
+			}
+			return users;
+		}
+		catch(Exception e) {
+			log.info("erreur findEmployesByName : "+e.getMessage());
+			return null;
+		}
+	}
 	
 	
 

@@ -86,7 +86,14 @@ public class UserRestController {
 	@ApiOperation(value = "get companys by name")
 	@GetMapping("/retrieve-companys-by-name/{name}")
 	@ResponseBody
-	public List<User> getUsersWithRole(@PathVariable("name")String name) {
+	public List<User> getCompanysWithName(@PathVariable("name")String name) {
 		return userService.getCompanysByName(name);
+	}
+	
+	@ApiOperation(value = "get employes by name")
+	@GetMapping("/retrieve-employes-by-name/{name}")
+	@ResponseBody
+	public List<User> getEmployesWithName(@PathVariable("name")String name) {
+		return userService.findEmployesByName(name);
 	}
 }

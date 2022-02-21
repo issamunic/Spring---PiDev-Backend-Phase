@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +36,8 @@ public class Profession implements Serializable{
 	
 	String name;
 	
+	@ToString.Exclude
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "profession")
 	List<User> users;
 	

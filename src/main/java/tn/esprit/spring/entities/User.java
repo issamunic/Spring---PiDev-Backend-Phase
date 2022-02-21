@@ -55,14 +55,17 @@ public class User implements Serializable{
 	@Enumerated(EnumType.STRING)
 	Role role;
 	
+	@ToString.Exclude
 	@JsonIgnore
 	@ManyToOne
 	Profession profession;
 	
+	@ToString.Exclude
 	@JsonIgnore
 	@ManyToOne
 	Domain domain;
 	
+	@ToString.Exclude
 	@JsonIgnore
 	@OneToMany
 	List<Trip> trips;
