@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import tn.esprit.spring.entities.Domain;
 import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.User;
 
@@ -14,6 +15,8 @@ import tn.esprit.spring.entities.User;
 public interface UserRepository extends JpaRepository<User, Long>{
 
 	public List<User> findByRole(Role role);
+	
+	public List<User> findByDomain(Domain domain);
 	
 	@Query("SELECT u FROM User u WHERE u.nameCompany LIKE %:name%")
 	public List<User> findCompanysByName(@Param("name") String nameCompany);

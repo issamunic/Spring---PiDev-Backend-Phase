@@ -103,4 +103,11 @@ public class UserRestController {
 	public List<User> getEmployesWithProfession(@PathVariable("idProfession")Long idProfession) {
 		return userService.findEmployesWithProfession(idProfession);
 	}
+	
+	@ApiOperation(value = "get companys by domain")
+	@GetMapping("/retrieve-companys-by-domain/{idDomain}")
+	@ResponseBody
+	public List<User> getCompanysWithDomain(@PathVariable("idDomain")Long idDomain) {
+		return userService.findCompanysWithDomain(idDomain);
+	}
 }

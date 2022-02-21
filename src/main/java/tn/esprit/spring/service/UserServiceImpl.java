@@ -194,6 +194,26 @@ public class UserServiceImpl implements IUserService{
 			return null;
 		}
 	}
+
+	@Override
+	public List<User> findCompanysWithDomain(Long idDomain) {
+		try {
+			Domain domain=domainRepository.findById(idDomain).orElse(null);
+			if(domain!=null) {
+				List<User> users=userRepository.findByDomain(domain);
+				for(User user:users) {
+					log.info("company by domain : "+user);
+				}
+				return users;
+			}
+			log.info("domain does not exist");
+			return null;
+		}
+		catch(Exception e) {
+			log.info("erreur findCompanysWithDomain : "+e.getMessage());
+			return null;
+		}
+	}
 	
 	
 

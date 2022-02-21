@@ -28,4 +28,6 @@ public interface IUserService {
 	public List<User> findEmployesByName(String nameEmp);
 	
 	public List<User> findEmployesWithProfession(Long idProfession);
+	
+	public List<User> findCompanysWithDomain(Long idDomain);
 }
