@@ -36,7 +36,7 @@ public class Report implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public int reclamId;
+	private int reclamId;
 	@Enumerated(EnumType.STRING)
 	private ReclamType type;
 	@Enumerated(EnumType.STRING)

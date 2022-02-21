@@ -1,13 +1,14 @@
 package tn.esprit.spring.entities;
-
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import lombok.AccessLevel;
@@ -18,6 +19,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,29 +27,24 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @ToString
-public class Trip implements Serializable {
+public class TripPlan implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long TripId;
-
-	String destination ;
-	Integer duration ;
-	Date startDate ;
-	Date endDate ;
-	String purpose ;
-
-
-	Long longitude;
-	Long latitude;
+	private Long tripPlanId;
+	private String projectName;
+	private String mission;
+	private String Description;
 	
-	int num;
-	int issam2;
-	int hamma;
+	@OneToOne(mappedBy="tripPlan")
+	private Trip trip;
 	
-	@OneToOne
-	private TripPlan tripPlan;
-	@ManyToOne
-	private Activity activity;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="activity")
+	private List<Activity> activities;
+	
+	
+	
+
+	
 }
