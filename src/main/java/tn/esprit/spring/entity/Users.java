@@ -34,7 +34,7 @@ public class Users {
 	@JsonIgnore
 	private Set<Groups> UserGroup;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="MessageUser")
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy="MessageUser")
 	private Set<Chat> chatSend;
 	
 	@ManyToMany(cascade = CascadeType.ALL)

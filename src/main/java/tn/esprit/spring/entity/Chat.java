@@ -16,8 +16,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Table( name = "Chat")
@@ -34,15 +36,18 @@ public class Chat {
 	private Date dateMsg;
 	
 	@ManyToOne
+	@ToString.Exclude
+	@JsonIgnore
 	Groups ChatGroup;
 	
 	@ManyToOne
 	Users MessageUser; 
 	
-	@ManyToMany(mappedBy="etatMessage", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy="etatMessage")
 	private Set<Users> etat;
 	
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy="ChatReact")
+	@JsonIgnore
 	private Set<ChatReact> react;
 	
 	@Temporal(TemporalType.TIMESTAMP)

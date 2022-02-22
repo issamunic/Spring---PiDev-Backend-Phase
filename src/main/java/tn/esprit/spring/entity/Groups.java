@@ -20,6 +20,7 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Table( name = "Groups")
@@ -40,11 +41,13 @@ public class Groups {
 	
 	private String imageGroup;
 	
-	@ManyToMany(mappedBy="UserGroup", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy="UserGroup")
 	@JsonIgnore
 	private Set<Users> GroupUser;
 
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy="ChatGroup")
+	@OneToMany(mappedBy="ChatGroup",cascade = CascadeType.REMOVE)
+	@JsonIgnore
+	@ToString.Exclude
 	
 	private Set<Chat> ChatMessage;
 	
