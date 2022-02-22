@@ -35,6 +35,9 @@ public class Trip implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long TripId;
 
+	
+	String name;
+	
 	String destination ;
 	Integer duration ;
 	@Temporal(TemporalType.DATE)

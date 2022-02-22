@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import tn.esprit.spring.entities.Task;
 import tn.esprit.spring.entities.Trip;
 import tn.esprit.spring.repository.TripRepository;
 import tn.esprit.spring.serviceInterface.ITripService;
@@ -83,5 +84,23 @@ public class TripServiceImpl implements ITripService {
 	public List<Trip> getTripInPeriod(Date dateInf, Date dateSup) {
 		return tripRepo.getTripInPeriod(dateInf, dateSup);
 	}
+
+	@Override
+	public List<Trip> getByName(String name) {
+		try {
+			List<Trip> trips = (List<Trip>) tripRepo.findByName(name);
+			for (Trip trip : trips) {
+				log.info(" Trip : " + trip);
+			}
+			return trips;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	
+
+	
+	
 
 }

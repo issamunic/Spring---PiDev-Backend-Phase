@@ -21,6 +21,8 @@ public interface ITripService {
 	public List<Trip> getTripByDate(Date dateInf, Date dateSup);
 	
 	public List<Trip> getTripInPeriod(Date dateInf, Date dateSup);
+	
+	public List<Trip> getByName(String name) ;
 
 
 }
