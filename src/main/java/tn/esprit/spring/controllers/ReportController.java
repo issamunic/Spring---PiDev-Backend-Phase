@@ -57,19 +57,19 @@ public class ReportController {
 		return ReportService.findReclamByUser(id);
 	}
 	
-	@GetMapping("/Reclamationtest")
+	@GetMapping("/semaine")
 	public Map<String, Integer> NombreDesReclamParSemaine()
 	{
 		 return ReportService.NombreDesReclamParSemaine();
 	}
 	
-	@GetMapping("/Reclamationtest2")
+	@GetMapping("/mois")
 	public Map<String, Integer> NombreDesReclamParmois()
 	{
 		 return ReportService.NombreDesReclamParMois();
 	}
 	
-	@GetMapping("/Reclamationtest3")
+	@GetMapping("/an")
 	public Map<String, Integer> NombreDesReclamParAn()
 	{
 		 return ReportService.NombreDesReclamParAn();
