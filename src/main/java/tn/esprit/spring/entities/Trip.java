@@ -42,9 +42,8 @@ public class Trip implements Serializable {
 	Long longitude;
 	Long latitude;
 	
-	int num;
-	int issam2;
-	int hamma;
+	public String image;
+
 	
 	@OneToOne
 	private TripPlan tripPlan;

@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -29,23 +31,28 @@ import lombok.experimental.FieldDefaults;
 @ToString
 public class User implements  Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long userId;
+	Long idUser;
+	
 	private String login;
 	private String password;
-	private Integer registrationNumber; 
-	private String FirstName;
-	private String LastName;
-	private Date BirthDate;
-	private String socialStatus;
-	private String profilePicture;
-	private String name;
-	private String logo;
+	private Integer registrationNumberEmploye; 
+	private String FirstNameEmploye;
+	private String LastNameEmploye;
+	
+	@Temporal(TemporalType.DATE)
+	private Date BirthDateEmploye;
+	
+	private String socialStatusEmploye;
+	private String profilePictureEmploye;
+	private String nameCompany;
+	private String logoCompany;
+	
+
+	
+	@OneToMany
+	private List<Trip> trips;
 	
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="utilisateur")
