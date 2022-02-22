@@ -13,6 +13,7 @@ import tn.esprit.spring.repository.CodeInvitationCompanyRepository;
 import tn.esprit.spring.repository.InvitationRepository;
 import tn.esprit.spring.serviceInterface.ICodeInvitationCompanyService;
 import tn.esprit.spring.serviceInterface.IInvitationService;
+import tn.esprit.spring.serviceInterface.IUserService;
 
 @Service
 @Slf4j
@@ -20,6 +21,9 @@ public class CodeInvitationCompanyServiceImpl implements ICodeInvitationCompanyS
 
 	@Autowired
 	CodeInvitationCompanyRepository CodeInvitationCompanyRepo;
+	
+	@Autowired
+	IUserService IUserService;
 	
 	@Override
 	public List<CodeInvitationCompany> getAll() {
@@ -38,6 +42,7 @@ public class CodeInvitationCompanyServiceImpl implements ICodeInvitationCompanyS
 	public CodeInvitationCompany add(CodeInvitationCompany CodeInvitationCompany) {
 		try {
 			CodeInvitationCompany.setDateCreationCodeInvitationCompany(new Date());
+			CodeInvitationCompany.setUserCompany(IUserService.retrieveUser(CodeInvitationCompany.getUserCompany().getIdUser()));
 			return CodeInvitationCompanyRepo.save(CodeInvitationCompany);
 		} catch (Exception e) {
 			log.info(e.getMessage());

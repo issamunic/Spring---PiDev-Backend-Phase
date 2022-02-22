@@ -44,6 +44,8 @@ public class Invitation implements Serializable{
 	
 	StatusInvitation StatusInvitation; 
 	
+	String MailEmployee;
+	
 
 	@OneToOne
 	User UserSender; 

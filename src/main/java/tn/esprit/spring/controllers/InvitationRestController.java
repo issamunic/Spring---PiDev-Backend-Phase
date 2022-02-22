@@ -1,5 +1,6 @@
 package tn.esprit.spring.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Invitation;
 import tn.esprit.spring.entities.Project;
-import tn.esprit.spring.serviceInterface.IInvitationService;
+import tn.esprit.spring.mail.mailsender.ISimpleEmailExampleController;
+import tn.esprit.spring.serviceInterface.*;
 @RestController
 @Api(tags = "Invitation Manager")
 @RequestMapping("/Invitation")
@@ -19,6 +21,14 @@ public class InvitationRestController {
 	@Autowired
 	IInvitationService invitationService;
     //http://localhost:8087/SpringMVC/swagger-ui/index.html
+	@Autowired
+	ISimpleEmailExampleController SimpleEmailExampleController;
+	
+	@Autowired
+	IUserService IUserService;
+	
+	@Autowired
+	ICodeInvitationCompanyService ICodeInvitationCompanyService;
 	
 	
 	@ApiOperation(value = "getAllInvitations")
@@ -26,6 +36,7 @@ public class InvitationRestController {
 	@ResponseBody
 	public List<Invitation> getAll() {
 		return invitationService.getAll();
+		
 	}
 	
 	
@@ -33,6 +44,12 @@ public class InvitationRestController {
 	@PostMapping("/add")
 	@ResponseBody
 	public Invitation add(@RequestBody Invitation invitation) {
+		
+		invitation.setDateCreationInvitation(new Date());
+		invitation.setUserSender(IUserService.retrieveUser(invitation.getUserSender().getIdUser()));
+		SimpleEmailExampleController.sendSimpleEmail(invitation.getMailEmployee(),
+				"invitation to Vinder From " +invitation.getUserSender().getNameCompany()
+				,"invitation to Vinder From "+invitation.getUserSender().getNameCompany());
 		return invitationService.add(invitation);
 	}
 	
