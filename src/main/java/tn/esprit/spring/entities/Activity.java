@@ -1,5 +1,4 @@
 package tn.esprit.spring.entities;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,7 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,6 +18,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,30 +26,19 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @ToString
-public class Trip implements Serializable {
+public class Activity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long TripId;
-
-	String destination ;
-	Integer duration ;
-	Date startDate ;
-	Date endDate ;
-	String purpose ;
-
-
-	Long longitude;
-	Long latitude;
+	private Long activityId;
+	private String acivity;
+	private String activityDescription;
+	private Date startActivity;
+	private Date endActivity;
 	
-<<<<<<< HEAD
-	String image;
-	
-=======
-	public String image;
-
-	
->>>>>>> anas
+	@JsonIgnore
+	@ManyToOne
+	private TripPlan tripPlan;
 	
 }

@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,32 +26,34 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Entity
 @ToString
-public class Trip implements Serializable {
+@Entity
+public class Report implements Serializable {
+	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long TripId;
-
-	String destination ;
-	Integer duration ;
-	Date startDate ;
-	Date endDate ;
-	String purpose ;
-
-
-	Long longitude;
-	Long latitude;
+	private int reclamId;
+	@Enumerated(EnumType.STRING)
+	private ReclamType type;
+	@Enumerated(EnumType.STRING)
+	private ReclamStatus Staus;
+	private String other;
+	private int severity;
+	private Date dateReport;
 	
-<<<<<<< HEAD
-	String image;
 	
-=======
-	public String image;
+	
+	@JsonIgnore
+	@ManyToOne
+	private User utilisateur;
+	
+	
+	
+	
+	
 
-	
->>>>>>> anas
-	
 }

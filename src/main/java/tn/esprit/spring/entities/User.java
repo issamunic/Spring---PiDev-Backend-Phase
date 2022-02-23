@@ -3,12 +3,20 @@ package tn.esprit.spring.entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+<<<<<<< HEAD
+=======
+import java.util.Set;
+>>>>>>> anas
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+<<<<<<< HEAD
 import javax.persistence.ManyToOne;
+=======
+>>>>>>> anas
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,12 +36,17 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @ToString
+<<<<<<< HEAD
 public class User implements Serializable{
+=======
+public class User implements  Serializable {
+>>>>>>> anas
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long idUser;
 	
+<<<<<<< HEAD
 	String login;
 	String password;
 	Integer registrationNumberEmploye; 
@@ -58,4 +71,9 @@ public class User implements Serializable{
 	List<Trip> trips;
 	
 	
+=======
+	private String login;
+	private String password;
+	private Integer registrationNumberEmploye; 
+>>>>>>> anas
 }
