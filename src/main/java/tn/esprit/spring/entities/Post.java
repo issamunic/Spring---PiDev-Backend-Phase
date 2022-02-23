@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,14 +38,17 @@ public class Post implements Serializable {/**
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long idPost;
 	String description;
+	@ElementCollection
 	List<String> country;
+	@ElementCollection
 	List<String> city;
+	@ElementCollection
 	List<String> stateOrProvince;
 	Instant createdOn;
 	String url;
 	Integer ReactCount;
 	@ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "userId", referencedColumnName = "idUser")
     private User user;
 	@ManyToOne(fetch = LAZY)
     @JoinColumn(name = "communityId", referencedColumnName = "idCommunity")

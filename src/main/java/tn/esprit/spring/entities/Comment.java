@@ -40,7 +40,7 @@ public class Comment implements Serializable {/**
 	Instant createdDate;
 	String sentiment;
 	@ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "userId", referencedColumnName = "idUser")
     private User user;
 
 }
