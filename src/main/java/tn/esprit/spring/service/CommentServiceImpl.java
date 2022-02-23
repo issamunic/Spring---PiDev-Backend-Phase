@@ -2,10 +2,12 @@ package tn.esprit.spring.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import tn.esprit.spring.entities.Comment;
 import tn.esprit.spring.entities.Post;
 import tn.esprit.spring.serviceInterface.ICommentService;
-
+@Service
 public class CommentServiceImpl implements ICommentService {
 
 	@Override

@@ -3,12 +3,14 @@ package tn.esprit.spring.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Community;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repository.CommunityRepository;
 import tn.esprit.spring.serviceInterface.ICommunityService;
 
+@Service
 public class CommunityServiceImpl implements ICommunityService {
 
 	@Autowired 
