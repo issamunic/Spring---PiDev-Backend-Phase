@@ -75,6 +75,17 @@ public class ReportController {
 		 return ReportService.NombreDesReclamParAn();
 	}
 	
+	@GetMapping("/chartReportType/{periode}")
+	public Map<String, Integer> NombreDesReclamParType(@PathVariable("periode") String periode){
+		return ReportService.NombreDesReclamParType(periode);
+	}
+	
+	@GetMapping("/get-reclamParday")
+	public int NombreDesReclamParDay() {
+		return ReportService.NombreDesReclamParDay();
+		
+	}
+	
 	
 	
 
