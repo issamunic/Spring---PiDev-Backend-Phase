@@ -37,8 +37,14 @@ public class PostRestController {
 	@ApiOperation(value = "retrieve post")
 	@GetMapping("/retrieve-post/{postId}")
 	@ResponseBody
-	public Post getUser(@PathVariable("postId") Long id) {
+	public Post getPost(@PathVariable("postId") Long id) {
 		return postService.retrievePost(id);
+	}
+	@ApiOperation(value = "retrieve post by country")
+	@GetMapping("/retrieve-post/{country}")
+	@ResponseBody
+	public List<Post> getPostByCountry(@PathVariable("country") String country) {
+		return postService.retrievePostsByCountry(country);
 	}
 	
 	@ApiOperation(value = "Add Post")

@@ -14,5 +14,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
 	@Query("Select p from Post p where p.community = ?1")
 	List<Post> findAllPostsByCommunity(Community community);
+	@Query("Select p from Post p where p.createdOn  >= DATEADD(day, -30, getdate() ")
+	List<Post> findLastMonthPosts();
 
 }
