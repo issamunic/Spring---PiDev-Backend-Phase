@@ -41,13 +41,12 @@ public class Groups {
 	
 	private String imageGroup;
 	
-	@ManyToMany(mappedBy="UserGroup")
+	@ManyToMany
 	@JsonIgnore
 	private Set<Users> GroupUser;
 
 	@OneToMany(mappedBy="ChatGroup",cascade = CascadeType.REMOVE)
 	@JsonIgnore
-	@ToString.Exclude
 	
 	private Set<Chat> ChatMessage;
 	

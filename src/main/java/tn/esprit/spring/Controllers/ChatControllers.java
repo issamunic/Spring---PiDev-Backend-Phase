@@ -53,16 +53,22 @@ public class ChatControllers{
 	
 	
 	@PostMapping("/{to}")
-	public void ReactToMessage(@RequestBody Chat chatMessage,@PathVariable("to") Long to) {
+	public void SendMessage(@RequestBody Chat chatMessage,@PathVariable("to") Long to) {
 		chatService.SendMessage(chatMessage, to);
 		 
 	}
 	
-	@GetMapping("/getMessage/{to}/{idUser}")
+	@GetMapping("/getAllMessage")
 	@ResponseBody
-	public List<Chat> getMessage(@PathVariable("to") Long to,@PathVariable("idUser") Long idUser) {
-		return chatService.getMessage(to, idUser);
+	public List<Chat> getAllMessage() {
+		return chatService.getAllMessage();
 	}
+	
+	@GetMapping("/getMessageByGroup/{idGroup}")
+	@ResponseBody
+	public List<Chat> getMessageByGroup(@PathVariable("idGroup") Long idGroup){
+		return chatService.getMessageByGroup(idGroup);
+	}	
 	
 	@DeleteMapping("message/{idMessage}")
 	public void DeleteMessage(@PathVariable("idMessage")Long idMessage) {

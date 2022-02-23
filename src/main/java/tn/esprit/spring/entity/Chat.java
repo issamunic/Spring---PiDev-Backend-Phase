@@ -26,9 +26,9 @@ import lombok.ToString;
 @Data
 public class Chat {
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column(name="idMessage")
-	
+	@GeneratedValue(strategy=GenerationType.AUTO)
+
 	private Long idMessage ;
 	private String message;
 	

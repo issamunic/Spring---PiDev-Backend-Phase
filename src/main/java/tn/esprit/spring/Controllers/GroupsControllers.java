@@ -25,8 +25,8 @@ public class GroupsControllers{
 	
 	//no
 	@PostMapping("/CreateGroups")
-	public String CreateGroup(@RequestBody Groups g) {
-		return groupService.CreateGroup(g);
+	public void CreateGroup(@RequestBody Groups g) {
+		groupService.CreateGroup(g);
 	}
 	
 	// okey
@@ -67,12 +67,10 @@ public class GroupsControllers{
 
 	@PutMapping("/AddMemberToGroups/{idGroup}/{IdUser}")
 	
-	public String AddMemberToGroups(Long idGroup,List<Long> IdUser){
-		return null;
+	public String AddMemberToGroups(@PathVariable("idGroup") Long idGroup,@PathVariable("IdUser") List<Long> IdUser){
+		return groupService.AddMemberToGroups(idGroup, IdUser);
 	}
-	public String MemberLeaveGroups(Long idGroup,Long idUser){
-		return null;
-	}
+	
 	public String RenameMember(Long idGroup,Long idUser,String newName){
 		return null;
 	}

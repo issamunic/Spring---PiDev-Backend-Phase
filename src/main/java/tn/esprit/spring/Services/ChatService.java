@@ -27,6 +27,8 @@ public class ChatService implements IChatService{
 	UserRepository userRepo;
 	@Autowired
 	GroupsRepository groupRepo;
+	@Autowired 
+	GroupsService groupService;
 	
 	@Override
 	public Chat SendMessage(Chat chatMessage ,Long to) {
@@ -43,16 +45,14 @@ public class ChatService implements IChatService{
 		
 	}
 	public List<Chat> getAllMessage(){
-		List<Chat> chat =  chatRepo.findAll();
-		for (Chat c : chat){
-			log.info("message "+c);
-		}
-		return chat;
+		Iterable<Chat> chat =  chatRepo.findAll();
+		return (List<Chat>) chat;
 	}
 	
 	@Override
-	public List<Chat> getMessage(Long to,Long idUser) {
-		return null;
+	public List<Chat> getMessageByGroup(Long idGroup) {
+		Groups group = groupRepo.findById(idGroup).orElse(null);
+		return chatRepo.getChatByGroup(group);
 	}
 
 

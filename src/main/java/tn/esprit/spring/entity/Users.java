@@ -30,18 +30,12 @@ public class Users {
 	private String  password;
 	private String pdp;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JsonIgnore
-	private Set<Groups> UserGroup;
-	
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy="MessageUser")
-	private Set<Chat> chatSend;
+
+
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<Chat> etatMessage;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="userReact")
-	private Set<ChatReact> userChatReact;
 	
 }

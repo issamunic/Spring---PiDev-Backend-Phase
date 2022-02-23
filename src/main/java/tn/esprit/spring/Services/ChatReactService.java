@@ -38,7 +38,7 @@ public class ChatReactService implements IChatReactService{
 
 	@Override
 	public void updateReact(Long idReact , React typeReact) {
-		ChatReact chatr= crr.findById(idReact).get();
+		ChatReact chatr= crr.findById(idReact).orElse(null);
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date dateReact = new Date();
