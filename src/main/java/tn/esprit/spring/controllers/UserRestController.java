@@ -122,6 +122,6 @@ public class UserRestController {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateDebut = dateFormat.parse(startDate);
 		Date dateFin = dateFormat.parse(endDate);
-		return userService.findCompanysWithBirthDate(dateDebut,dateFin);
+		return userService.findEmployesWithBirthDate(dateDebut,dateFin);
 	}
 }

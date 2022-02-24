@@ -217,7 +217,7 @@ public class UserServiceImpl implements IUserService{
 	}
 
 	@Override
-	public List<User> findCompanysWithBirthDate(Date dateInf, Date dateDeb) {
+	public List<User> findEmployesWithBirthDate(Date dateInf, Date dateDeb) {
 		try {
 			List<User> users=userRepository.getEmployesByDateRange(dateInf,dateDeb);
 			for(User user:users) {

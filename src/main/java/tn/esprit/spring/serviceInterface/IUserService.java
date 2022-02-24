@@ -32,5 +32,5 @@ public interface IUserService {
 	
 	public List<User> findCompanysWithDomain(Long idDomain);
 	
-	public List<User> findCompanysWithBirthDate(Date dateInf,Date dateDeb);
+	public List<User> findEmployesWithBirthDate(Date dateInf,Date dateDeb);
 }

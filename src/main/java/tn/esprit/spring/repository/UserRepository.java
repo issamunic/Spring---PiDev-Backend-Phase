@@ -20,13 +20,14 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	@Query("SELECT u FROM User u WHERE u.nameCompany LIKE %:name%")
 	public List<User> findCompanysByName(@Param("name") String nameCompany);
 	
-	@Query("SELECT u FROM User u WHERE u.FirstNameEmploye LIKE %:name% OR u.LastNameEmploye LIKE %:name%")
+	@Query("SELECT u FROM User u WHERE u.role LIKE 'employe' AND (CONCAT(trim(u.FirstNameEmploye), ' ', trim(u.LastNameEmploye)) LIKE %:name% OR CONCAT(trim(u.LastNameEmploye), ' ', trim(u.FirstNameEmploye)) LIKE %:name%)")            
 	public List<User> findEmployesByName(@Param("name") String nameEmploye);
 	
 	public List<User> findByDomain(Domain domain);
 	
-	//@Query("SELECT u FROM User u WHERE u.BirthDateEmploye BETWEEN :dateDeb AND :dateFin AND u.role LIKE employe")
 	@Query("SELECT u FROM User u WHERE u.BirthDateEmploye BETWEEN :dateDeb AND :dateFin AND u.role LIKE 'employe'")
 	public List<User> getEmployesByDateRange(@Param("dateDeb") Date dateDebut,@Param("dateFin") Date dateFin);
+	
+
 	 
 }
