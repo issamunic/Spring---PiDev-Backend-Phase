@@ -25,7 +25,6 @@ public class GroupsControllers{
 	IGroupsService groupService;
 	
 	//no
-	@PostMapping("/CreateGroups")
 	@PostMapping("/CreateGroups/{idUser}")
 	@ResponseBody
 	public void CreateGroup(@RequestBody Groups g ,@PathVariable("idUser") List<Long> idUser) {
