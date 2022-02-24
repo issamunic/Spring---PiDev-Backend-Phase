@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Post;
-import tn.esprit.spring.entities.User;
 import tn.esprit.spring.serviceInterface.IPostService;
 
 @RestController
@@ -41,9 +40,9 @@ public class PostRestController {
 		return postService.retrievePost(id);
 	}
 	@ApiOperation(value = "retrieve post by country")
-	@GetMapping("/retrieve-post/{country}")
+	@GetMapping("/retrieve-post/bycountry/{country}")
 	@ResponseBody
-	public List<Post> getPostByCountry(@PathVariable("country") String country) {
+	public List<Post> getPostByCountry(@PathVariable String country) {
 		return postService.retrievePostsByCountry(country);
 	}
 	

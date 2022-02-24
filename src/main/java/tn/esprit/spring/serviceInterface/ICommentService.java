@@ -7,16 +7,16 @@ import tn.esprit.spring.entities.Post;
 
 public interface ICommentService {
 	
-	Comment addComment(Comment comment);
+	Comment addComment(Comment comment, Long postId);
 	
 	Comment addSentimentToComment(Comment comment);
 	
 	void deleteComment(Long id);
 	
-	List<Comment> retrieveCommentsByPost(Post post);
+	List<Comment> retrieveCommentsByPost(Long postId);
 	
 	List<Comment> retrieveCommentsByPostAndSentiment(Post post, String sentiment);
 	
-	List<String> sentimentsOfCommentsByPost(Post post);
+	List<String> sentimentsOfCommentsByPost(Long postId);
 
 }

@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -51,9 +53,11 @@ public class Post implements Serializable {/**
 	Date createdOn;
 	String url;
 	Integer ReactCount;
+	@JsonIgnore
 	@ManyToOne(fetch = LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "idUser")
     private User user;
+	@JsonIgnore
 	@ManyToOne(fetch = LAZY)
     @JoinColumn(name = "communityId", referencedColumnName = "idCommunity")
 	Community community;

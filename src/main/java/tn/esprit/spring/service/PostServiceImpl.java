@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -44,7 +42,7 @@ public class PostServiceImpl implements IPostService {
     
     static int largestWordLength = 0;
     
-    public static void loadConfigs() {
+    public static void loadBadWords() {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://docs.google.com/spreadsheets/d/1hIEi2YG3ydav1E06Bzf2mQbGZ12kh2fe4ISgLg_UBuM/export?format=csv").openConnection().getInputStream()));
             String line = "";
@@ -88,6 +86,7 @@ public class PostServiceImpl implements IPostService {
      */
      
     public static ArrayList<String> badWordsFound(String input) {
+    	 loadBadWords();
         if(input == null) {
             return new ArrayList<>();
         }
@@ -132,7 +131,7 @@ public class PostServiceImpl implements IPostService {
 
 
         for(String s: badWords) {
-            System.out.println(s + " qualified as a bad word in a username");
+            System.out.println(s + " qualified as a bad word!");
         }
         return badWords;
 
@@ -151,11 +150,10 @@ public class PostServiceImpl implements IPostService {
 	public Post addPost(Post p) {
 		// TODO Auto-generated method stub
 		String description = p.getDescription();
-		if (filterText(description).equals(description))
-			{Date date = new Date(System.currentTimeMillis());
-			p.setCreatedOn(date);
+		if (filterText(description).equals(description))		
+			{
 			return postrepo.save(p);}
-		else  throw( new ForumException("this contains bad words!"));
+		else  return null;
 		
 	}
 
@@ -185,22 +183,31 @@ public class PostServiceImpl implements IPostService {
 	@Override
 	public List<Post> retrievePostsByCountry(String country) {
 		// TODO Auto-generated method stub
-		country.toLowerCase();
+		
 		List<Post>postsToReturn = new ArrayList<Post>();
 		List<Post> lastmonthPosts = postrepo.findLastMonthPosts();
+		
 		for (Post post : lastmonthPosts) {
 			String description =post.getDescription();
+//			description = description.replaceAll(".", "");
+//			description = description.replaceAll(",", "");
+//			description = description.replaceAll("?", "");
+//			description = description.replaceAll("!", "");
+//			description = description.replaceAll("*", "");
 			CoreDocument coreDocument = new CoreDocument(description);
+			stanfordCoreNLP.annotate(coreDocument);
 			List<CoreLabel> coreLabels = coreDocument.tokens();
+			log.info(coreLabels.toString());
 			for(CoreLabel coreLabel: coreLabels) {
 				String ner = coreLabel.get(CoreAnnotations.NamedEntityTagAnnotation.class);
-				if ((ner.toLowerCase().equals("country"))&&(coreLabel.originalText().toLowerCase().equals(country)))
+				log.info(coreLabel.originalText() +" " +ner);
+				if (((ner.equals("LOCATION")) || ner.equalsIgnoreCase("country"))  &&(coreLabel.originalText().equalsIgnoreCase(country)))
 				{
 					postsToReturn.add(post);
 				}
+			}		
 			}
-		}
-		return postsToReturn;
+		  return  postsToReturn;
 	}
 
 	@Override
