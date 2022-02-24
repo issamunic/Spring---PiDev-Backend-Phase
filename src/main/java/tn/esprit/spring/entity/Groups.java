@@ -1,5 +1,6 @@
 package tn.esprit.spring.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -25,7 +26,7 @@ import lombok.ToString;
 @Entity
 @Table( name = "Groups")
 @Data
-public class Groups {
+public class Groups implements Serializable{
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column(name="idGroup")

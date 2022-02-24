@@ -6,7 +6,7 @@ import tn.esprit.spring.entity.*;
 
 public interface IGroupsService{
 	// CRUD GROUPS
-	public void CreateGroup(Groups groups);
+	public void CreateGroup(Groups groups , List<Long> idUser);
 	public Groups getByIdGroup(Long idGroup);
 	public List<Groups> retrieveAllGroup();
 	public void deleteGroup(Long idGroup);

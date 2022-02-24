@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,8 +26,10 @@ public class GroupsControllers{
 	
 	//no
 	@PostMapping("/CreateGroups")
-	public void CreateGroup(@RequestBody Groups g) {
-		groupService.CreateGroup(g);
+	@PostMapping("/CreateGroups/{idUser}")
+	@ResponseBody
+	public void CreateGroup(@RequestBody Groups g ,@PathVariable("idUser") List<Long> idUser) {
+		groupService.CreateGroup(g,idUser);
 	}
 	
 	// okey
@@ -50,7 +53,7 @@ public class GroupsControllers{
 	}
 	// okey
 	@PutMapping("/renameGroups/{idGroup}/{Newname}")
-	public String RenameGroups(@PathVariable("idGroup")Long idGroup,@PathVariable("Newname") String Newname) {
+	public String RenameGroups( @PathVariable("idGroup")Long idGroup , @PathVariable("Newname") String Newname ) {
 		return groupService.RenameGroups(idGroup, Newname);
 	}
 	
@@ -58,6 +61,20 @@ public class GroupsControllers{
 	public String ChangeImageGroups(Long idGroup,String image){
 		return null;
 	}
+	
+	
+	@GetMapping("/{idGroup}")
+	public Groups getByIdGroup( @PathVariable("idGroup") Long idGroup ) {
+		return groupService.getByIdGroup(idGroup);
+		
+	}
+
+	@GetMapping("")
+	public List<Groups> retrieveAllGroup() {
+		return groupService.retrieveAllGroup();
+	}
+	
+	
 	
 	@DeleteMapping("/removeUser/{idGroup}/{idUser}")
 	@ResponseBody

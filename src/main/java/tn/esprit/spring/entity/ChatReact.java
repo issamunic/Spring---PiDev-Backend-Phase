@@ -1,8 +1,10 @@
 package tn.esprit.spring.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -22,7 +24,7 @@ import lombok.Data;
 @Entity
 @Table( name = "ChatReact")
 @Data
-public class ChatReact {
+public class ChatReact implements Serializable{
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column(name="idReact")

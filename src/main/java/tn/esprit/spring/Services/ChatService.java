@@ -1,10 +1,13 @@
 package tn.esprit.spring.Services;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -30,6 +33,32 @@ public class ChatService implements IChatService{
 	@Autowired 
 	GroupsService groupService;
 	
+	
+	public boolean testMessage(String message){
+		String ch="";
+		boolean test=false;
+		File file = new File("dictionnaire.txt");
+		try {
+			Scanner scan = new Scanner(file);
+			ch=scan.nextLine();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String[] ListDictionnaire = ch.split(",");
+		String[] TestmessageList=message.split(" ");
+		int i=0;
+		while( i < TestmessageList.length && test == false ){
+			int j=0;
+			while(j < ListDictionnaire.length && test == false )
+			{
+				test=TestmessageList[i].contains(ListDictionnaire[i]); 
+			}
+			
+		}
+		return test;
+	}
 	@Override
 	public Chat SendMessage(Chat chatMessage ,Long to) {
 		Groups group=groupRepo.findById(to).get();

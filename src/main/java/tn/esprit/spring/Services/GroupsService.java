@@ -1,5 +1,8 @@
 package tn.esprit.spring.Services;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -16,6 +19,8 @@ import tn.esprit.spring.repository.UserRepository;
 @Service
 @Slf4j
 public class GroupsService implements IGroupsService{
+	
+	private static int idSession =1;
 
 	@Autowired
 	GroupsRepository groupRepo;
@@ -24,16 +29,15 @@ public class GroupsService implements IGroupsService{
 
 	@Override
 	@Transactional
-	public void CreateGroup(Groups groups) {
-	//	groupRepo.save(groups);
+	public void CreateGroup(Groups groups, List<Long> idUser) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date dateCreation= new Date();
+		groups.setDateGroupe(dateCreation);
+		groupRepo.save(groups);
 		
-		if(groups.getGroupUser()==null)
-		log.info("hhhh no");
-		else{
-		for(Users user : groups.getGroupUser()){
-			log.info(groups.getGroupUser().toString());
-		}}
 	}
+		
+	
 	
 	@Override
 	public void deleteGroup(Long idGroup) {
@@ -93,7 +97,8 @@ public class GroupsService implements IGroupsService{
 		for(Users user : users ){
 			for (Long id : IdUser ){
 				if(id.equals(user.getIdUser()))
-				user.getUserGroup().add(group);
+				group.getGroupUser().add(user);
+				groupRepo.save(group);
 			}
 		}
 		return group.getGroupUser().toString();
@@ -103,13 +108,12 @@ public class GroupsService implements IGroupsService{
 	public String RemoveMemberFromGroups(Long idGroup, Long idUser) {
 		Groups group = groupRepo.findById(idGroup).orElse(null);
 		Users user = userRepo.findById(idUser).orElse(null);
-		//group.getGroupUser().remove(user);
-		// ne9sa logique l quitter
 		if(group.getGroupUser() != null){
 			
 		int u =  group.getGroupUser().size();
 		String us =  user.toString();
-		
+		group.getGroupUser().remove(user);
+		groupRepo.save(group);
 			log.info("nmbr: "+u);
 			log.info("nmbr: "+us);
 		}
