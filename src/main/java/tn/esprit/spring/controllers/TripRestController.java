@@ -1,5 +1,7 @@
 package tn.esprit.spring.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -63,19 +65,28 @@ public class TripRestController {
 	@ApiOperation(value = "getTripsByStartDate")
 	@GetMapping("/getTripsByStartDate/{dateInf}/{dateSup}")
 	@ResponseBody
-	public List<Trip> getTripsByStartDate(@PathVariable("dateInf") Date dateInf,@PathVariable("dateSup") Date dateSup) {
-		return tripService.getTripByDate(dateInf, dateSup);
+	public List<Trip> getTripsByStartDate(@PathVariable("dateInf") String dateInf,
+			@PathVariable("dateSup") String dateSup)  throws ParseException{
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date dateDebut = dateFormat.parse(dateInf);
+		Date dateFin = dateFormat.parse(dateSup);
+		return tripService.getTripByDate(dateDebut, dateFin);
 	}
 	
 	@ApiOperation(value = "getTripsInPeriod")
 	@GetMapping("/getTripsInPeriod/{dateInf}/{dateSup}")
 	@ResponseBody
-	public List<Trip> getTripsInPeriod(@PathVariable("dateInf") Date dateInf,@PathVariable("dateSup") Date dateSup) {
-		return tripService.getTripInPeriod(dateInf, dateSup);
+	public List<Trip> getTripsInPeriod(@PathVariable("dateInf") String dateInf,
+			@PathVariable("dateSup") String dateSup) throws ParseException{
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date dateDebut = dateFormat.parse(dateInf);
+		Date dateFin = dateFormat.parse(dateSup);
+		
+		return tripService.getTripInPeriod(dateDebut, dateFin);
 	}
 	
 	
-	
+
 	
 	
 	

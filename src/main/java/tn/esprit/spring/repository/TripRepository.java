@@ -18,7 +18,7 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
 	List<Trip> getTripByStartDate(@Param("dateInf") Date dateInf,@Param("dateSup") Date dateSup);
 
 	
-	@Query("SELECT t FROM Trip t WHERE t.startDate > :dateInf AND t.endDate > :dateSup  ")
+	@Query("SELECT t FROM Trip t WHERE t.startDate > :dateInf AND t.endDate < :dateSup  ")
 	List<Trip> getTripInPeriod(@Param("dateInf") Date dateInf,@Param("dateSup") Date dateSup);
 	
 	public List<Trip> findByName(String name);
