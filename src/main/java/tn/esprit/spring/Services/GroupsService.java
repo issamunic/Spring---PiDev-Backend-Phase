@@ -20,7 +20,6 @@ import tn.esprit.spring.repository.UserRepository;
 @Slf4j
 public class GroupsService implements IGroupsService{
 	
-	private static int idSession =1;
 
 	@Autowired
 	GroupsRepository groupRepo;

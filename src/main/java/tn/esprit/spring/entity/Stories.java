@@ -22,43 +22,41 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table( name = "Chat")
+@Table( name = "Stories")
 @Data
-public class Chat implements Serializable{
+@AllArgsConstructor
+@NoArgsConstructor
+public class Stories implements Serializable{
 	@Id
-	@Column(name="idMessage")
+	@Column(name="idStories")
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 
-	private Long idMessage ;
-	private String message;
+	private Long idStories ;
+	
+	private String Media;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateMsg;
-	
-	@ManyToOne
-	@ToString.Exclude
-	@JsonIgnore
-	Groups ChatGroup;
-	
-	@ManyToOne
-	
-	Users MessageUser; 
-	
-	@ManyToMany
-	private Set<Users> etat;
-	
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy="ChatReact")
-	@JsonIgnore
-	private Set<ChatReact> react;
-	
-	
-	private Date expirationdate;
+	private Date dateStories;
 	
 	@Enumerated(EnumType.STRING)
-	private MessageType messageType;
+	private EtatStories etatStorie;
+	
+	@Enumerated(EnumType.STRING)
+	private VisibilityType visibility;
+	
+	@ManyToOne
+	@JsonIgnore
+	Users userStorie; 
+	
+	@ManyToMany
+	private Set<Users> ViewsStroie;
+	@ManyToMany
+	private Set<Users> ExceptStroie;
 	
 }

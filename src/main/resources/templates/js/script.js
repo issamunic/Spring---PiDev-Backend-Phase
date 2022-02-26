@@ -13,7 +13,7 @@ const connect = (event) => {
         const chatPage = document.querySelector('#chat-page')
         chatPage.classList.remove('hide')
 
-        const socket = new SockJS('/chat-example')
+        const socket = new SockJS('/SpringMVC/chat-example')
         stompClient = Stomp.over(socket)
         stompClient.connect({}, onConnected, onError)
     }

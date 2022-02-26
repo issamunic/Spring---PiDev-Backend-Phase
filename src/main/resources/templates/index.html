@@ -206,7 +206,7 @@ const connect = (event) => {
         const chatPage = document.querySelector('#chat-page')
         chatPage.classList.remove('hide')
 
-        const socket = new SockJS('/chat-example')
+        const socket = new SockJS('/SpringMVC/chat-example')
         stompClient = Stomp.over(socket)
         stompClient.connect({}, onConnected, onError)
     }
@@ -235,12 +235,10 @@ const sendMessage = (event) => {
 
     if (messageContent && stompClient) {
         const chatMessage = {
-            sender: username,
-            content: messageInput.value,
-            type: 'CHAT',
-            time: moment().calendar()
+        	messageUser:{idUser:2},	
+            message: messageInput.value
         }
-        stompClient.send("/app/chat.send/1", {}, JSON.stringify(chatMessage))
+        stompClient.send("http://localhost:8088/SpringMVC/chat/1", {}, JSON.stringify(chatMessage))
         messageInput.value = ''
     }
     event.preventDefault();

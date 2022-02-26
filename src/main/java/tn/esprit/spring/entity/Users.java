@@ -1,6 +1,7 @@
 package tn.esprit.spring.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,11 +16,15 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table( name = "Users")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Users implements Serializable{
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -34,9 +39,7 @@ public class Users implements Serializable{
 
 
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JsonIgnore
-	private Set<Chat> etatMessage;
+	
 	
 	
 }

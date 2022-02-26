@@ -64,8 +64,7 @@ public class ChatControllers{
 		return chatService.getAllMessage();
 	}
 	
-	@GetMapping("/getMessageByGroup/{idGroup}")
-	@ResponseBody
+	@PostMapping("/getMessageByGroup/{idGroup}")
 	public List<Chat> getMessageByGroup(@PathVariable("idGroup") Long idGroup){
 		return chatService.getMessageByGroup(idGroup);
 	}	

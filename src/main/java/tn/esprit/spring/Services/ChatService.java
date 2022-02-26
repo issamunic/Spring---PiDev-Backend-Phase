@@ -1,16 +1,16 @@
 package tn.esprit.spring.Services;
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +24,7 @@ import tn.esprit.spring.repository.UserRepository;
 @Slf4j
 public class ChatService implements IChatService{
 
+	private static Long idSession =(long) 2;
 	@Autowired
 	ChatRepository chatRepo;
 	@Autowired
@@ -42,7 +43,6 @@ public class ChatService implements IChatService{
 			Scanner scan = new Scanner(file);
 			ch=scan.nextLine();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -62,11 +62,20 @@ public class ChatService implements IChatService{
 	@Override
 	public Chat SendMessage(Chat chatMessage ,Long to) {
 		Groups group=groupRepo.findById(to).get();
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date dateMessage = new Date();
+
+		long currentTimestamp = System.currentTimeMillis();
+		Date dateMessage  = new Date((currentTimestamp));		
+			//currentTimestamp=currentTimestamp/1000;
+			//Date expirationdate  = new Date((currentTimestamp+60)*1000);
+			
 		chatMessage.setDateMsg(dateMessage);
 		chatMessage.setChatGroup(group);
 		return chatRepo.save(chatMessage);
+	}
+	
+	@Scheduled(fixedRate=5000)
+	public void DeleteSecureMessage(){
+		//List<Chat> messages= chatRepo.DeleteSecureMessage();
 	}
 	@Override
 	public void DeleteMessage(Long idMessage) {
@@ -81,8 +90,42 @@ public class ChatService implements IChatService{
 	@Override
 	public List<Chat> getMessageByGroup(Long idGroup) {
 		Groups group = groupRepo.findById(idGroup).orElse(null);
-		return chatRepo.getChatByGroup(group);
+		Users user = userRepo.findById(idSession).get();
+		List<Chat> ListChat = chatRepo.getChatByGroup(group);
+		Chat chat =ListChat.get(0);
+		etatMessage(chat,user);
+		
+			
+		return ListChat;
 	}
+	public void etatMessage(Chat chat , Users user){
+		if(chat.getEtat().size()==0){
+			chat.getEtat().add(user);
+			log.info(chat.getIdMessage().toString()+" "+chat.getMessageUser().getNom());
+			chatRepo.save(chat); 
+		}
+		for(Users u : chat.getEtat()){
+			if(u.equals(user)==false){
+				chat.getEtat().add(user);
+				log.info(chat.getIdMessage().toString()+" "+chat.getMessageUser().getNom());
+				
+			}
+		}
+		chatRepo.save(chat); 
+		
+	}
+	
+	@Scheduled(fixedRate=5000)
+	public void ChatScheduler(){
+		/*List<Chat> chatEexpirationDate = chatRepo.chatEexpirationDate();
+		for(Chat chat : chatEexpirationDate ){
+			chatRepo.delete(chat);
+			log.info("");
+		}*/
+		
+	}
+	
+	
 
 
 }
