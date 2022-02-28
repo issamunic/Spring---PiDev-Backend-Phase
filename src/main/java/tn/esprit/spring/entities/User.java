@@ -38,8 +38,9 @@ public class User implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long idUser;
 	
-	String login;
+	String login;//username
 	String password;
+	boolean active;
 	Integer registrationNumberEmploye; 
 	String FirstNameEmploye;
 	String LastNameEmploye;

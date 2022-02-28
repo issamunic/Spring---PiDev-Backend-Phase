@@ -2,6 +2,7 @@ package tn.esprit.spring.serviceInterface;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.User;

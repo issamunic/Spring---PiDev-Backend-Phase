@@ -28,6 +28,5 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	@Query("SELECT u FROM User u WHERE u.BirthDateEmploye BETWEEN :dateDeb AND :dateFin AND u.role LIKE 'employe'")
 	public List<User> getEmployesByDateRange(@Param("dateDeb") Date dateDebut,@Param("dateFin") Date dateFin);
 	
-
-	 
+	public User findByLogin(String login);
 }

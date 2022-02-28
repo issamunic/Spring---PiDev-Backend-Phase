@@ -42,6 +42,7 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public User addUser(User user) {
 		try {
+			//user.setPassword(getPasswordEncoder().encode(user.getPassword()));
 			User u=userRepository.save(user);
 			log.info("user added : "+u);
 			return u;
@@ -231,6 +232,9 @@ public class UserServiceImpl implements IUserService{
 		}
 	}
 	
-	
+	/*@Bean
+	public PasswordEncoder getPasswordEncoder() {
 
+		return NoOpPasswordEncoder.getInstance();
+	}*/
 }
