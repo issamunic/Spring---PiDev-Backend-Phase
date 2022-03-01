@@ -189,11 +189,12 @@ public class PostServiceImpl implements IPostService {
 		
 		for (Post post : lastmonthPosts) {
 			String description =post.getDescription();
-//			description = description.replaceAll(".", "");
-//			description = description.replaceAll(",", "");
+			description = description.replaceAll(".", "");
+			description = description.replaceAll(",", "");
 //			description = description.replaceAll("?", "");
 //			description = description.replaceAll("!", "");
 //			description = description.replaceAll("*", "");
+			log.info(lastmonthPosts.toString());
 			CoreDocument coreDocument = new CoreDocument(description);
 			stanfordCoreNLP.annotate(coreDocument);
 			List<CoreLabel> coreLabels = coreDocument.tokens();
@@ -201,7 +202,7 @@ public class PostServiceImpl implements IPostService {
 			for(CoreLabel coreLabel: coreLabels) {
 				String ner = coreLabel.get(CoreAnnotations.NamedEntityTagAnnotation.class);
 				log.info(coreLabel.originalText() +" " +ner);
-				if (((ner.equals("LOCATION")) || ner.equalsIgnoreCase("country"))  &&(coreLabel.originalText().equalsIgnoreCase(country)))
+				if ((ner.equalsIgnoreCase("country"))  &&(coreLabel.originalText().equalsIgnoreCase(country)))
 				{
 					postsToReturn.add(post);
 				}
