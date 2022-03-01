@@ -12,8 +12,19 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import edu.stanford.nlp.ling.CoreAnnotations;
+import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
+import edu.stanford.nlp.pipeline.Annotation;
+import edu.stanford.nlp.pipeline.CoreDocument;
+import edu.stanford.nlp.pipeline.CoreSentence;
+import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
+import edu.stanford.nlp.sentiment.SentimentCoreAnnotations.SentimentAnnotatedTree;
+import edu.stanford.nlp.trees.Tree;
+import edu.stanford.nlp.util.CoreMap;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import tn.esprit.spring.core.Pipeline;
 import tn.esprit.spring.dto.CommentsDto;
 import tn.esprit.spring.entities.Comment;
 import tn.esprit.spring.entities.Post;
@@ -24,6 +35,7 @@ import tn.esprit.spring.serviceInterface.ICommentService;
 import java.util.regex.Pattern;
 @Service
 @AllArgsConstructor
+@Slf4j
 public class CommentServiceImpl implements ICommentService {
 	
 	@Autowired
@@ -32,6 +44,8 @@ public class CommentServiceImpl implements ICommentService {
 	PostRepository postrepo;
 	
 	private final CommentMapper commentMapper;
+	
+	StanfordCoreNLP stanfordCoreNLP = Pipeline.getInstance();
 	
 static Map<String, String[]> words = new HashMap<>();
     
@@ -145,10 +159,24 @@ static Map<String, String[]> words = new HashMap<>();
 	
 
 	@Override
-	public Comment addSentimentToComment(Long commentId) {
+	public String addSentimentToComment(Comment comment) {
 		// TODO Auto-generated method stub
-		return null;
-	}
+		String text = comment.getText();
+		int sentimentInt;
+	      String sentimentName = null; 
+	      Annotation annotation = stanfordCoreNLP.process(text);
+	      for(CoreMap sentence : annotation.get(CoreAnnotations.SentencesAnnotation.class))
+	      {
+	         Tree tree = sentence.get(SentimentAnnotatedTree.class);
+	        sentimentInt = RNNCoreAnnotations.getPredictedClass(tree); 
+	                sentimentName = sentence.get(SentimentCoreAnnotations.SentimentClass.class);
+	        System.out.println(sentimentName + "\t" + sentimentInt + "\t" + sentence);
+	      }
+	      
+	      return sentimentName;
+	     }
+	
+	
 
 	@Override
 	public void deleteComment(Long id) {
@@ -171,10 +199,15 @@ static Map<String, String[]> words = new HashMap<>();
 	  @Override 
 	  public Comment addComment(CommentsDto commentDto) { 
 		  // TODOAuto-generated method stub 
-		  Post post = postrepo.findById(commentDto.getPostId()).orElse(null); if
-	  (filterText(commentDto.getText()).equals(commentDto.getText()) && post !=
-	  null) { postrepo.save(post); Comment comment = commentMapper.map(commentDto,
-	  post, null); return comRepo.save(comment);} return null; }
+		  Post post = postrepo.findById(commentDto.getPostId()).orElse(null); 
+		  if (filterText(commentDto.getText()).equals(commentDto.getText()) && post !=null) 
+		 { postrepo.save(post); 
+	  Comment comment = commentMapper.map(commentDto, post, null);
+	  comment.setSentiment(addSentimentToComment(comment));
+	  return comRepo.save(comment);
+	  } 
+		  return null; 
+		  }
 	 
 
 	@Override

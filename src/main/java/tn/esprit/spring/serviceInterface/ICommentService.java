@@ -10,7 +10,7 @@ public interface ICommentService {
 	
 	Comment addComment(CommentsDto commentDto);
 	
-	Comment addSentimentToComment(Long commentId);
+	String addSentimentToComment(Comment comment);
 	
 	void deleteComment(Long id);
 	

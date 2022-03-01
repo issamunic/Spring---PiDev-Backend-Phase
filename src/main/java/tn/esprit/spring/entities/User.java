@@ -2,7 +2,9 @@ package tn.esprit.spring.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -46,6 +48,8 @@ public class User implements Serializable{
 	String profilePictureEmploye;
 	String nameCompany;
 	String logoCompany;
+	@ElementCollection
+    Map<Date, User> followers;
 	
 	@ManyToOne
 	Profession profession;
