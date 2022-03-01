@@ -36,9 +36,12 @@ public class Activity implements Serializable {
 	private String activityDescription;
 	private Date startActivity;
 	private Date endActivity;
+	private int period;
 	
 	@JsonIgnore
 	@ManyToOne
 	private TripPlan tripPlan;
+	
+	
 	
 }

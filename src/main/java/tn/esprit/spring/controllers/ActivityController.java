@@ -39,8 +39,8 @@ public class ActivityController {
 	@ApiOperation(value = "addActivity")
 	@PostMapping("/add")
 	@ResponseBody
-	public Activity add(@RequestBody Activity Activity) {
-		return ActivityService.add(Activity);
+	public String add(@RequestBody Activity Activity) {
+		 return ActivityService.add(Activity);
 	}
 	
 	@ApiOperation(value = "getById")
@@ -54,17 +54,31 @@ public class ActivityController {
 	@ApiOperation(value = "updateActivity")
 	@PutMapping("/update")
 	@ResponseBody
-	public Activity update(@RequestBody Activity Activity) {
-		return ActivityService.update(Activity);
+	public void update() {
+		 ActivityService.update();
 	}
 	
 	
-	@ApiOperation(value = "deleteActivity")
+	/*@ApiOperation(value = "deleteActivity")
 	@DeleteMapping("/delete/{Activity-id}")
 	@ResponseBody
 	public void delete(@PathVariable("Activity-id") Long id) {
 		 ActivityService.delete(id);
 	}
 	
-
+*/
+	@ApiOperation(value = "ajouterActivityToTripPlan")
+	@GetMapping("/asgTPAC/{tripPlan-id}/{activity-id}")
+	@ResponseBody
+	public void assgProjetToUser(@PathVariable("tripPlan-id") long tripPlanid ,@PathVariable("activity-id") long activityid) {
+		ActivityService.addActivityToTripPlan(tripPlanid, activityid);
+	}
+		
+		@ApiOperation(value = "find-Activities-ByTripPlan")
+		@GetMapping("/find-Activities-ByTripPlan/{tripPlan-id}")
+		@ResponseBody
+		public List<Activity> findActivitiesByTripPlan(@PathVariable("tripPlan-id") long tripPlanid ) {
+			return ActivityService.listActivityByTripPlanId(tripPlanid);
+	
+	}
 }

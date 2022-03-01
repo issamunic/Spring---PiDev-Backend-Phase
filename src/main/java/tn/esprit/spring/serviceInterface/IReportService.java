@@ -17,7 +17,10 @@ public interface IReportService {
     public Map<String, Integer> NombreDesReclamParSemaine();
 	public Map<String, Integer> NombreDesReclamParAn();
 	public Map<String, Integer> NombreDesReclamParType(String periode);
+	
 	public int NombreDesReclamParDay();
+	
+	
 	public int NombreDesReclamTraite();
 	public int NombreDesReclamNonTraite();
 	

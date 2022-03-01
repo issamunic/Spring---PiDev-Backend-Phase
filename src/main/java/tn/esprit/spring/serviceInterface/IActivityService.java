@@ -10,13 +10,15 @@ public interface IActivityService {
 public List<Activity> getAll();
 	
 	
-	public Activity add(Activity Activity);
+	public String add(Activity Activity);
 	
-	public Activity update(Activity Activity);
+	public void update();
 	
-	public void delete(Long Activityid);
+	public void delete();
 	
 	public Activity getById(Long Activityid);
 
-	
+	public List<Activity> listActivityByTripPlanId(long id);
+
+	void addActivityToTripPlan(long idTripPlan, long idActivity);
 }

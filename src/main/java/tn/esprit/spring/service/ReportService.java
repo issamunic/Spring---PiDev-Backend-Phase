@@ -273,6 +273,7 @@ public class ReportService implements IReportService {
 	        LocalDate date2 = LocalDate.parse(formater.format(date), DateTimeFormatter.ISO_DATE);
 
 	        System.out.println(date2.toString());
+	        
 return 0;				 
 
 
