@@ -2,14 +2,15 @@ package tn.esprit.spring.serviceInterface;
 
 import java.util.List;
 
+import tn.esprit.spring.dto.CommentsDto;
 import tn.esprit.spring.entities.Comment;
 import tn.esprit.spring.entities.Post;
 
 public interface ICommentService {
 	
-	Comment addComment(Comment comment, Long postId);
+	Comment addComment(CommentsDto commentDto);
 	
-	Comment addSentimentToComment(Comment comment);
+	Comment addSentimentToComment(Long commentId);
 	
 	void deleteComment(Long id);
 	

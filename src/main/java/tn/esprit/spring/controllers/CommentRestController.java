@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import tn.esprit.spring.dto.CommentsDto;
 import tn.esprit.spring.entities.Comment;
 import tn.esprit.spring.entities.Post;
 import tn.esprit.spring.serviceInterface.ICommentService;
@@ -27,10 +28,10 @@ public class CommentRestController {
 	@Autowired
 	ICommentService comservice;
 	
-	@ApiOperation(value = "retrieve post")
+	@ApiOperation(value = "retrieve comments")
 	@GetMapping("/retrieve-comment/{postId}")
 	@ResponseBody
-	public List<Comment> getComment(@PathVariable("postId") Long id) {
+	public List<Comment> getComments(@PathVariable("postId") Long id) {
 		return comservice.retrieveCommentsByPost(id);
 	}
 	
@@ -38,12 +39,12 @@ public class CommentRestController {
 	@ApiOperation(value = "Add Comment")
 	@PostMapping("/add-comment")
 	@ResponseBody
-	public Comment addComment(@RequestBody Comment Comment,@RequestBody Long postid){
-		return comservice.addComment(Comment, postid);
+	public Comment addComment(@RequestBody CommentsDto commentDto){
+		return comservice.addComment(commentDto);
 	}
 	
-	@ApiOperation(value = "Delete Post")
-	@DeleteMapping("/remove-post/{commentid}")
+	@ApiOperation(value = "Delete Comment")
+	@DeleteMapping("/remove-comment/{commentid}")
 	@ResponseBody
 	public void deleteComment(@PathVariable("commentid") Long idComment){
 		comservice.deleteComment(idComment);

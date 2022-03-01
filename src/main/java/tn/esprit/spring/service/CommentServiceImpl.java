@@ -12,18 +12,26 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import lombok.AllArgsConstructor;
+import tn.esprit.spring.dto.CommentsDto;
 import tn.esprit.spring.entities.Comment;
 import tn.esprit.spring.entities.Post;
+import tn.esprit.spring.mapper.CommentMapper;
 import tn.esprit.spring.repository.CommentRepository;
 import tn.esprit.spring.repository.PostRepository;
 import tn.esprit.spring.serviceInterface.ICommentService;
+import java.util.regex.Pattern;
 @Service
+@AllArgsConstructor
 public class CommentServiceImpl implements ICommentService {
 	
 	@Autowired
 	CommentRepository comRepo;
 	@Autowired
 	PostRepository postrepo;
+	
+	private final CommentMapper commentMapper;
 	
 static Map<String, String[]> words = new HashMap<>();
     
@@ -137,7 +145,7 @@ static Map<String, String[]> words = new HashMap<>();
 	
 
 	@Override
-	public Comment addSentimentToComment(Comment comment) {
+	public Comment addSentimentToComment(Long commentId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -159,13 +167,15 @@ static Map<String, String[]> words = new HashMap<>();
 
 	
 
-	@Override
-	public Comment addComment(Comment comment, Long postId) {
-		// TODO Auto-generated method stub
-		if (filterText(comment.getText()).equals(comment.getText()))
-			return comRepo.save(comment);
-		return null;
-	}
+	
+	  @Override 
+	  public Comment addComment(CommentsDto commentDto) { 
+		  // TODOAuto-generated method stub 
+		  Post post = postrepo.findById(commentDto.getPostId()).orElse(null); if
+	  (filterText(commentDto.getText()).equals(commentDto.getText()) && post !=
+	  null) { postrepo.save(post); Comment comment = commentMapper.map(commentDto,
+	  post, null); return comRepo.save(comment);} return null; }
+	 
 
 	@Override
 	public List<Comment> retrieveCommentsByPost(Long postId) {

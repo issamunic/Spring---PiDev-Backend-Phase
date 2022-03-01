@@ -37,6 +37,7 @@ public class User implements Serializable{
 	Integer registrationNumberEmploye; 
 	String FirstNameEmploye;
 	String LastNameEmploye;
+	String username;
 	
 	@Temporal(TemporalType.DATE)
 	Date BirthDateEmploye;
