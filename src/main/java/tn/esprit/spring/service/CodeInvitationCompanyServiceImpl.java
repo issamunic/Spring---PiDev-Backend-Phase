@@ -42,7 +42,6 @@ public class CodeInvitationCompanyServiceImpl implements ICodeInvitationCompanyS
 	public CodeInvitationCompany add(CodeInvitationCompany CodeInvitationCompany) {
 		try {
 			CodeInvitationCompany.setDateCreationCodeInvitationCompany(new Date());
-			CodeInvitationCompany.setUserCompany(IUserService.retrieveUser(CodeInvitationCompany.getUserCompany().getIdUser()));
 			return CodeInvitationCompanyRepo.save(CodeInvitationCompany);
 		} catch (Exception e) {
 			log.info(e.getMessage());
@@ -52,16 +51,14 @@ public class CodeInvitationCompanyServiceImpl implements ICodeInvitationCompanyS
 
 	@Override
 	public CodeInvitationCompany update(CodeInvitationCompany CodeInvitationCompanytest) {
-		List<CodeInvitationCompany> CodeInvitationCompanys = (List<CodeInvitationCompany>) CodeInvitationCompanyRepo.findAll();
-		for (CodeInvitationCompany CodeInvitationCompanyfor : CodeInvitationCompanys) {
-			if(CodeInvitationCompanytest.getCodeInvitation().equals(CodeInvitationCompanyfor.getCodeInvitation()))
-			{
-			System.out.println("code used");
+		try {
+			CodeInvitationCompanyRepo.save(CodeInvitationCompanytest);
+			return CodeInvitationCompanytest;
+		} catch (Exception e) {
+			log.info(e.getMessage());
 			return null;
-			}
 		}
-		CodeInvitationCompanyRepo.save(CodeInvitationCompanytest);
-		return CodeInvitationCompanytest;
+		
 	}
 
 	@Override
@@ -98,6 +95,20 @@ public class CodeInvitationCompanyServiceImpl implements ICodeInvitationCompanyS
 				}
 				CodeInvitationCompanyRepo.save(CodeInvitationCompanytest);
 				return CodeInvitationCompanytest;
+
+		}
+		
+		@Override
+		public CodeInvitationCompany getByCode(String code) {
+			
+				List<CodeInvitationCompany> CodeInvitationCompanys = (List<CodeInvitationCompany>) CodeInvitationCompanyRepo.findAll();
+				for (CodeInvitationCompany CodeInvitationCompanyfor : CodeInvitationCompanys) {
+					if(CodeInvitationCompanyfor.getCodeInvitation().equals(code)){
+						return CodeInvitationCompanyfor;
+					}
+				}
+				
+				return null;
 
 		}
 

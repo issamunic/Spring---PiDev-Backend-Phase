@@ -14,10 +14,9 @@ import org.springframework.batch.item.file.LineMapper;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import tn.esprit.spring.entities.csv;
@@ -27,9 +26,14 @@ import tn.esprit.spring.entities.csv;
 @EnableBatchProcessing
 @Component
 public class SpringBatchConfig {
-
-	
-	 @Bean
+	String pathffff="";
+	public String getPathffff() {
+		return pathffff;
+	}
+	public void setPathffff(String pathffff) {
+		this.pathffff = pathffff;
+	}
+	@Bean
 	    public Job job(JobBuilderFactory jobBuilderFactory,
 	                   StepBuilderFactory stepBuilderFactory,
 	                   ItemReader<csv> itemReader,
@@ -52,9 +56,9 @@ public class SpringBatchConfig {
 	    }
 	 @Bean
 	    public FlatFileItemReader<csv> itemReader() {
-
+	    	
 	        FlatFileItemReader<csv> flatFileItemReader = new FlatFileItemReader<>();
-	        flatFileItemReader.setResource(new FileSystemResource("src/main/resources/users.csv"));
+	    	flatFileItemReader.setResource(new ClassPathResource(getPathffff()));
 	        flatFileItemReader.setName("CSV-Reader");
 	        flatFileItemReader.setLinesToSkip(1);
 	        flatFileItemReader.setLineMapper(lineMapper());

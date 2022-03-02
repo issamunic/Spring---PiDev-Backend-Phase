@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Invitation;
 import tn.esprit.spring.entities.StatusInvitation;
+import tn.esprit.spring.entities.User;
+import tn.esprit.spring.mail.mailsender.ISimpleEmailExampleController;
 import tn.esprit.spring.repository.InvitationRepository;
 
 import tn.esprit.spring.serviceInterface.IInvitationService;
@@ -20,6 +22,9 @@ public class InvitationServiceImpl  implements IInvitationService{
 
 	@Autowired
 	InvitationRepository InvitationRepo;
+	@Autowired
+	ISimpleEmailExampleController SimpleEmailExampleController;
+	
 	
 	@Override
 	public List<Invitation> getAll() {
@@ -38,7 +43,11 @@ public class InvitationServiceImpl  implements IInvitationService{
 	public Invitation add(Invitation invitation) {
 		try {
 			invitation.setStatusInvitation(StatusInvitation.pending);
-			invitation.setDateAcceptInvitation(new Date());
+			invitation.setDateCreationInvitation(new Date());
+			
+			SimpleEmailExampleController.sendSimpleEmail(invitation.getMailEmployee(),
+					"invitation to Vinder From "
+					,"invitation to Vinder From ");
 			return InvitationRepo.save(invitation);
 		} catch (Exception e) {
 			log.info(e.getMessage());
@@ -88,6 +97,23 @@ public class InvitationServiceImpl  implements IInvitationService{
 			log.info(e.getMessage());
 		}
 		return null;
+	}
+	
+	@Override
+	public List<Invitation> getByCompany(User Company) {
+		try {
+			List<Invitation> invitationsComapny = null ;		
+			List<Invitation> invitations = (List<Invitation>) InvitationRepo.findAll();
+			for (Invitation invitation : invitations) {
+				if(Company.equals(invitation.getUserSender())) {
+					invitationsComapny.add(invitation);
+				log.info(" invitation : " + invitation);
+				}
+			}
+			return invitationsComapny;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 

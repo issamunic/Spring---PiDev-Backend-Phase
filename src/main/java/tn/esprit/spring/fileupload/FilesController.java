@@ -1,5 +1,6 @@
 package tn.esprit.spring.fileupload;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -49,5 +50,11 @@ public class FilesController {
 	    Resource file = storageService.load(filename);
 	    return ResponseEntity.ok()
 	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+	  }
+	  
+	  @GetMapping("/files/delete/{filename}")
+	  @ResponseBody
+	  public void deleteFile(@PathVariable String filename) {
+	    storageService.deleteFile(filename);
 	  }
 }

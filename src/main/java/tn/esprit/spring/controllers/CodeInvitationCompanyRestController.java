@@ -65,11 +65,23 @@ public class CodeInvitationCompanyRestController {
 	public void delete(@PathVariable("CodeInvitationCompany-id") Long id) {
 		CodeInvitationCompanyService.delete(id);
 	}
-	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@ApiOperation(value = "addCodeInvitationCompanyFinal")
 	@PostMapping("/addFinal")
 	@ResponseBody
 	public CodeInvitationCompany addFinal(@RequestBody CodeInvitationCompany CodeInvitationCompany) {
 		return CodeInvitationCompanyService.addFinal(CodeInvitationCompany);
 	}
+	
+	@ApiOperation(value = "getByCode")
+	@GetMapping("/getByCode/{CodeInvitationCompany}")
+	@ResponseBody
+	public CodeInvitationCompany getById(@PathVariable("CodeInvitationCompany") String CodeInvitationCompany) {
+		return CodeInvitationCompanyService.getByCode(CodeInvitationCompany);
+	}
+	
+	
 }

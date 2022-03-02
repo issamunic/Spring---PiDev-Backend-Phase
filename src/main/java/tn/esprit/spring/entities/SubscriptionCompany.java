@@ -1,13 +1,11 @@
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,21 +21,17 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @ToString
-public class csv implements Serializable{
-private static final long serialVersionUID = 1L;
-	
+public class SubscriptionCompany implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idcsv;
+	Long idSubscriptionCompany;
 	
 	
-	private String name;
-	private String email;
-	
-	private String Idsender;
-	
-	
-	
+	int NbrEmployeeMax; 
+		
 
+	@OneToOne
+	User Company; 
+	
 }

@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Invitation;
 import tn.esprit.spring.entities.Project;
+import tn.esprit.spring.entities.User;
 import tn.esprit.spring.mail.mailsender.ISimpleEmailExampleController;
 import tn.esprit.spring.serviceInterface.*;
 @RestController
@@ -21,9 +22,7 @@ public class InvitationRestController {
 	@Autowired
 	IInvitationService invitationService;
     //http://localhost:8087/SpringMVC/swagger-ui/index.html
-	@Autowired
-	ISimpleEmailExampleController SimpleEmailExampleController;
-	
+
 	@Autowired
 	IUserService IUserService;
 	
@@ -43,13 +42,7 @@ public class InvitationRestController {
 	@ApiOperation(value = "addInvitation")
 	@PostMapping("/add")
 	@ResponseBody
-	public Invitation add(@RequestBody Invitation invitation) {
-		
-		invitation.setDateCreationInvitation(new Date());
-		invitation.setUserSender(IUserService.retrieveUser(invitation.getUserSender().getIdUser()));
-		SimpleEmailExampleController.sendSimpleEmail(invitation.getMailEmployee(),
-				"invitation to Vinder From " +invitation.getUserSender().getNameCompany()
-				,"invitation to Vinder From "+invitation.getUserSender().getNameCompany());
+	public Invitation add(@RequestBody Invitation invitation) {		
 		return invitationService.add(invitation);
 	}
 	
@@ -76,6 +69,11 @@ public class InvitationRestController {
 		invitationService.delete(id);
 	}
 	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	@ApiOperation(value = "SetinvitationAccepted")
 	@PutMapping("/SetinvitationAccepted/{invitation-id}")
 	@ResponseBody
@@ -83,4 +81,13 @@ public class InvitationRestController {
 		System.out.println("********************"+id+"**********");
 		return invitationService.SetinvitationAccepted(id);
 	}
+	
+	@ApiOperation(value = "getByCompany")
+	@GetMapping("/getByCompany")
+	@ResponseBody
+	public List<Invitation> getByCompany(@RequestBody User Company) {
+		return invitationService.getByCompany(Company);
+		
+	}	
+	
 }

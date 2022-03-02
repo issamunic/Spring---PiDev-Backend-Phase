@@ -65,5 +65,8 @@ public class User implements Serializable{
 	@OneToOne(mappedBy="UserCompany")
 	CodeInvitationCompany CodeInvitationCompany;
 	
+	@OneToOne(mappedBy="Company")
+	SubscriptionCompany SubscriptionCompany;
+	
 	
 }

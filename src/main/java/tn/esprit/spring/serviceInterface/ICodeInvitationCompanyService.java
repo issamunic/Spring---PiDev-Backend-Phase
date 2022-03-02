@@ -19,5 +19,7 @@ public interface ICodeInvitationCompanyService {
 
 	public CodeInvitationCompany addFinal(CodeInvitationCompany CodeInvitationCompanyyyy);
 
+	public CodeInvitationCompany getByCode(String code);
+
 
 }

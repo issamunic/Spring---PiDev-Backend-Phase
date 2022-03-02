@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,21 +25,25 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @ToString
-public class csv implements Serializable{
-private static final long serialVersionUID = 1L;
-	
+public class HistorySubcriptionCompany implements Serializable{
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idcsv;
+	Long idHistorySubcriptionCompany;
 	
 	
-	private String name;
-	private String email;
-	
-	private String Idsender;
+	int NbrEmployeeAddedToMax;
 	
 	
+	@Temporal(TemporalType.DATE)
+	Date DateHistorySubcriptionCompany;
 	
+	
+	Long CompanyId;
+	
+	
+		
+
 
 }

@@ -1,11 +1,14 @@
 package tn.esprit.spring.fileupload;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Random;
 import java.util.stream.Stream;
+
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -14,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FilesStorageServiceImpl implements FilesStorageService{
-	 private final Path root = Paths.get("uploads");
+	 private final Path root = Paths.get("src/main/resources/");
 	  @Override
 	  public void init() {
 	    try {
@@ -44,6 +47,15 @@ public class FilesStorageServiceImpl implements FilesStorageService{
 	    } catch (MalformedURLException e) {
 	      throw new RuntimeException("Error: " + e.getMessage());
 	    }
+	  }
+	  @Override
+	  public void deleteFile(String url) {
+		    try {
+				Files.delete(Paths.get("src/main/resources/"+url));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	  }
 	  @Override
 	  public void deleteAll() {

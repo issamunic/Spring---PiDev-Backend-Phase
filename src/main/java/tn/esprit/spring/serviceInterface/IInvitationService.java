@@ -4,6 +4,7 @@ import java.util.List;
 
 import tn.esprit.spring.entities.Invitation;
 import tn.esprit.spring.entities.Project;
+import tn.esprit.spring.entities.User;
 
 
 public interface IInvitationService {
@@ -19,5 +20,7 @@ public interface IInvitationService {
 	public Invitation getById(Long Invitationid);
 
 	Invitation SetinvitationAccepted(Long Invitationid);
+
+	List<Invitation> getByCompany(User Company);
 
 }
