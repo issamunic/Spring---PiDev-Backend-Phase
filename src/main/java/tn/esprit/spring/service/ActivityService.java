@@ -55,7 +55,10 @@ public class ActivityService implements IActivityService {
 				//ActivityRepo.save(activity);
 				
 				if(a.getStartActivity()!=null && a.getEndActivity()!=null) {
-				if(((activity.getStartActivity().equals(a.getStartActivity()))||((activity.getStartActivity().after(a.getStartActivity()))))&&((activity.getEndActivity().equals(a.getEndActivity()))||((activity.getEndActivity().before(a.getEndActivity()))))) {
+				if(((activity.getStartActivity().equals(a.getStartActivity()))||
+						((activity.getStartActivity().after(a.getStartActivity()))))&&
+						((activity.getEndActivity().equals(a.getEndActivity()))||
+								((activity.getEndActivity().before(a.getEndActivity()))))) {
 				//if(activity.getStartActivity().after(a.getStartActivity()&&activity.getEndActivity().before(a.getEndActivity())) {
 					//if((activity.getStartActivity().after(a.getStartActivity())) && (activity.getEndActivity().before(a.getEndActivity()))){
 						cpt = cpt + 1;
@@ -66,7 +69,6 @@ public class ActivityService implements IActivityService {
 					//ActivityRepo.save(activity);
 					//return " valid";
 					
-              
 					}*/
 			}
 			System.out.println(	"cpt :"+cpt);
@@ -76,12 +78,9 @@ public class ActivityService implements IActivityService {
 				ActivityRepo.save(activity);
 				return "Activité Valid";	
 				}
-				
 				else{
 				return "Date Réservé ! , Cherchez une autre date ou contacté le planificateur";
 				}
-
-			
 		}
 		
 		ActivityRepo.save(activity);
@@ -110,35 +109,33 @@ public class ActivityService implements IActivityService {
 		debut.setHours(8);
 		debut.setMinutes(0);
 		debut.setSeconds(0);
-
+		int j = 0;
 		for(Activity a  : Activitys) {
-			if(a.getStartActivity()==null && a.getEndActivity()==null) {
-				Calendar calendar2 = Calendar.getInstance();
-				
-				   calendar2.setTime(debut);
+			if(a.getStartActivity()==null && a.getEndActivity()==null ) {
+				Calendar calendar2 = Calendar.getInstance();   
+				   calendar2.setTime(debut); 
 				   if(debut.getHours()+a.getPeriod()<18) {
 				   calendar2.add(Calendar.HOUR, a.getPeriod());
-				   }
-				   
-				   if(debut.getHours()+a.getPeriod()>=18) {
-				   calendar2.add(Calendar.DATE, 1);
-					debut.setHours(8);
-					debut.setMinutes(0);
-					debut.setSeconds(0);
-				   calendar2.add(Calendar.HOUR, a.getPeriod());
-				   }
-				   
-				   
+				   System.out.println("d5al lel if lowla");
+				   }  
+				   else if(debut.getHours()+a.getPeriod()>=18) {
+					   j = j + 1;
+						calendar2.add(Calendar.DATE,j);
+						debut.setHours(8);
+						debut.setMinutes(0);
+						debut.setSeconds(0);
+						System.out.println("calander****:"+calendar2);
+						
+						calendar2.setTime(debut);
+				    calendar2.add(Calendar.HOUR, a.getPeriod());
+				    System.out.println("d5al lel if thenya");
+				   }  
 				   System.out.println("datedebut"+a.getPeriod());
 				   System.out.println("datefin"+a.getPeriod());
 				   a.setStartActivity( debut);
 				   a.setEndActivity(calendar2.getTime());
 				   ActivityRepo.save(a);
-					
-					
-				
-				
-				
+			
 				debut = calendar2.getTime();
 				
 			}
@@ -149,7 +146,7 @@ public class ActivityService implements IActivityService {
 
 	}
 
-	@Scheduled(fixedRate = 600000)
+	//@Scheduled(fixedRate = 600000)
 	public void delete() {
 		List<Activity> Activitys = (List<Activity>) ActivityRepo.ListActivityInfCurentDate();
 		for (Activity Activity : Activitys) {
