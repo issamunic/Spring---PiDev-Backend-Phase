@@ -114,13 +114,27 @@ public class ActivityService implements IActivityService {
 		for(Activity a  : Activitys) {
 			if(a.getStartActivity()==null && a.getEndActivity()==null) {
 				Calendar calendar2 = Calendar.getInstance();
+				
 				   calendar2.setTime(debut);
+				   if(debut.getHours()+a.getPeriod()<18) {
 				   calendar2.add(Calendar.HOUR, a.getPeriod());
+				   }
+				   
+				   if(debut.getHours()+a.getPeriod()>=18) {
+				   calendar2.add(Calendar.DATE, 1);
+					debut.setHours(8);
+					debut.setMinutes(0);
+					debut.setSeconds(0);
+				   calendar2.add(Calendar.HOUR, a.getPeriod());
+				   }
+				   
+				   
 				   System.out.println("datedebut"+a.getPeriod());
 				   System.out.println("datefin"+a.getPeriod());
-				a.setStartActivity( debut);
-				a.setEndActivity(calendar2.getTime());
-					ActivityRepo.save(a);
+				   a.setStartActivity( debut);
+				   a.setEndActivity(calendar2.getTime());
+				   ActivityRepo.save(a);
+					
 					
 				
 				
