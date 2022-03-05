@@ -3,17 +3,25 @@ package tn.esprit.spring.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Domain;
+import tn.esprit.spring.entities.Image;
 import tn.esprit.spring.entities.Profession;
 import tn.esprit.spring.entities.Role;
+import tn.esprit.spring.entities.Roles;
 import tn.esprit.spring.entities.User;
+import tn.esprit.spring.imageConfig.ImageUtility;
 import tn.esprit.spring.repository.DomainRepository;
+import tn.esprit.spring.repository.ImageRepository;
 import tn.esprit.spring.repository.ProfessionRepository;
+import tn.esprit.spring.repository.RolesRepository;
 import tn.esprit.spring.repository.UserRepository;
 import tn.esprit.spring.serviceInterface.IUserService;
 
@@ -30,6 +38,15 @@ public class UserServiceImpl implements IUserService{
 	@Autowired
 	ProfessionRepository professionRepository;
 	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
+	
+	@Autowired 
+	ImageRepository imageRepository;
+	
+	@Autowired
+	RolesRepository rolesRepository;
+	
 	@Override
 	public List<User> retrieveAllUsers() {
 		List<User> users=userRepository.findAll();
@@ -42,7 +59,7 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public User addUser(User user) {
 		try {
-			//user.setPassword(getPasswordEncoder().encode(user.getPassword()));
+			user.setPassword(getEncodedPassword(user.getPassword()));
 			User u=userRepository.save(user);
 			log.info("user added : "+u);
 			return u;
@@ -67,6 +84,7 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public User updateUser(User user) {
 		try {
+			user.setPassword(getEncodedPassword(user.getPassword()));
 			User u=userRepository.save(user);
 			log.info("user update : "+u);
 			return u;
@@ -76,6 +94,27 @@ public class UserServiceImpl implements IUserService{
 			return null;
 		}
 	}
+	
+	/*@Override
+	public User updateUser(User user,MultipartFile file) {
+		try {
+			user.setPassword(getEncodedPassword(user.getPassword()));
+			if(file!=null) {
+				Image image=imageRepository.save(Image.builder()
+		                .name(file.getOriginalFilename())
+		                .type(file.getContentType())
+		                .image(ImageUtility.compressImage(file.getBytes())).build());
+				user.setImage(image);
+			}
+			User u=userRepository.save(user);
+			log.info("user update : "+u);
+			return u;
+		}
+		catch(Exception e) {
+			log.info("erreur user update : "+e.getMessage());
+			return null;
+		}
+	}*/
 
 	@Override
 	public User retrieveUser(Long id) {
@@ -232,9 +271,43 @@ public class UserServiceImpl implements IUserService{
 		}
 	}
 	
-	/*@Bean
-	public PasswordEncoder getPasswordEncoder() {
+	public String getEncodedPassword(String password) {
+        return passwordEncoder.encode(password);
+    }
 
-		return NoOpPasswordEncoder.getInstance();
-	}*/
+	@Override
+	public void assignImageToUser(Long idImage, Long idUser) {
+		Image image=imageRepository.findById(idImage).orElse(null);
+		User user=userRepository.findById(idUser).orElse(null);
+		user.setImage(image);
+		userRepository.save(user);
+	}
+	
+	@Override
+	public String assignRolesToUser(Long idRoles,Long idUser) {
+		Roles roles=rolesRepository.findById(idRoles).orElse(null);
+		User user=userRepository.findById(idUser).orElse(null);
+		if(user.getRoles().size()>0) {
+			for (Roles r : user.getRoles()) {
+				if(r.getIdRoles()==roles.getIdRoles()) {
+					return "this user is already a(n) "+r.getRoleName();
+				}
+			}
+		}
+		user.setRole(Role.valueOf(roles.getRoleName()));
+		user.getRoles().clear();
+		user.getRoles().add(roles);
+		userRepository.save(user);
+		return "this user is now : a(n) "+roles.getRoleName();
+	}
+
+	@Override
+	public Optional<Image> retrieveImageUser(Long idUser) {
+		User user=userRepository.findById(idUser).orElse(null);
+		if(user!=null && user.getImage()!=null) {
+			Image img=user.getImage();
+			return imageRepository.findByName(img.getName());
+		}
+		return null;
+	}
 }

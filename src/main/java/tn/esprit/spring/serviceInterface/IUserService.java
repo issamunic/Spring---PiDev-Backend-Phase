@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import tn.esprit.spring.entities.Image;
 import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.User;
 
@@ -34,4 +37,10 @@ public interface IUserService {
 	public List<User> findCompanysWithDomain(Long idDomain);
 	
 	public List<User> findEmployesWithBirthDate(Date dateInf,Date dateDeb);
+	
+	void assignImageToUser(Long idImage,Long idUser);
+	
+	String assignRolesToUser(Long idRoles,Long idUser);
+	
+	Optional<Image> retrieveImageUser(Long idUser);
 }

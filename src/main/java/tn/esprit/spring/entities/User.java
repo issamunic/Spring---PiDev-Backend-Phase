@@ -4,14 +4,19 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -71,5 +76,13 @@ public class User implements Serializable{
 	@OneToMany
 	List<Trip> trips;
 	
+	@ToString.Exclude
+	//@JsonIgnore
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	List<Roles> roles;
 	
+	@ToString.Exclude
+	@JsonIgnore
+	@OneToOne
+	Image image;
 }

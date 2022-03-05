@@ -1,10 +1,17 @@
 package tn.esprit.spring.controllers;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,13 +19,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import tn.esprit.spring.entities.Image;
 import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.User;
+import tn.esprit.spring.imageConfig.ImageUtility;
 import tn.esprit.spring.serviceInterface.IUserService;
 
 @RestController
@@ -124,4 +135,31 @@ public class UserRestController {
 		Date dateFin = dateFormat.parse(endDate);
 		return userService.findEmployesWithBirthDate(dateDebut, dateFin);
 	}
+	
+	@ApiOperation(value = "assign user to image")
+	@PutMapping("/assign-user-to-image/{user-id}/{image-id}")
+	@ResponseBody
+	public void assignUserToImage(@PathVariable("user-id") Long idUser, @PathVariable("image-id") Long idImage) {
+		userService.assignImageToUser(idImage, idUser);
+	}
+	
+	@ApiOperation(value = "assign user to role")
+	@PutMapping("/assign-user-to-role/{user-id}/{role-id}")
+	@ResponseBody
+	public String assignUserToRole(@PathVariable("user-id") Long idUser, @PathVariable("role-id") Long idRole) {
+		return userService.assignRolesToUser(idRole, idUser);
+	}
+	
+	@GetMapping(path = {"/image/get/{user-id}"})
+    public ResponseEntity<byte[]> getImageUser(@PathVariable("user-id") Long idUser) throws IOException {
+
+        final Optional<Image> dbImage = userService.retrieveImageUser(idUser);
+        if(dbImage.get()!=null) {
+        	return ResponseEntity
+                    .ok()
+                    .contentType(MediaType.valueOf(dbImage.get().getType()))
+                    .body(ImageUtility.decompressImage(dbImage.get().getImage()));
+        }
+        return null;
+    }
 }
