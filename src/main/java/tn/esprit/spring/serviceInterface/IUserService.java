@@ -50,4 +50,8 @@ public interface IUserService {
 	void register(User user, String siteURL) throws UnsupportedEncodingException, MessagingException;
 	
 	boolean verify(String verificationCode);
+	
+	boolean testActiveAccount(String login);
+	
+	boolean checkEmailUsed(String login);
 }

@@ -375,4 +375,22 @@ public class UserServiceImpl implements IUserService{
 		}
 		return null;
 	}
+
+	@Override
+	public boolean testActiveAccount(String login) {
+		User user=userRepository.findByLogin(login);
+		if(user.isActive()) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean checkEmailUsed(String login) {
+		User user=userRepository.findByLogin(login);
+		if(user!=null) {
+			return true;
+		}
+		return false;
+	}
 }

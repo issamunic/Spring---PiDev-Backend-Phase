@@ -50,6 +50,9 @@ public class UserRestController {
 	@PostMapping("/process_register")
     public String processRegister(@RequestBody User user,HttpServletRequest request)
             throws UnsupportedEncodingException, MessagingException {
+		if(userService.checkEmailUsed(user.getLogin())) {
+			return "email already used";
+		}
 		userService.register(user, getSiteURL(request));       
         return "register_success go check your email to activate your account";
     }
