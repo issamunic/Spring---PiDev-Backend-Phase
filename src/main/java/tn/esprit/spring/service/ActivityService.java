@@ -109,34 +109,48 @@ public class ActivityService implements IActivityService {
 		debut.setHours(8);
 		debut.setMinutes(0);
 		debut.setSeconds(0);
-		int j = 0;
+		calendar1.setTime(debut);
+		Date faza = calendar1.getTime();
+		Calendar calendar2 = Calendar.getInstance();   
+		   calendar2.setTime(debut); 
 		for(Activity a  : Activitys) {
 			if(a.getStartActivity()==null && a.getEndActivity()==null ) {
-				Calendar calendar2 = Calendar.getInstance();   
-				   calendar2.setTime(debut); 
-				   if(debut.getHours()+a.getPeriod()<18) {
+				
+				
+				   if(calendar2.getTime().getHours()+a.getPeriod()<18) {
+					   a.setStartActivity( calendar2.getTime());
+			  
 				   calendar2.add(Calendar.HOUR, a.getPeriod());
+				   
+				   a.setEndActivity(calendar2.getTime());
 				   System.out.println("d5al lel if lowla");
 				   }  
-				   else if(debut.getHours()+a.getPeriod()>=18) {
-					   j = j + 1;
-						calendar2.add(Calendar.DATE,j);
-						debut.setHours(8);
-						debut.setMinutes(0);
-						debut.setSeconds(0);
+				   else if(calendar2.getTime().getHours()+a.getPeriod()>=18) {
+						calendar2.add(Calendar.DATE,1);
+						
+						
+						faza= calendar2.getTime();
+						faza.setHours(8);
+						faza.setMinutes(0);
+						faza.setSeconds(0);
+						calendar2.setTime(faza);
+						
 						System.out.println("calander****:"+calendar2);
 						
-						calendar2.setTime(debut);
+						//calendar2.setTime(debut);
+						   a.setStartActivity( calendar2.getTime());
+						
 				    calendar2.add(Calendar.HOUR, a.getPeriod());
+				    a.setEndActivity(calendar2.getTime());
 				    System.out.println("d5al lel if thenya");
 				   }  
 				   System.out.println("datedebut"+a.getPeriod());
 				   System.out.println("datefin"+a.getPeriod());
-				   a.setStartActivity( debut);
-				   a.setEndActivity(calendar2.getTime());
+				   
 				   ActivityRepo.save(a);
+				   
+				   debut = calendar2.getTime();
 			
-				debut = calendar2.getTime();
 				
 			}
 			

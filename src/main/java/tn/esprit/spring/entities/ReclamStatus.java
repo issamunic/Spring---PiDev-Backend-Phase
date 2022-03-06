@@ -1,6 +1,6 @@
 package tn.esprit.spring.entities;
 
 public enum ReclamStatus {
-	pending,Inprogress,deleted
+	pending,Inprogress,Handled
 
 }

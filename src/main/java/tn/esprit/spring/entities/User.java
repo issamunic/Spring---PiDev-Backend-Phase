@@ -31,6 +31,11 @@ import lombok.experimental.FieldDefaults;
 @ToString
 public class User implements  Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long idUser;

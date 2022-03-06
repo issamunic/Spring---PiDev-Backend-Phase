@@ -44,6 +44,7 @@ public class Report implements Serializable {
 	private String other;
 	private int severity;
 	private Date dateReport;
+	private String Response;
 	
 	
 	

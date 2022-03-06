@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import tn.esprit.spring.entities.ReclamStatus;
 import tn.esprit.spring.entities.ReclamType;
 import tn.esprit.spring.entities.Report;
 import tn.esprit.spring.entities.User;
@@ -44,7 +45,9 @@ public class ReportService implements IReportService {
 		cal.add(Calendar.DATE, -8);
 		Date date1 = cal.getTime();
 		*/
+		
 		r.setDateReport(date);
+		r.setStaus(ReclamStatus.Inprogress);
 		r.setUtilisateur(userRepo.findById((long) 2).orElse(null));
 		repoRecalam.save(r);
 		
@@ -92,6 +95,40 @@ public class ReportService implements IReportService {
 			
 	}
 	
+	
+	/*
+	 @Override
+	public  Map<String, Integer> NombreDesReclamParMois() {
+		
+		 Map<String, Integer> mapReclamweek = new HashMap<String, Integer>();
+		 
+		 
+		 
+		 Date dateFin = new Date(System.currentTimeMillis());
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(dateFin);
+			for(int i=1;i<5;i++) {
+			
+			cal.add(Calendar.DATE, -7*i);
+
+			Date date1 = cal.getTime();
+			
+			SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+			
+			System.out.println(formater.format(dateFin)+"**********"+formater.format(date1));
+			 List<Report> listReport = (List<Report>) repoRecalam.ListReportOfweekAgo(date1,date);
+			 mapReclamweek.put(cal.getTime().toString() , listReport.size());
+			 dateFin = date1;
+			}    
+			 
+
+			 
+			return mapReclamweek;
+
+		
+	}
+	 */
+	
 	@Override
 	public  Map<String, Integer> NombreDesReclamParMois() {
 		
@@ -99,21 +136,25 @@ public class ReportService implements IReportService {
 		 
 		 
 		 
-		 Date date = new Date(System.currentTimeMillis());
+		 Date dateFin = new Date(System.currentTimeMillis());
 			Calendar cal = Calendar.getInstance();
-			
+			cal.setTime(dateFin);
 			for(int i=1;i<5;i++) {
-			cal.setTime(date);
-			cal.add(Calendar.DATE, -7*i);
+			
+			cal.add(Calendar.DATE, -7);
 
 			Date date1 = cal.getTime();
 			
+			
+			
 			SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
 			
-			System.out.println(formater.format(date)+"**********"+formater.format(date1));
-			 List<Report> listReport = (List<Report>) repoRecalam.ListReportOfweekAgo(date1,date);
-			 mapReclamweek.put("Week "+i , listReport.size());
-			 date = date1;
+			System.out.println(formater.format(dateFin)+"**********"+formater.format(date1));
+			 List<Report> listReport = (List<Report>) repoRecalam.ListReportOfweekAgo(date1,dateFin);
+			 mapReclamweek.put(cal.getTime().toString() , listReport.size());
+			 dateFin = date1;
+			 
+			 System.out.println("current date : "+dateFin);
 			}    
 			 
 
@@ -137,7 +178,9 @@ public class ReportService implements IReportService {
 			
 			for(int i=1;i<13;i++) {
 			cal.setTime(date);
-			cal.add(Calendar.DATE, -30*i);
+			
+			
+			cal.add(Calendar.DATE, -30);
 
 			Date date1 = cal.getTime();
 			
@@ -145,7 +188,7 @@ public class ReportService implements IReportService {
 			
 			System.out.println(formater.format(date)+"**********"+formater.format(date1));
 			 List<Report> listReport = (List<Report>) repoRecalam.ListReportOfweekAgo(date1,date);
-			 mapReclamweek.put("month"+i, listReport.size());
+			 mapReclamweek.put(cal.getTime().toString(), listReport.size());
 			 date = date1;
 			}
 			
@@ -165,6 +208,9 @@ public class ReportService implements IReportService {
 
 	@Override
 	public void updateReclamation(Report r) {
+		
+		
+		r.setStaus(ReclamStatus.Handled);
 		
 		repoRecalam.save(r);
 		
