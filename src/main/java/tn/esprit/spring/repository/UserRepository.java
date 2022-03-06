@@ -29,4 +29,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	public List<User> getEmployesByDateRange(@Param("dateDeb") Date dateDebut,@Param("dateFin") Date dateFin);
 	
 	public User findByLogin(String login);
+	
+	@Query("SELECT u FROM User u WHERE u.verificationCode = ?1")
+    public User findByVerificationCode(String code);
 }

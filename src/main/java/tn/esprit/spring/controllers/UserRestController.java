@@ -1,13 +1,18 @@
 package tn.esprit.spring.controllers;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +44,29 @@ public class UserRestController {
 
 	@Autowired
 	IUserService userService;
+
+	@ApiOperation(value = "registration")
+	@ResponseBody
+	@PostMapping("/process_register")
+    public String processRegister(@RequestBody User user,HttpServletRequest request)
+            throws UnsupportedEncodingException, MessagingException {
+		userService.register(user, getSiteURL(request));       
+        return "register_success go check your email to activate your account";
+    }
+     
+    private String getSiteURL(HttpServletRequest request) {
+        String siteURL = request.getRequestURL().toString();
+        return siteURL.replace(request.getServletPath(), "");
+    }
+    
+    @GetMapping("/verify")
+    public String verifyUser(@Param("code") String code) {
+        if (userService.verify(code)) {
+            return "verify_success";
+        } else {
+            return "verify_fail";
+        }
+    }
 
 	@ApiOperation(value = "get list users")
 	@GetMapping("/retrieve-all-users")

@@ -1,16 +1,23 @@
 package tn.esprit.spring.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.utility.RandomString;
 import tn.esprit.spring.entities.Domain;
 import tn.esprit.spring.entities.Image;
 import tn.esprit.spring.entities.Profession;
@@ -47,6 +54,63 @@ public class UserServiceImpl implements IUserService{
 	@Autowired
 	RolesRepository rolesRepository;
 	
+	@Autowired
+    private JavaMailSender mailSender;
+	
+	
+	public void register(User user, String siteURL) throws UnsupportedEncodingException, MessagingException{
+		user.setPassword(getEncodedPassword(user.getPassword()));
+	    String randomCode = RandomString.make(64);
+	    user.setVerificationCode(randomCode);
+	    user.setActive(false);
+	     
+	    userRepository.save(user);
+	     
+	    sendVerificationEmail(user, siteURL);
+    }
+     
+	private void sendVerificationEmail(User user, String siteURL)
+	        throws MessagingException, UnsupportedEncodingException {
+	    String toAddress = user.getLogin();
+	    String fromAddress = "mohamed.benrabah98@gmail.com";
+	    String senderName = user.getNameCompany();
+	    String subject = "Please verify your registration";
+	    String content = "Dear [[name]],<br>"
+	            + "Please click the link below to verify your registration:<br>"
+	            + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
+	            + "Thank you,<br>"
+	            + "Your company name.";
+	     
+	    MimeMessage message = mailSender.createMimeMessage();
+	    MimeMessageHelper helper = new MimeMessageHelper(message);
+	     
+	    helper.setFrom(fromAddress, senderName);
+	    helper.setTo(toAddress);
+	    helper.setSubject(subject);
+	     
+	    content = content.replace("[[name]]", user.getLogin());
+	    String verifyURL = siteURL + "/user/verify?code=" + user.getVerificationCode();
+	     
+	    content = content.replace("[[URL]]", verifyURL);
+	     
+	    helper.setText(content, true);
+	     
+	    mailSender.send(message);
+	     
+	}
+	
+	public boolean verify(String verificationCode) {
+	    User user = userRepository.findByVerificationCode(verificationCode);
+	    if (user == null || user.isActive()) {
+	        return false;
+	    } else {
+	        user.setVerificationCode(null);
+	        user.setActive(true);
+	        userRepository.save(user);
+	        return true;
+	    }
+	}
+	
 	@Override
 	public List<User> retrieveAllUsers() {
 		List<User> users=userRepository.findAll();
@@ -60,6 +124,7 @@ public class UserServiceImpl implements IUserService{
 	public User addUser(User user) {
 		try {
 			user.setPassword(getEncodedPassword(user.getPassword()));
+			user.setActive(false);
 			User u=userRepository.save(user);
 			log.info("user added : "+u);
 			return u;

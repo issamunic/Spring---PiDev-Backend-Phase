@@ -1,8 +1,11 @@
 package tn.esprit.spring.serviceInterface;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import javax.mail.MessagingException;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,4 +46,8 @@ public interface IUserService {
 	String assignRolesToUser(Long idRoles,Long idUser);
 	
 	Optional<Image> retrieveImageUser(Long idUser);
+	
+	void register(User user, String siteURL) throws UnsupportedEncodingException, MessagingException;
+	
+	boolean verify(String verificationCode);
 }

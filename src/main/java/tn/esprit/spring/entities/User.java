@@ -45,7 +45,10 @@ public class User implements Serializable{
 	
 	String login;//username
 	String password;
+	
 	boolean active;
+    String verificationCode;
+    
 	Integer registrationNumberEmploye; 
 	String FirstNameEmploye;
 	String LastNameEmploye;
@@ -77,7 +80,7 @@ public class User implements Serializable{
 	List<Trip> trips;
 	
 	@ToString.Exclude
-	//@JsonIgnore
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	List<Roles> roles;
 	
