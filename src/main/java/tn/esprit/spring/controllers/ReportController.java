@@ -58,11 +58,11 @@ public class ReportController {
 		 ReportService.deleteReclamation(id);
 	}
 	
-	@PostMapping("/update-Report")
+	/*@PostMapping("/update-Report")
 	public void UpdateReport(@RequestBody Report r)
 	{
 		  ReportService.updateReclamation(r);
-	}
+	}*/
 	
 	
 	@GetMapping("/ReclamationByUserId/{user-id}")
@@ -103,16 +103,18 @@ public class ReportController {
 	@ApiOperation(value = "updateReport")
 	@PutMapping("/update")
 	@ResponseBody
-	public void update(@RequestBody Report r) {
+	public void update() {
+		
+		Report r = ReportService.updateReclamation(33);
 	
 		  String ACCOUNT_SID = "AC39b3348ddc32e1b8ea10dab06afc1f9a";
-	        String AUTH_TOKEN = "45762239195021d61a158860b28a1eba";
+	        String AUTH_TOKEN = "03506d35b5d6b2a8f3c54acaa4036f0e";
 
 	        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 	        Message message = Message.creator(
 	                new com.twilio.type.PhoneNumber("whatsapp:+21652135404"),
-	                new com.twilio.type.PhoneNumber("whatsapp:+14155238886"),
-	                r.getResponse()+"qui est lié au"+r.getType()+r.getUtilisateur().getFirstNameEmploye())
+	                new com.twilio.type.PhoneNumber("whatsapp:+14155238886"),"Bonjour Mr/Mme "+r.getUtilisateur().getFirstNameEmploye()+" "+r.getResponse())
+	                /*r.getResponse()+"qui est lié au"+r.getType()+r.getUtilisateur().getFirstNameEmploye())*/
 	                .create();
 
 	        System.out.println(message.getSid());
@@ -122,7 +124,7 @@ public class ReportController {
 	@GetMapping("/msg")
     public void sendMSG() {
         String ACCOUNT_SID = "AC39b3348ddc32e1b8ea10dab06afc1f9a";
-        String AUTH_TOKEN = "45762239195021d61a158860b28a1eba";
+        String AUTH_TOKEN = "03506d35b5d6b2a8f3c54acaa4036f0e";
 
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Message message = Message.creator(

@@ -38,7 +38,7 @@ public class User implements  Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long idUser;
+	int idUser;
 	
 	private String login;
 	private String password;

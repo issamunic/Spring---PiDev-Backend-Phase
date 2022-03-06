@@ -113,7 +113,9 @@ public class ActivityService implements IActivityService {
 		Date faza = calendar1.getTime();
 		Calendar calendar2 = Calendar.getInstance();   
 		   calendar2.setTime(debut); 
+		   
 		for(Activity a  : Activitys) {
+			
 			if(a.getStartActivity()==null && a.getEndActivity()==null ) {
 				
 				
@@ -126,9 +128,8 @@ public class ActivityService implements IActivityService {
 				   System.out.println("d5al lel if lowla");
 				   }  
 				   else if(calendar2.getTime().getHours()+a.getPeriod()>=18) {
+			
 						calendar2.add(Calendar.DATE,1);
-						
-						
 						faza= calendar2.getTime();
 						faza.setHours(8);
 						faza.setMinutes(0);

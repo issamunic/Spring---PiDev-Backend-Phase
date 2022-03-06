@@ -9,7 +9,7 @@ public interface IReportService {
 	
 	public Report  addReclamation(Report r ) ; 
 	public void deleteReclamation(int id);
-	public void updateReclamation(Report r);
+	public Report updateReclamation(int r);
 	public List<Report> RecalamationList(); 
 	public List<Report>findReclamByUser(long  id);
 

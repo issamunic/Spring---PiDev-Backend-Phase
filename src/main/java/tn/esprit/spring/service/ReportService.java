@@ -45,11 +45,14 @@ public class ReportService implements IReportService {
 		cal.add(Calendar.DATE, -8);
 		Date date1 = cal.getTime();
 		*/
-		
+		User u = userRepo.findById(2).orElse(null);
+		r.setUtilisateur(u);
 		r.setDateReport(date);
 		r.setStaus(ReclamStatus.Inprogress);
-		r.setUtilisateur(userRepo.findById((long) 2).orElse(null));
+		u.getReclamations().add(r);
+		
 		repoRecalam.save(r);
+		
 		
 		
 		return r;
@@ -207,25 +210,28 @@ public class ReportService implements IReportService {
 	}
 
 	@Override
-	public void updateReclamation(Report r) {
-		
-		
+	public Report updateReclamation(int id) {
+		Report r = repoRecalam.findById(id).orElse(null);
+		r.setResponse("votre problemme est resolu !");
 		r.setStaus(ReclamStatus.Handled);
-		
 		repoRecalam.save(r);
+		return r;
+		
 		
 	}
 
 	@Override
 	public List<Report> RecalamationList() {
 		List<Report> listReclam = (List<Report>) repoRecalam.findAll();
+
 		return  listReclam;
 	}
 
 	@Override
 	public List<Report> findReclamByUser(long id) {
-		User user = userRepo.findById(id).orElse(null);
+		User user = userRepo.findById((int)id).orElse(null);
 		return user.getReclamations();
+		
 	}
 
 	@Override
