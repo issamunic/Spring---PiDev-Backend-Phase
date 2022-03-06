@@ -3,6 +3,9 @@ package tn.esprit.spring.synonyms;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class WordDao {
 	
 	private static List<Word> words;
@@ -63,6 +66,15 @@ public class WordDao {
     public Word addWord(String word) throws Exception {
         if(findWord(word) != null) {
             throw new Exception(String.format("Word <%s> already exist in database", word));
+        }
+        Word _word = new Word(word);
+        words.add(_word);
+        return _word;
+    }
+    
+    public Word addWord2(String word) throws Exception {
+        if(findWord(word) != null) {
+            return null;
         }
         Word _word = new Word(word);
         words.add(_word);

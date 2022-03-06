@@ -20,6 +20,10 @@ public class WordService {
         return wordDao.addWord(word);
     }
     
+    public Word addWord2(String word) throws Exception {
+        return wordDao.addWord2(word);
+    }
+    
     /**
      * Add synonym for word
      * @param word 
