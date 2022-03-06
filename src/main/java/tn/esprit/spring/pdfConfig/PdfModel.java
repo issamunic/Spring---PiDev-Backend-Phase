@@ -62,21 +62,35 @@ public class PdfModel {
 		for (User user : users) {
 			table.addCell(String.valueOf(user.getIdUser()));
 			table.addCell(user.getLogin());
-			table.addCell(user.getRole()+"");
-			switch(String.valueOf(user.getRole())) {
-				case "admin": 
-					table.addCell("---"); 
-					table.addCell("---");
-					break;
-				case "employe":
-					table.addCell("---"); 
-					table.addCell(user.getProfession().getName());
-					break;
-				case "company":
-					table.addCell(user.getDomain().getName()); 
-					table.addCell("---");
-					break;
+			if(user.getRole()!=null) {
+				table.addCell(user.getRole()+"");
+				switch(String.valueOf(user.getRole())) {
+					case "admin": 
+						table.addCell("---"); 
+						table.addCell("---");
+						break;
+					case "employe":
+						table.addCell("---"); 
+						if(user.getProfession()!=null)
+						{
+							table.addCell(user.getProfession().getName());
+						}else {
+							table.addCell("---");
+						}
+						break;
+					case "company":
+						if(user.getDomain()!=null) {
+							table.addCell(user.getDomain().getName());
+						}
+						else {
+							table.addCell("---");
+						}
+						table.addCell("---");
+						break;
+				}
 			}
+			
+			
 		}
 	}
 	
