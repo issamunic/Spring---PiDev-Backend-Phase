@@ -27,6 +27,10 @@ public class TripRestController {
 	@GetMapping("/getAll")
 	@ResponseBody
 	public List<Trip> getAll() {
+
+		
+
+
 		return tripService.getAll();
 	}
 	
@@ -83,6 +87,16 @@ public class TripRestController {
 		Date dateFin = dateFormat.parse(dateSup);
 		
 		return tripService.getTripInPeriod(dateDebut, dateFin);
+	}
+	
+	@ApiOperation(value = "get Trips Grouped By Destination")
+	@GetMapping("/getGroupedByDestination")
+	@ResponseBody
+	public List<List<Trip>> getGroupedByDestination() {
+
+
+
+		return tripService.groupBy(tripService.getGroupedByDestination()) ;
 	}
 	
 	

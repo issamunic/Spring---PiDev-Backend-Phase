@@ -1,10 +1,12 @@
 package tn.esprit.spring.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Task;
@@ -96,6 +98,47 @@ public class TripServiceImpl implements ITripService {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	@Override
+	public void apiCall() {
+	    final String uri = "http://api.positionstack.com/v1/forward?access_key=7f7711b22c8b37548fd956a27e4ce17a&query=51.507822,-0.076702";
+
+	    RestTemplate restTemplate = new RestTemplate();
+	    String result = restTemplate.getForObject(uri, String.class);
+	    System.out.println("**************************");
+
+	    System.out.println(result);
+	    System.out.println("**************************");
+
+		
+	}
+
+	
+
+	@Override
+	public List<Trip> getGroupedByDestination() {
+		return tripRepo.getGroupedByDestination();
+	}
+
+	@Override
+	public List<List<Trip>> groupBy(List<Trip> liste) {
+		if (liste == null) return null;
+		String destination ="";
+		List<List<Trip>> parentList = new ArrayList<List<Trip>>();
+		List<Trip> childList = new ArrayList<Trip>();
+		destination = liste.get(0).getDestination();
+		for ( Trip trip : liste) {
+			if(trip.getDestination().equals(destination)) childList.add(trip);
+			else {
+				destination = trip.getDestination();
+				parentList.add(childList);
+				childList= new ArrayList<Trip>();
+				childList.add(trip);
+			}
+		}
+		parentList.add(childList);
+		return parentList;
 	}
 
 	

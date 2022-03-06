@@ -57,5 +57,7 @@ public class Trip implements Serializable {
 	@ManyToOne
 	User user;
 	
+	boolean isMatched;
+	
 	
 }

@@ -22,4 +22,7 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
 	List<Trip> getTripInPeriod(@Param("dateInf") Date dateInf,@Param("dateSup") Date dateSup);
 	
 	public List<Trip> findByName(String name);
+	
+	@Query("SELECT t FROM Trip t ORDER BY destination  ")
+	public List<Trip> getGroupedByDestination();
 }

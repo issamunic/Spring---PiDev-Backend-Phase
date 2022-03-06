@@ -23,6 +23,13 @@ public interface ITripService {
 	public List<Trip> getTripInPeriod(Date dateInf, Date dateSup);
 	
 	public List<Trip> getByName(String name) ;
+	
+	public void apiCall() ;
+	
+	
+	public List<Trip> getGroupedByDestination();
+	
+	public List<List<Trip>> groupBy(List<Trip> liste);
 
 
 }
