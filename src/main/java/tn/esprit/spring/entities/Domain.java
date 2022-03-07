@@ -39,4 +39,16 @@ public class Domain implements Serializable{
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "domain")
 	List<User> users;
+	
+	public Domain(String name) {
+		this.name=name;
+	}
+	
+	public boolean equals(String wordVal) {
+        return name.equalsIgnoreCase(wordVal);
+    }
+	
+	public boolean like(String wordVal) {
+        return name.toLowerCase().contains(wordVal.toLowerCase());
+    }
 }
