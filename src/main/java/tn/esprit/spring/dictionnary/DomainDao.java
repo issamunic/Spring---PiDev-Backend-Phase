@@ -15,10 +15,6 @@ import tn.esprit.spring.repository.RelationDomainRepository;
 @Repository
 public class DomainDao {
 	
-	//private List<Domain> words = new LinkedList<>();
-	
-	//private List<RelationDomain> relations = new LinkedList<>();
-	
 	@Autowired
 	DomainRepository domainRepository;
 	
