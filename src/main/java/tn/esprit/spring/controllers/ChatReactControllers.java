@@ -1,4 +1,4 @@
-package tn.esprit.spring.Controllers;
+package tn.esprit.spring.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;

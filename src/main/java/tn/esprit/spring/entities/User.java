@@ -15,29 +15,46 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
-@Entity
-@Table( name = "User")
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
-public class User implements Serializable{
+@AllArgsConstructor
+@Entity
+@ToString
+public class User implements  Serializable {
+
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	@Column(name="idUser")
-	private Long idUser; 
-	private String  nom;
-	private String  prenom;
-	private String  mailAdress;
-	private String  password;
-	private String pdp;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long idUser;
 	
+	private String login;
+	private String password;
+	private Integer registrationNumberEmploye; 
+	private String FirstNameEmploye;
+	private String LastNameEmploye;
+	
+	@Temporal(TemporalType.DATE)
+	private Date BirthDateEmploye;
+	
+	private String socialStatusEmploye;
+	private String profilePictureEmploye;
+	private String nameCompany;
+	private String logoCompany;
+	
+
 
 
 	

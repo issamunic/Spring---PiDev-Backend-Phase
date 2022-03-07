@@ -1,7 +1,5 @@
 package tn.esprit.spring.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -125,7 +123,7 @@ public class GroupsService implements IGroupsService{
 			log.info("nmbr: "+u);
 			log.info("nmbr: "+us);
 		}
-		return user.getNom()+" "+user.getPrenom()+" was removed from the group from "+group.getGroupeName()+".";
+		return user.getFirstNameEmploye()+" "+user.getLastNameEmploye()+" was removed from the group from "+group.getGroupeName()+".";
 		
 	}
 	
