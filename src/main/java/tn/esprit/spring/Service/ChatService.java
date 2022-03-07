@@ -1,4 +1,4 @@
-package tn.esprit.spring.Services;
+package tn.esprit.spring.Service;
 
 
 import java.io.File;
@@ -30,10 +30,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
-import tn.esprit.spring.entity.*;
+import tn.esprit.spring.entities.*;
 import tn.esprit.spring.repository.ChatRepository;
 import tn.esprit.spring.repository.GroupsRepository;
 import tn.esprit.spring.repository.UserRepository;
+import tn.esprit.spring.serviceInterface.IChatService;
 
 
 @Service

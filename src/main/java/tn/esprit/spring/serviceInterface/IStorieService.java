@@ -1,8 +1,8 @@
-package tn.esprit.spring.Services;
+package tn.esprit.spring.serviceInterface;
 
 import java.util.*;
 
-import tn.esprit.spring.entity.*;
+import tn.esprit.spring.entities.*;
 
 public interface IStorieService{
 

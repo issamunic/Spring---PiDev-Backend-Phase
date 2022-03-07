@@ -1,4 +1,4 @@
-package tn.esprit.spring.Services;
+package tn.esprit.spring.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -11,9 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
-import tn.esprit.spring.entity.*;
+import tn.esprit.spring.entities.*;
 import tn.esprit.spring.repository.GroupsRepository;
 import tn.esprit.spring.repository.UserRepository;
+import tn.esprit.spring.serviceInterface.IGroupsService;
 
 
 @Service
@@ -29,10 +30,9 @@ public class GroupsService implements IGroupsService{
 	@Override
 	@Transactional
 	public void CreateGroup(Groups groups, List<Long> idUser) {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date dateCreation= new Date();
 		groups.setDateGroupe(dateCreation);
-		groupRepo.save(groups);
+		groupRepo.save(groups);	
 		
 	}
 		
@@ -48,8 +48,10 @@ public class GroupsService implements IGroupsService{
 	public void UpadateEtatGroup(Long idGroup, GroupeType etatGroup,Long dureeExpiration) {
 		Groups group = groupRepo.findById(idGroup).get();
 		group.setGroupeSecuritytype(etatGroup);
+		if(etatGroup == GroupeType.secure)
 		group.setDureeExpiration(dureeExpiration);
-		
+		else
+			group.setDureeExpiration(null);
 		groupRepo.save(group);	
 	}
 	
@@ -90,7 +92,8 @@ public class GroupsService implements IGroupsService{
 	
 	public List<Groups> retrieveGroupByUser(){
 		
-		return groupRepo.retrieveGroupByUser(idSession);
+		return null;
+				//groupRepo.retrieveGroupByUser(idSession);
 	}
 	
 	

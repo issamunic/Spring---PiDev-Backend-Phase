@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import tn.esprit.spring.Services.IGroupsService;
-import tn.esprit.spring.entity.GroupeType;
-import tn.esprit.spring.entity.Groups;
-import tn.esprit.spring.entity.themes;
+import tn.esprit.spring.entities.GroupeType;
+import tn.esprit.spring.entities.Groups;
+import tn.esprit.spring.entities.themes;
+import tn.esprit.spring.serviceInterface.IGroupsService;
 
 @RestController
 @RequestMapping("/group")

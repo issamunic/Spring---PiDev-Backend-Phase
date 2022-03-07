@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
-import tn.esprit.spring.Services.StorieService;
-import tn.esprit.spring.entity.Chat;
-import tn.esprit.spring.entity.Stories;
-import tn.esprit.spring.entity.User;
+import tn.esprit.spring.Service.StorieService;
+import tn.esprit.spring.entities.Chat;
+import tn.esprit.spring.entities.Stories;
+import tn.esprit.spring.entities.User;
 
 @RestController
 @RequestMapping("/Stories")

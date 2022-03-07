@@ -1,7 +1,7 @@
-package tn.esprit.spring.Services;
+package tn.esprit.spring.serviceInterface;
 
-import tn.esprit.spring.entity.ChatReact;
-import tn.esprit.spring.entity.React;
+import tn.esprit.spring.entities.ChatReact;
+import tn.esprit.spring.entities.React;
 
 public interface IChatReactService{
 	public void ReactToMessage(ChatReact chatr);

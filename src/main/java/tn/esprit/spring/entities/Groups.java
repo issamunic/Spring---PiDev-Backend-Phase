@@ -1,4 +1,4 @@
-package tn.esprit.spring.entity;
+package tn.esprit.spring.entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,12 +9,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -22,43 +20,42 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table( name = "Stories")
+@Table( name = "Groups")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Stories implements Serializable{
+public class Groups implements Serializable{
 	@Id
-	@Column(name="idStories")
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-
-	private Long idStories ;
+	@Column(name="idGroup")
 	
-	private String Media;
+	private Long idGroup;
+	private String groupeName;
+	
+	@Enumerated(EnumType.STRING)
+	private themes theme;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateStories;
+	private Date dateGroupe;
 	
-	@Enumerated(EnumType.STRING)
-	private EtatStories etatStorie;
-	
-	@Enumerated(EnumType.STRING)
-	private VisibilityType visibility;
-	
-	@ManyToOne
-	User userStorie; 
+	private String imageGroup;
 	
 	@ManyToMany
-	private Set<User> ViewsStroie; 
-	
-	@ManyToMany	
-	
-	private Set<User> ExceptStroie;
+	@JsonIgnore
+	private Set<User> GroupUser;
 
+	@OneToMany(mappedBy="ChatGroup",cascade = CascadeType.REMOVE)
+	@JsonIgnore
+	
+	private Set<Chat> ChatMessage;
+	
+	@Enumerated(EnumType.STRING)
+	private GroupeType groupeSecuritytype;
+	
+	private Long dureeExpiration;
+	
+	
 	
 }

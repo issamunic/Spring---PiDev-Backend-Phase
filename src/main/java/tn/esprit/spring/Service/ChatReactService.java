@@ -1,4 +1,4 @@
-package tn.esprit.spring.Services;
+package tn.esprit.spring.Service;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
@@ -11,10 +11,11 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
-import tn.esprit.spring.entity.*;
+import tn.esprit.spring.entities.*;
 import tn.esprit.spring.repository.ChatReactRepository;
 import tn.esprit.spring.repository.ChatRepository;
 import tn.esprit.spring.repository.UserRepository;
+import tn.esprit.spring.serviceInterface.IChatReactService;
 
 @Slf4j
 @Service

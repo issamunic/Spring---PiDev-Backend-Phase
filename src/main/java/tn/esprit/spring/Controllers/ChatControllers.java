@@ -25,14 +25,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
-import tn.esprit.spring.Services.ChatReactService;
-import tn.esprit.spring.Services.ChatService;
-import tn.esprit.spring.Services.IChatService;
-import tn.esprit.spring.entity.Chat;
-import tn.esprit.spring.entity.ChatReact;
-import tn.esprit.spring.entity.Groups;
-import tn.esprit.spring.entity.MessageType;
-import tn.esprit.spring.entity.User;
+import tn.esprit.spring.Service.ChatReactService;
+import tn.esprit.spring.Service.ChatService;
+import tn.esprit.spring.entities.Chat;
+import tn.esprit.spring.entities.ChatReact;
+import tn.esprit.spring.entities.Groups;
+import tn.esprit.spring.entities.MessageType;
+import tn.esprit.spring.entities.User;
+import tn.esprit.spring.serviceInterface.IChatService;
 
 @RestController
 @RequestMapping("/chat")

@@ -1,4 +1,4 @@
-package tn.esprit.spring.Services;
+package tn.esprit.spring.Service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,11 +9,11 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import lombok.extern.slf4j.Slf4j;
-import tn.esprit.spring.entity.Chat;
-import tn.esprit.spring.entity.GroupeType;
-import tn.esprit.spring.entity.Groups;
-import tn.esprit.spring.entity.MessageType;
-import tn.esprit.spring.entity.User;
+import tn.esprit.spring.entities.Chat;
+import tn.esprit.spring.entities.GroupeType;
+import tn.esprit.spring.entities.Groups;
+import tn.esprit.spring.entities.MessageType;
+import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repository.ChatRepository;
 import tn.esprit.spring.repository.GroupsRepository;
 import tn.esprit.spring.repository.UserRepository;

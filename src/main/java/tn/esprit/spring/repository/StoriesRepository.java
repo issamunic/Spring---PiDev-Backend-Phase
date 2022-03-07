@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import tn.esprit.spring.entity.EtatStories;
-import tn.esprit.spring.entity.Stories;
-import tn.esprit.spring.entity.User;
+import tn.esprit.spring.entities.EtatStories;
+import tn.esprit.spring.entities.Stories;
+import tn.esprit.spring.entities.User;
 
 
 @Repository

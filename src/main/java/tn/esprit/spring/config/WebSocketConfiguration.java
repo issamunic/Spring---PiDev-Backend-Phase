@@ -1,4 +1,4 @@
-package tn.esprit.spring.Configuration;
+package tn.esprit.spring.config;
 
 import java.util.List;
 
