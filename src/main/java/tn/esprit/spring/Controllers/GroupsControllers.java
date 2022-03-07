@@ -40,9 +40,9 @@ public class GroupsControllers{
 		
 		
 	// okey
-	@PutMapping("/upadateEtatGroup/{idGroup}/{etatGroup}")
-	public void UpadateEtatGroup(@PathVariable("idGroup") Long idGroup,@PathVariable("etatGroup") GroupeType etatGroup) {
-		groupService.UpadateEtatGroup(idGroup, etatGroup);
+	@PutMapping("/upadateEtatGroup/{idGroup}/{etatGroup}/{dureeExpiration}")
+	public void UpadateEtatGroup(@PathVariable("idGroup") Long idGroup,@PathVariable("etatGroup") GroupeType etatGroup,@PathVariable("dureeExpiration") Long dureeExpiration) {
+		groupService.UpadateEtatGroup(idGroup, etatGroup,dureeExpiration);
 	}
 	
 	// okey

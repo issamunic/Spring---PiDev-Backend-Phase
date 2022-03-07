@@ -9,8 +9,9 @@ public interface IGroupsService{
 	public void CreateGroup(Groups groups , List<Long> idUser);
 	public Groups getByIdGroup(Long idGroup);
 	public List<Groups> retrieveAllGroup();
+	public List<Groups> retrieveGroupByUser();
 	public void deleteGroup(Long idGroup);
-	public void UpadateEtatGroup(Long idGroup,GroupeType etatGroup);
+	public void UpadateEtatGroup(Long idGroup,GroupeType etatGroup,Long dureeExpiration);
 	public void ChangeThemeGroup(Long idGroup,themes theme);
 	public String RenameGroups(Long idGroup,String Newname);
 	public String ChangeImageGroups(Long idGroup,String image);

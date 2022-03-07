@@ -54,6 +54,8 @@ public class Groups implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private GroupeType groupeSecuritytype;
 	
+	private Long dureeExpiration;
+	
 	
 	
 }

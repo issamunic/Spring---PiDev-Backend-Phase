@@ -51,12 +51,14 @@ public class Stories implements Serializable{
 	private VisibilityType visibility;
 	
 	@ManyToOne
-	@JsonIgnore
 	Users userStorie; 
 	
 	@ManyToMany
-	private Set<Users> ViewsStroie;
-	@ManyToMany
+	private Set<Users> ViewsStroie; 
+	
+	@ManyToMany	
+	
 	private Set<Users> ExceptStroie;
+
 	
 }

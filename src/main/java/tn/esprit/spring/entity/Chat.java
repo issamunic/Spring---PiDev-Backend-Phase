@@ -45,7 +45,6 @@ public class Chat implements Serializable{
 	Groups ChatGroup;
 	
 	@ManyToOne
-	
 	Users MessageUser; 
 	
 	@ManyToMany
@@ -55,8 +54,10 @@ public class Chat implements Serializable{
 	@JsonIgnore
 	private Set<ChatReact> react;
 	
-	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date expirationdate;
+	
+	private Long dureeExpiration;
 	
 	@Enumerated(EnumType.STRING)
 	private MessageType messageType;

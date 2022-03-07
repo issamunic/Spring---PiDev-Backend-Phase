@@ -5,7 +5,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -31,103 +34,104 @@ public class StorieService implements IStorieService{
 	@Autowired
 	StoriesRepository storieRepo;
 	
-	public Long idSession = (long) 1;
-
-	Users userSession = userRepo.findById(idSession).get();
+	private static Long idSession =(long) 1;
 	 
 	@Override
 	public Stories CreateStorie(Stories storie) {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date dateStorie= new Date();
-		storie.setEtatStorie(EtatStories.posted);
 		storie.setDateStories(dateStorie);
+		storie.setEtatStorie(EtatStories.posted);		
 		return storieRepo.save(storie);
 	}
 	@Override
 	public List<Stories> getStorieByUser(Long idUser) {
+		Stories story = null;
 		Users userSession = userRepo.findById(idSession).get();
-		Users user= userRepo.findById(idUser).get();
-		List<Stories> storie = storieRepo.getStorieByUser(user,userSession);
-		for(Stories story : storie){
-			if(story.getUserStorie()!=userSession){
-				story.getViewsStroie().add(userSession);
-				storieRepo.save(story);
-			}
-		}
-		
-		return storie;
-	}
-	@Override
-	public List<Stories> getFollowersStorie() {
-		List<Stories> stories = storieRepo.getFollowersStorie(userSession);
-		for(Stories story : stories){
-			if(story.getUserStorie()!=userSession){
-				story.getViewsStroie().add(userSession);
-				storieRepo.save(story);
-			}
-		}
+		List<Stories> stories = storieRepo.getStorieByUser(idUser);
+		stories =FiltreStoryByIdSession(stories , userSession);
 		return stories;
-		
 	}
+	
+	
+	
 	@Override
-	public void BanUserToShowStorie(Stories storie, Long idUser) {
-		Stories story = storieRepo.findById(storie.getIdStories()).get();
+	public Map<Users, List<Stories>> getFollowersStorie() {
+		Users userSession = userRepo.findById(idSession).get();
+		List<Stories> stories = storieRepo.getFollowersStorie();
+		stories =FiltreStoryByIdSession(stories , userSession);
+		Map<Users,List<Stories>> storiesnByPerson =
+				new HashMap<>();
+		storiesnByPerson = stories.stream()
+				.collect(Collectors.groupingBy(Stories::getUserStorie));
+		
+		
+		return storiesnByPerson;
+	}
+	
+	
+	@Override
+	public void BanUserToShowStorie(Long idStorie, Long idUser) {
+		Stories story = storieRepo.findById(idStorie).get();
 		Users user = userRepo.findById(idUser).get();
 		story.getExceptStroie().add(user);
 		storieRepo.save(story);
 				
 	}
+	
 	@Override
-	public void unbannedUserToShowStorie(Stories storie, Long idUser) {
-		Stories story = storieRepo.findById(storie.getIdStories()).get();
+	public void unbannedUserToShowStorie(Long idStorie, Long idUser) {
+		Stories story = storieRepo.findById(idStorie).get();
 		Users user = userRepo.findById(idUser).get();
 		story.getExceptStroie().remove(user);
 		storieRepo.save(story);
 				
-	}
+	}	
 	
-	public void updateEtatStorie(Stories storie , Long idUser){
-		Stories story = storieRepo.findById(storie.getIdStories()).get();
-		Users user = userRepo.findById(idUser).get();
-		story.getViewsStroie().add(user);
-		storieRepo.save(story);
-	}
-	
-	public void deleteSoty(Stories storie){
+	@Override
+	public void deleteSoty(Long idStorie){
+		Stories storie = storieRepo.findById(idStorie).get();
 		if(storie.getUserStorie().getIdUser() == idSession)
-			storieRepo.deleteById(storie.getIdStories());
+			storieRepo.deleteById(idStorie);
 	}
+	
 	@Override
 	public List<Stories> getMyArchiveStories() {
+		EtatStories etatStories = EtatStories.archived;
+		Users user = userRepo.findById(idSession).orElse(null);
 		
-		return storieRepo.getMyArchiveStories(idSession);
-	
+		return storieRepo.getMyArchiveStories(user,etatStories);	
 	}
 	
-	public void viewStorie(Stories storie){
-		Users user = userRepo.findById(idSession).get();
-		if(storie.getUserStorie()!=user)
-			storie.getViewsStroie().add(user);
-		storieRepo.save(storie);
+	
+	@Override
+	public List<Users> BannerUsersList (Long idStorie){
+		//return userRepo.getBannerUsersList(idStorie);
+		return null;
 	}
 	
-	public void repeatToStorie(Stories storie, String message){
-		Chat chat= new Chat();
-		// select get group where id user = and id session 
-		//chat.setChatGroup(group);
-		chat.setMessage(message);
-		chat.setMessageUser(userSession);
+	@Override
+	public void repeatToStorie(Long idGroup,Chat chat){
+		Users userSession = userRepo.findById(idSession).get();
+		Groups group = groupRepo.findById(idGroup).get();
+		
+		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date dateMessage = new Date();
 		chat.setDateMsg(dateMessage);
+		
+		chat.setChatGroup(group);
+		chat.setMessage(chat.getMessage());
+		chat.setMessageUser(userSession); 		
+		
 		chat.setMessageType(MessageType.storie);
+		
 		chatRepo.save(chat);
 		}
 	
 	//twali update f blast select w traja3 boolean w f chat delete 
 	@Scheduled(fixedRate=5000)
 	public void testScheduler(){
-		List<Stories> stories = storieRepo.ScheduledDeleteStories(EtatStories.posted);
+		List<Stories> stories = storieRepo.ScheduledSetEtatStories(EtatStories.posted);
 		for(Stories storie : stories ){
 			storie.setEtatStorie(EtatStories.archived);
 			storieRepo.save(storie);
@@ -139,6 +143,41 @@ public class StorieService implements IStorieService{
 		
 	}
 	
+	
+	// filtrage pour éliminer l'affichage si l'utilisateur de la session et banner par le créateur 
+		public List<Stories> FiltreStoryByIdSession (List<Stories> stories,Users userSession){
+			Stories story=null;
+			if(stories != null){
+				for(Stories storie : stories ){
+					Long idStorie=storie.getIdStories();
+					List<Users> users = storieRepo.getExceptByUser(idStorie);
+					if(users.contains(userSession)){
+						log.info("banned"+users);
+						story=storie;
+					}
+				}
+				stories.remove(story);
+			}
+			return stories;
+		}
+		
+		
+		public void viewStorie(Stories storie, Users userSession){
+			if(storie.getUserStorie()!=userSession)
+			{
+				storie.getViewsStroie().add(userSession);
+			}
+			storieRepo.save(storie);
+		}
+		
+		
+		public boolean  FiltreStoryByIdSession(Stories stories ,Users userSession){
+			if(stories.getVisibility()==VisibilityType.followers){
+				//
+			}
+			return true;
+		}
 
+	
 
 }

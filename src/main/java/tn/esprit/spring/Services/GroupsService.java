@@ -20,7 +20,7 @@ import tn.esprit.spring.repository.UserRepository;
 @Slf4j
 public class GroupsService implements IGroupsService{
 	
-
+	private static Long idSession =(long) 2;
 	@Autowired
 	GroupsRepository groupRepo;
 	@Autowired
@@ -45,9 +45,11 @@ public class GroupsService implements IGroupsService{
 
 
 	@Override
-	public void UpadateEtatGroup(Long idGroup, GroupeType etatGroup) {
+	public void UpadateEtatGroup(Long idGroup, GroupeType etatGroup,Long dureeExpiration) {
 		Groups group = groupRepo.findById(idGroup).get();
 		group.setGroupeSecuritytype(etatGroup);
+		group.setDureeExpiration(dureeExpiration);
+		
 		groupRepo.save(group);	
 	}
 	
@@ -86,6 +88,10 @@ public class GroupsService implements IGroupsService{
 		
 	}
 	
+	public List<Groups> retrieveGroupByUser(){
+		
+		return groupRepo.retrieveGroupByUser(idSession);
+	}
 	
 	
 

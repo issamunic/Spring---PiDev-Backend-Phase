@@ -15,28 +15,44 @@ import tn.esprit.spring.entity.Users;
 
 @Repository
 public interface StoriesRepository extends JpaRepository<Stories, Long>{
-	
-	@Query("SELECT DISTINCT s FROM Stories s ,Users u WHERE  "
-			+ "( s.visibility = followersExcept ) or (s.visibility = friendAndTheirFrienExcept )or "
-			+ "((s.visibility=followers) or (s.visibility=friendAndTheirFrien))"
-			+ "and (s.ExceptStroie !=:userSession )")
-	List<Stories> getFollowersStorie(@Param("userSession") Users userSession);
-	
-	@Query("SELECT DISTINCT s FROM Stories s ,Users u  WHERE "
+	@Query("SELECT DISTINCT s FROM Stories s ")
+	List<Stories> getFollowersStorie();
+		/*
+		 * SELECT  s FROM Stories s  WHERE "
 			+ "( s.userStorie =:user ) and ( "
 			+ "(s.visibility = publicPersonExcept and s.ExceptStroie !=:userSession ) OR"
 			+ "( s.visibility = followersExcept and s.ExceptStroie !=:userSession ) OR "
 			+ "(s.visibility = friendAndTheirFrienExcept and s.ExceptStroie !=:userSession ) OR "
 			+ "( s.visibility IN ('followers','friendAndTheirFrien') ) "
-			+ ") ")
-	List<Stories> getStorieByUser(@Param("user") Users user ,  @Param("userSession") Users userSession);
+			+ ") 
+			*/
+		
+	@Query("select s.ExceptStroie from Stories s where "
+			+ "s.idStories=:idStorie ")
+	List<Users> getExceptByUser(@Param("idStorie") Long idStorie );
 	
-	@Query("SELECT DISTINCT s FROM Stories s WHERE "
-			+ "s.userStorie.idUser =:idSession")
-	List<Stories> getMyArchiveStories(@Param("idSession") Long idSession);
+	@Query("select s from Stories s where "
+			+ "s.userStorie.idUser=:idUser and "
+			+ "s.etatStorie = 'posted' and "
+			+ "s.visibility != 'privateStorie' "
+			+ "order By s.dateStories desc")
+	List<Stories> getStorieByUser(@Param("idUser") Long idUser );
+	
+	/*
+	 SELECT stories.*,COUNT(stories_views_stroie.views_stroie_id_user) "
+			+ "FROM stories_views_stroie INNER JOIN stories ON "
+			+ "stories_views_stroie.stories_id_stories = stories.id_stories  "
+			+ "WHERE stories.user_storie_id_user=:idSession "
+			+ "GROUP BY(stories_views_stroie.stories_id_stories)"
+			+ "ORDER by stories.date_stories desc)	 
+	 */
+	@Query( "SELECT s from Stories s where "
+			+ "s.userStorie=:user and s.etatStorie=:etatStories "
+			+ "order By s.dateStories desc")
+	List<Stories> getMyArchiveStories(@Param("user") Users user , @Param("etatStories") EtatStories etatStories);
 	
 	@Query("SELECT DISTINCT s FROM Stories s WHERE "
 			+ "(s.dateStories-SYSDATE())+60<=0 and s.etatStorie=:etat")
-	List<Stories> ScheduledDeleteStories(@Param("etat") EtatStories etat);
-		
+	List<Stories> ScheduledSetEtatStories(@Param("etat") EtatStories etat);
+	
 }
