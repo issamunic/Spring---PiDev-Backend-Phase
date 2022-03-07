@@ -42,13 +42,12 @@ public class Trip implements Serializable {
 	Long longitude;
 	Long latitude;
 	
-<<<<<<< HEAD
-	String image;
+
 	
-=======
+
 	public String image;
 
 	
->>>>>>> anas
+
 	
 }
