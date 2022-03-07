@@ -98,8 +98,8 @@ public class GroupsService implements IGroupsService{
 	@Override
 	public String AddMemberToGroups(Long idGroup,List<Long> IdUser) {
 		Groups group = groupRepo.findById(idGroup).get();
-		List<Users> users = (List<Users>) userRepo.findAll();
-		for(Users user : users ){
+		List<User> users = (List<User>) userRepo.findAll();
+		for(User user : users ){
 			for (Long id : IdUser ){
 				if(id.equals(user.getIdUser()))
 				group.getGroupUser().add(user);
@@ -112,7 +112,7 @@ public class GroupsService implements IGroupsService{
 	@Override
 	public String RemoveMemberFromGroups(Long idGroup, Long idUser) {
 		Groups group = groupRepo.findById(idGroup).orElse(null);
-		Users user = userRepo.findById(idUser).orElse(null);
+		User user = userRepo.findById(idUser).orElse(null);
 		if(group.getGroupUser() != null){
 			
 		int u =  group.getGroupUser().size();

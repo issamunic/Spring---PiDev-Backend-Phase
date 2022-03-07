@@ -57,7 +57,7 @@ public class ChatService implements IChatService{
 	public void sendAudio(Long to){
 		Chat chatMessage = new Chat();
 		Groups group=groupRepo.findById(to).get();
-		Users user = userRepo.findById(idSession).get();
+		User user = userRepo.findById(idSession).get();
 		
 		long currentTimestamp = System.currentTimeMillis();
 		Date dateMessage  = new Date((currentTimestamp));	
@@ -121,7 +121,7 @@ public class ChatService implements IChatService{
 	public Chat SendMessage(Chat chatMessage ,Long to ) 
 	{
 		Groups group=groupRepo.findById(to).get();
-		Users user = userRepo.findById(idSession).get();
+		User user = userRepo.findById(idSession).get();
 		
 		long currentTimestamp = System.currentTimeMillis();
 		Date dateMessage  = new Date((currentTimestamp));		
@@ -172,7 +172,7 @@ public class ChatService implements IChatService{
 	public List<Chat> getMessageByGroup(Long idGroup) 
 	{
 		Groups group = groupRepo.findById(idGroup).orElse(null);
-		Users user = userRepo.findById(idSession).get();
+		User user = userRepo.findById(idSession).get();
 		List<Chat> ListChat = chatRepo.getChatByGroup(group);
 		
 		if(ListChat.size()>0 ){
@@ -240,7 +240,7 @@ public class ChatService implements IChatService{
 		}
 		
 		// function for etat Message => SEEN message 
-		public  void etatMessage(List<Chat> ListChat, Users user){
+		public  void etatMessage(List<Chat> ListChat, User user){
 			for(Chat chat : ListChat){
 				chat.getEtat().add(user);
 				chatRepo.save(chat); 

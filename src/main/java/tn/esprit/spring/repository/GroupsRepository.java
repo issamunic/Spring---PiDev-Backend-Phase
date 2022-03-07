@@ -16,5 +16,5 @@ public interface GroupsRepository extends JpaRepository<Groups, Long>{
 //	@Query("SELECT g from Groups g where "
 	//		+ "c..idUser=:idSession"
 	//		+ "order By dateMsg desc ")
-	List<Groups> retrieveGroupByUser(Long idSession);
+	//List<Groups> retrieveGroupByUser(Long idSession);
 }

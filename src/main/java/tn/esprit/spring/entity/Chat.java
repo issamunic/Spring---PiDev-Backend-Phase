@@ -45,10 +45,10 @@ public class Chat implements Serializable{
 	Groups ChatGroup;
 	
 	@ManyToOne
-	Users MessageUser; 
+	User MessageUser; 
 	
 	@ManyToMany
-	private Set<Users> etat;
+	private Set<User> etat;
 	
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy="ChatReact")
 	@JsonIgnore

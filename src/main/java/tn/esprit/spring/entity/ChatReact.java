@@ -33,7 +33,7 @@ public class ChatReact implements Serializable{
 	
 	
 	@ManyToOne
-	Users userReact;
+	User userReact;
 	
 	@ManyToOne
 	Chat ChatReact;

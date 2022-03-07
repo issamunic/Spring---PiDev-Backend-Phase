@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.Services.StorieService;
 import tn.esprit.spring.entity.Chat;
 import tn.esprit.spring.entity.Stories;
-import tn.esprit.spring.entity.Users;
+import tn.esprit.spring.entity.User;
 
 @RestController
 @RequestMapping("/Stories")
@@ -43,7 +43,7 @@ public class StoriesController{
 	}
 	
 	@GetMapping("getFollowersStorie")
-	public Map<Users,List<Stories>> getFollowersStorie(){
+	public Map<User,List<Stories>> getFollowersStorie(){
 		return StorieService.getFollowersStorie();
 	}
 	

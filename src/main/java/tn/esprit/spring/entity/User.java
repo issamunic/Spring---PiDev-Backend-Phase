@@ -23,11 +23,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table( name = "Users")
+@Table( name = "User")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Users implements Serializable{
+public class User implements Serializable{
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column(name="idUser")

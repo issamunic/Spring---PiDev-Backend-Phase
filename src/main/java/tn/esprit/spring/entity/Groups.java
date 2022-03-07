@@ -44,7 +44,7 @@ public class Groups implements Serializable{
 	
 	@ManyToMany
 	@JsonIgnore
-	private Set<Users> GroupUser;
+	private Set<User> GroupUser;
 
 	@OneToMany(mappedBy="ChatGroup",cascade = CascadeType.REMOVE)
 	@JsonIgnore

@@ -32,7 +32,7 @@ import tn.esprit.spring.entity.Chat;
 import tn.esprit.spring.entity.ChatReact;
 import tn.esprit.spring.entity.Groups;
 import tn.esprit.spring.entity.MessageType;
-import tn.esprit.spring.entity.Users;
+import tn.esprit.spring.entity.User;
 
 @RestController
 @RequestMapping("/chat")

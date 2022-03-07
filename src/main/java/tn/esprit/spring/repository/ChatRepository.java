@@ -22,7 +22,7 @@ public interface ChatRepository extends JpaRepository<Chat, Long>{
 	
 	@Query("SELECT c.etat FROM Chat c WHERE "
 			+ "c.idMessage =:idMessage")
-	List<Users> getChatView( @Param("idMessage") Long idMessage );
+	List<User> getChatView( @Param("idMessage") Long idMessage );
 	
 	@Query("SELECT c FROM Chat c WHERE "
 			+ "c.expirationdate-SYSDATE()<=0")

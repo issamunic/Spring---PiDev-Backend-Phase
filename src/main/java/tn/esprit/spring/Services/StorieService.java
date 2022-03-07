@@ -46,7 +46,7 @@ public class StorieService implements IStorieService{
 	@Override
 	public List<Stories> getStorieByUser(Long idUser) {
 		Stories story = null;
-		Users userSession = userRepo.findById(idSession).get();
+		User userSession = userRepo.findById(idSession).get();
 		List<Stories> stories = storieRepo.getStorieByUser(idUser);
 		stories =FiltreStoryByIdSession(stories , userSession);
 		return stories;
@@ -55,11 +55,11 @@ public class StorieService implements IStorieService{
 	
 	
 	@Override
-	public Map<Users, List<Stories>> getFollowersStorie() {
-		Users userSession = userRepo.findById(idSession).get();
+	public Map<User, List<Stories>> getFollowersStorie() {
+		User userSession = userRepo.findById(idSession).get();
 		List<Stories> stories = storieRepo.getFollowersStorie();
 		stories =FiltreStoryByIdSession(stories , userSession);
-		Map<Users,List<Stories>> storiesnByPerson =
+		Map<User,List<Stories>> storiesnByPerson =
 				new HashMap<>();
 		storiesnByPerson = stories.stream()
 				.collect(Collectors.groupingBy(Stories::getUserStorie));
@@ -72,7 +72,7 @@ public class StorieService implements IStorieService{
 	@Override
 	public void BanUserToShowStorie(Long idStorie, Long idUser) {
 		Stories story = storieRepo.findById(idStorie).get();
-		Users user = userRepo.findById(idUser).get();
+		User user = userRepo.findById(idUser).get();
 		story.getExceptStroie().add(user);
 		storieRepo.save(story);
 				
@@ -81,7 +81,7 @@ public class StorieService implements IStorieService{
 	@Override
 	public void unbannedUserToShowStorie(Long idStorie, Long idUser) {
 		Stories story = storieRepo.findById(idStorie).get();
-		Users user = userRepo.findById(idUser).get();
+		User user = userRepo.findById(idUser).get();
 		story.getExceptStroie().remove(user);
 		storieRepo.save(story);
 				
@@ -97,21 +97,21 @@ public class StorieService implements IStorieService{
 	@Override
 	public List<Stories> getMyArchiveStories() {
 		EtatStories etatStories = EtatStories.archived;
-		Users user = userRepo.findById(idSession).orElse(null);
+		User user = userRepo.findById(idSession).orElse(null);
 		
 		return storieRepo.getMyArchiveStories(user,etatStories);	
 	}
 	
 	
 	@Override
-	public List<Users> BannerUsersList (Long idStorie){
+	public List<User> BannerUsersList (Long idStorie){
 		//return userRepo.getBannerUsersList(idStorie);
 		return null;
 	}
 	
 	@Override
 	public void repeatToStorie(Long idGroup,Chat chat){
-		Users userSession = userRepo.findById(idSession).get();
+		User userSession = userRepo.findById(idSession).get();
 		Groups group = groupRepo.findById(idGroup).get();
 		
 		
@@ -145,12 +145,12 @@ public class StorieService implements IStorieService{
 	
 	
 	// filtrage pour éliminer l'affichage si l'utilisateur de la session et banner par le créateur 
-		public List<Stories> FiltreStoryByIdSession (List<Stories> stories,Users userSession){
+		public List<Stories> FiltreStoryByIdSession (List<Stories> stories,User userSession){
 			Stories story=null;
 			if(stories != null){
 				for(Stories storie : stories ){
 					Long idStorie=storie.getIdStories();
-					List<Users> users = storieRepo.getExceptByUser(idStorie);
+					List<User> users = storieRepo.getExceptByUser(idStorie);
 					if(users.contains(userSession)){
 						log.info("banned"+users);
 						story=storie;
@@ -162,7 +162,7 @@ public class StorieService implements IStorieService{
 		}
 		
 		
-		public void viewStorie(Stories storie, Users userSession){
+		public void viewStorie(Stories storie, User userSession){
 			if(storie.getUserStorie()!=userSession)
 			{
 				storie.getViewsStroie().add(userSession);
@@ -171,7 +171,7 @@ public class StorieService implements IStorieService{
 		}
 		
 		
-		public boolean  FiltreStoryByIdSession(Stories stories ,Users userSession){
+		public boolean  FiltreStoryByIdSession(Stories stories ,User userSession){
 			if(stories.getVisibility()==VisibilityType.followers){
 				//
 			}

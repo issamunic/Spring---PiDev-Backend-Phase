@@ -13,7 +13,7 @@ import tn.esprit.spring.entity.Chat;
 import tn.esprit.spring.entity.GroupeType;
 import tn.esprit.spring.entity.Groups;
 import tn.esprit.spring.entity.MessageType;
-import tn.esprit.spring.entity.Users;
+import tn.esprit.spring.entity.User;
 import tn.esprit.spring.repository.ChatRepository;
 import tn.esprit.spring.repository.GroupsRepository;
 import tn.esprit.spring.repository.UserRepository;
@@ -55,7 +55,7 @@ public class ChatFunction {
 	}
 	
 	// function for etat Message => SEEN message 
-	public  void etatMessage(List<Chat> ListChat, Users user){
+	public  void etatMessage(List<Chat> ListChat, User user){
 		for(Chat chat : ListChat){
 			chat.getEtat().add(user);
 			chatRepo.save(chat); 

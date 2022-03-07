@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import tn.esprit.spring.entity.EtatStories;
 import tn.esprit.spring.entity.Stories;
-import tn.esprit.spring.entity.Users;
+import tn.esprit.spring.entity.User;
 
 
 @Repository
@@ -29,7 +29,7 @@ public interface StoriesRepository extends JpaRepository<Stories, Long>{
 		
 	@Query("select s.ExceptStroie from Stories s where "
 			+ "s.idStories=:idStorie ")
-	List<Users> getExceptByUser(@Param("idStorie") Long idStorie );
+	List<User> getExceptByUser(@Param("idStorie") Long idStorie );
 	
 	@Query("select s from Stories s where "
 			+ "s.userStorie.idUser=:idUser and "
@@ -49,7 +49,7 @@ public interface StoriesRepository extends JpaRepository<Stories, Long>{
 	@Query( "SELECT s from Stories s where "
 			+ "s.userStorie=:user and s.etatStorie=:etatStories "
 			+ "order By s.dateStories desc")
-	List<Stories> getMyArchiveStories(@Param("user") Users user , @Param("etatStories") EtatStories etatStories);
+	List<Stories> getMyArchiveStories(@Param("user") User user , @Param("etatStories") EtatStories etatStories);
 	
 	@Query("SELECT DISTINCT s FROM Stories s WHERE "
 			+ "(s.dateStories-SYSDATE())+60<=0 and s.etatStorie=:etat")
