@@ -151,8 +151,31 @@ public class PostServiceImpl implements IPostService {
 		// TODO Auto-generated method stub
 		String description = p.getDescription();
 		if (filterText(description).equals(description))		
-			{
-			return postrepo.save(p);}
+			{Date date = new Date(System.currentTimeMillis());
+			p.setCreatedOn(date);
+			CoreDocument coreDocument = new CoreDocument(description.toLowerCase());
+			stanfordCoreNLP.annotate(coreDocument);
+			List<CoreLabel> coreLabels = coreDocument.tokens();
+			for(CoreLabel coreLabel: coreLabels) {
+				String ner = coreLabel.get(CoreAnnotations.NamedEntityTagAnnotation.class);
+				if ((ner.equals("COUNTRY"))  )
+				{
+					p.getCountry().add(coreLabel.originalText());
+					postrepo.save(p);
+				}
+				if((ner.equals("LOCATION"))) {
+					p.getCountry().add(coreLabel.originalText());
+					postrepo.save(p);
+				}
+				if((ner.equals("CITY"))) {
+					p.getCity().add(coreLabel.originalText());
+					postrepo.save(p);
+				}
+				if((ner.equals("STATE_OR_PROVINCE"))) {
+					p.getStateOrProvince().add(coreLabel.originalText());
+					postrepo.save(p);
+				}
+			}return postrepo.save(p);}
 		else  return null;
 		
 	}
@@ -171,6 +194,29 @@ public class PostServiceImpl implements IPostService {
 		if (filterText(description).equals(description))
 		{	Date date = new Date(System.currentTimeMillis());
 			p.setCreatedOn(date);
+			CoreDocument coreDocument = new CoreDocument(description.toLowerCase());
+			stanfordCoreNLP.annotate(coreDocument);
+			List<CoreLabel> coreLabels = coreDocument.tokens();
+			for(CoreLabel coreLabel: coreLabels) {
+				String ner = coreLabel.get(CoreAnnotations.NamedEntityTagAnnotation.class);
+				if ((ner.equals("COUNTRY"))  )
+				{
+					p.getCountry().add(coreLabel.originalText());
+					postrepo.save(p);
+				}
+				if((ner.equals("LOCATION"))) {
+					p.getCountry().add(coreLabel.originalText());
+					postrepo.save(p);
+				}
+				if((ner.equals("CITY"))) {
+					p.getCity().add(coreLabel.originalText());
+					postrepo.save(p);
+				}
+				if((ner.equals("STATE_OR_PROVINCE"))) {
+					p.getStateOrProvince().add(coreLabel.originalText());
+					postrepo.save(p);
+				}
+			}
 		return postrepo.save(p);}
 		else throw (new ForumException("this contains bad words!"));
 	}
@@ -183,26 +229,25 @@ public class PostServiceImpl implements IPostService {
 	@Override
 	public List<Post> retrievePostsByCountry(String country) {
 		// TODO Auto-generated method stub
-		
+		country.toLowerCase();
 		List<Post>postsToReturn = new ArrayList<Post>();
 		List<Post> lastmonthPosts = postrepo.findLastMonthPosts();
 		
 		for (Post post : lastmonthPosts) {
 			String description =post.getDescription();
-			description = description.replaceAll(".", "");
-			description = description.replaceAll(",", "");
+//			description = description.replaceAll(".", "");
+//			description = description.replaceAll(",", "");
 //			description = description.replaceAll("?", "");
 //			description = description.replaceAll("!", "");
 //			description = description.replaceAll("*", "");
-			log.info(lastmonthPosts.toString());
-			CoreDocument coreDocument = new CoreDocument(description);
+			
+			CoreDocument coreDocument = new CoreDocument(description.toLowerCase());
 			stanfordCoreNLP.annotate(coreDocument);
 			List<CoreLabel> coreLabels = coreDocument.tokens();
-			log.info(coreLabels.toString());
 			for(CoreLabel coreLabel: coreLabels) {
 				String ner = coreLabel.get(CoreAnnotations.NamedEntityTagAnnotation.class);
 				log.info(coreLabel.originalText() +" " +ner);
-				if ((ner.equalsIgnoreCase("country"))  &&(coreLabel.originalText().equalsIgnoreCase(country)))
+				if ((ner.equals("COUNTRY"))  &&(coreLabel.originalText().equalsIgnoreCase(country)))
 				{
 					postsToReturn.add(post);
 				}
@@ -228,6 +273,13 @@ public class PostServiceImpl implements IPostService {
 		// TODO Auto-generated method stub
 		Community community = communityRepo.findById(idCommunity).orElse(null);
 		return postrepo.findAllPostsByCommunity(community);
+	}
+
+
+	@Override
+	public List<Post> retreiveAllPosts() {
+		// TODO Auto-generated method stub
+		return postrepo.findAllByOrderByReactCountDescCreatedOnDesc();
 	}
 	
 

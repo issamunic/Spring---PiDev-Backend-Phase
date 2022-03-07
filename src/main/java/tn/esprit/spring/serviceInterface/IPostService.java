@@ -17,6 +17,7 @@ public interface IPostService {
 
 	List<Post> retreivePostsByCommunity(Long idCommunity);
 	
+	List<Post> retreiveAllPosts();
 	List<Post> retrievePostsByCountry (String country);
 	
 	List<Post> retrievePostsByLocation (String location);

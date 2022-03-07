@@ -64,7 +64,12 @@
 			<artifactId>stanford-corenlp</artifactId>
 			<version>4.3.0</version>
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/com.facebook.business.sdk/facebook-java-business-sdk -->
+		<dependency>
+    		<groupId>com.facebook.business.sdk</groupId>
+    		<artifactId>facebook-java-business-sdk</artifactId> 
+    		<version>[8.0.3,)</version>
+		</dependency>
 		<dependency>
 			<groupId>edu.stanford.nlp</groupId>
 			<artifactId>stanford-corenlp</artifactId>

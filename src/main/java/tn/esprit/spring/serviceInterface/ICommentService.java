@@ -16,8 +16,10 @@ public interface ICommentService {
 	
 	List<Comment> retrieveCommentsByPost(Long postId);
 	
-	List<Comment> retrieveCommentsByPostAndSentiment(Post post, String sentiment);
+	List<Comment> retrieveCommentsByPostAndSentiment(Long postId, String sentiment);
 	
 	List<String> sentimentsOfCommentsByPost(Long postId);
+	
+	List<Double> PourcentageOfSentimentsLastWeek();
 
 }

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -188,10 +189,20 @@ static Map<String, String[]> words = new HashMap<>();
 	
 
 	@Override
-	public List<Comment> retrieveCommentsByPostAndSentiment(Post post, String sentiment) {
+	public List<Comment> retrieveCommentsByPostAndSentiment(Long postId, String sentiment) {
 		// TODO Auto-generated method stub
+		Post post = postrepo.findById(postId).orElse(null);
+		if (post!=null) {
+			List<Comment> comments = comRepo.findAll();
+			List<Comment> commentsToReturn = new ArrayList<Comment>();
+			for (Comment comment : comments) {
+				if (comment.getPost().equals(post)&& comment.getSentiment().equals(sentiment));
+				commentsToReturn.add(comment);
+			}return commentsToReturn;
+		}
 		return null;
 	}
+	
 
 	
 
@@ -227,6 +238,43 @@ static Map<String, String[]> words = new HashMap<>();
 	public List<String> sentimentsOfCommentsByPost(Long postId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public List<Double> PourcentageOfSentimentsLastWeek() {
+		// TODO Auto-generated method stub
+		List<Double> pourcentages = new ArrayList<Double>();
+		Double numPositives =  (double) 0;
+		Double numNegatives =  (double) 0 ;
+		Double numNeutral =  (double) 0 ;
+		List<Comment> comments = comRepo.findAll();
+		log.info(comments.toString());
+		for(Comment comment : comments) {
+			if (comment.getSentiment().contains("Positive")) {
+				numPositives=numPositives+1;
+			}
+			else if(comment.getSentiment().equals("Negative")) {
+				numNegatives++;
+			}
+			else if(comment.getSentiment().equals("Neutral")) {
+				numNeutral++;
+			}
+			
+		}
+		
+		 if(comments.size() != 0) {
+			 System.out.println("numcomments:"+comments.size());
+		numPositives=  ((numPositives/(comments.size()))*100);
+		numNegatives= (numNegatives/comments.size())*100;
+		numNeutral= (numNeutral/comments.size())*100;}
+		 
+		pourcentages.add(numPositives);
+		pourcentages.add(numNegatives);
+		pourcentages.add(numNeutral); 
+		System.out.println(pourcentages);
+		return pourcentages;
+		
 	}
 
 }

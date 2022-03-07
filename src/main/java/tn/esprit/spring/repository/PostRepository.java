@@ -16,5 +16,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	List<Post> findAllPostsByCommunity(Community community);
 	@Query("Select p from Post p where p.createdOn  >= CURRENT_TIMESTAMP -30")
 	List<Post> findLastMonthPosts();
+	
+	List<Post> findAllByOrderByReactCountDescCreatedOnDesc();
 
 }

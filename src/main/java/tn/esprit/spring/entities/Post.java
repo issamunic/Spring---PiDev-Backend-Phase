@@ -52,7 +52,7 @@ public class Post implements Serializable {/**
 	@Temporal(TemporalType.DATE)
 	Date createdOn;
 	String url;
-	Integer ReactCount;
+	Integer reactCount;
 	@JsonIgnore
 	@ManyToOne(fetch = LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "idUser")
