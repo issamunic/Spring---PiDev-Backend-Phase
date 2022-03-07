@@ -1,25 +1,27 @@
 package tn.esprit.spring.entities;
 
-import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
+
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,28 +29,19 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @ToString
-public class Domain implements Serializable{
+public class Image {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long idDomain;
-	
+	Long idImage;
+
 	String name;
+
+	String type;
+
+	@Column(name = "image", unique = false, nullable = false, length = 100000)
+	byte[] image;
 	
-	@ToString.Exclude
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "domain")
-	List<User> users;
-	
-	public Domain(String name) {
-		this.name=name;
-	}
-	
-	public boolean equals(String wordVal) {
-        return name.equalsIgnoreCase(wordVal);
-    }
-	
-	public boolean like(String wordVal) {
-        return name.toLowerCase().contains(wordVal.toLowerCase());
-    }
+	@OneToOne(mappedBy="image")
+	User user;
 }
