@@ -1,14 +1,16 @@
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,28 +29,13 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @ToString
-public class Domain implements Serializable{
+public class Roles implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long idDomain;
+	Long idRoles;
 	
-	String name;
+	String roleName;
 	
-	@ToString.Exclude
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "domain")
-	List<User> users;
-	
-	public Domain(String name) {
-		this.name=name;
-	}
-	
-	public boolean equals(String wordVal) {
-        return name.equalsIgnoreCase(wordVal);
-    }
-	
-	public boolean like(String wordVal) {
-        return name.toLowerCase().contains(wordVal.toLowerCase());
-    }
+	String roleDescription;
 }
