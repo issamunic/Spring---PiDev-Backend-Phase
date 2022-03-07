@@ -45,10 +45,12 @@ public class ReportService implements IReportService {
 		cal.add(Calendar.DATE, -8);
 		Date date1 = cal.getTime();
 		*/
-		User u = userRepo.findById(2).orElse(null);
+		User u = userRepo.findById((long) 2).orElse(null);
 		r.setUtilisateur(u);
 		r.setDateReport(date);
 		r.setStaus(ReclamStatus.Inprogress);
+		r.setResponse("Mr/Mme "+r.getUtilisateur().getFirstNameEmploye()+" your complaint concerning"+ r.getType()+ " was taken into consideration");
+
 		u.getReclamations().add(r);
 		
 		repoRecalam.save(r);
@@ -229,7 +231,7 @@ public class ReportService implements IReportService {
 
 	@Override
 	public List<Report> findReclamByUser(long id) {
-		User user = userRepo.findById((int)id).orElse(null);
+		User user = userRepo.findById(id).orElse(null);
 		return user.getReclamations();
 		
 	}
@@ -314,28 +316,48 @@ public class ReportService implements IReportService {
 			
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public int NombreDesReclamParDay() {
 		
+		int count = 0;
+		List<Report> listReclam = (List<Report>) repoRecalam.findAll();
 		 Date date = new Date(System.currentTimeMillis());
-			SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
-			
-
 		 
-	        LocalDate date2 = LocalDate.parse(formater.format(date), DateTimeFormatter.ISO_DATE);
-
-	        System.out.println(date2.toString());
-	        
-return 0;				 
+		 System.out.println("++++++++++++++++++"+date);
 
 
+		
+		 for(Report report : listReclam) {
+			 
+			 System.out.println(report.getDateReport());
+			 if(report.getDateReport()!=null) {
+			 if(report.getDateReport().getDay()==date.getDay()&&report.getDateReport().getMonth()==date.getMonth()&&report.getDateReport().getYear()==date.getYear()) {
+				 count = count + 1 ;
+				 
+			 }
+			 }
+		 }
+		 
+		 return count;
 
-			}
+		}		
+		
+		
+		
+		
+		 
+	     
 			
 
 
 		
 
+
+	private Date formater(Date date) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public int NombreDesReclamTraite() {

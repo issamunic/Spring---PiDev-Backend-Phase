@@ -19,9 +19,7 @@ public interface RepportRepository extends CrudRepository<Report, Integer> {
 	List<Report> ListReportOfweekAgo(@Param("date1") Date date1,@Param("date2") Date date2);
 	
 	@Query
-	("SELECT r From Report r Where r.dateReport = :date2")
+	("SELECT r From Report r Where date_format(r.dateReport,'%Y-%m-%d') = :date2")
 	List<Report> ListReportparJour(@Param("date2") Date date2);
-	
-	
-	
+		
 }

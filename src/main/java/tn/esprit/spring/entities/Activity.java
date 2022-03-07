@@ -3,6 +3,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,6 +39,8 @@ public class Activity implements Serializable {
 	private Date startActivity;
 	private Date endActivity;
 	private int period;
+	@Enumerated(EnumType.STRING)
+	private Progress progress;
 	
 	@JsonIgnore
 	@ManyToOne

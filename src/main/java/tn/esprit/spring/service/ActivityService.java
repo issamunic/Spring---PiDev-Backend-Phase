@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Activity;
+import tn.esprit.spring.entities.Progress;
+import tn.esprit.spring.entities.Report;
 import tn.esprit.spring.entities.TripPlan;
 import tn.esprit.spring.repository.ActivityRepo;
 import tn.esprit.spring.repository.TripPlanRepo;
@@ -94,10 +96,9 @@ public class ActivityService implements IActivityService {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void update() {
-		TripPlan p =tripPlanRepo.findById((long) 2).orElse(null); // 2 bech twali dynamique 
+	public void update(long idTripPlan) {
+		TripPlan p =tripPlanRepo.findById(idTripPlan).orElse(null); // 2 bech twali dynamique 
 		List<Activity> Activitys = (List<Activity>) ActivityRepo.ListActivityWithoutDate(p);
-		
 		Date dateDebut = p.getTrip().getStartDate();
 		   Calendar calendar1 = Calendar.getInstance();
 		   calendar1.setTime(dateDebut);
@@ -112,13 +113,9 @@ public class ActivityService implements IActivityService {
 		calendar1.setTime(debut);
 		Date faza = calendar1.getTime();
 		Calendar calendar2 = Calendar.getInstance();   
-		   calendar2.setTime(debut); 
-		   
-		for(Activity a  : Activitys) {
-			
+		   calendar2.setTime(debut); 	   
+		for(Activity a  : Activitys) {	
 			if(a.getStartActivity()==null && a.getEndActivity()==null ) {
-				
-				
 				   if(calendar2.getTime().getHours()+a.getPeriod()<18) {
 					   a.setStartActivity( calendar2.getTime());
 			  
@@ -209,6 +206,50 @@ public class ActivityService implements IActivityService {
 
 		
 	}
+
+	@Override
+	public String makeDoneActivity(long id) {
+		Activity activity = ActivityRepo.findById(id).orElse(null);
+		if((activity.getProgress()!=Progress.notdone) || (activity.getProgress()==Progress.done)) {
+		activity.setProgress(Progress.done);
+		ActivityRepo.save(activity);
+		
+		return "Good Job, your Activity is Done";
+		}
+
+		
+		else {
+			return "you can't make it done because you missed the deadline You can consult your responsible";
+
+		}
+		
+
+		
+		
+
+	}
+
+	
+	//@Scheduled(fixedRate = 6000)
+	@Override
+	public void makeNotDoneActivity() {
+		List<Activity> activities = (List<Activity>) ActivityRepo.findAll();
+		 Date date = new Date(System.currentTimeMillis());
+		 for (Activity activity : activities) {
+			 
+			 if((activity.getProgress()!=Progress.done)&&(activity.getEndActivity().before(date))) {
+				 activity.setProgress(Progress.notdone);
+				 ActivityRepo.save(activity);
+				 System.out.println("***************traitement***************");
+				 
+			 }
+				
+				
+			}
+	
+	}
+	
+	
 	
 	
 

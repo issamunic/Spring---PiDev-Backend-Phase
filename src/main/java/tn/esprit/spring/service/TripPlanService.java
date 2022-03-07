@@ -33,6 +33,7 @@ public class TripPlanService implements ITripPlanService {
 	public TripPlan add(TripPlan TripPlan) {
 		try {
 			return TripPlanRepo.save(TripPlan);
+			
 		} catch (Exception e) {
 			log.info(e.getMessage());
 			return null;

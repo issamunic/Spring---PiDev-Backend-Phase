@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Activity;
+import tn.esprit.spring.entities.TripPlan;
+import tn.esprit.spring.repository.ActivityRepo;
+import tn.esprit.spring.repository.TripPlanRepo;
 import tn.esprit.spring.serviceInterface.IActivityService;
 
 @RestController
@@ -25,6 +28,12 @@ public class ActivityController {
 	
 	@Autowired
 	IActivityService ActivityService;
+	
+	@Autowired
+	ActivityRepo ar;
+	
+	@Autowired
+	TripPlanRepo trp;
     //http://localhost:8087/SpringMVC/swagger-ui/index.html
 	
 	
@@ -39,8 +48,11 @@ public class ActivityController {
 	@ApiOperation(value = "addActivity")
 	@PostMapping("/add")
 	@ResponseBody
-	public String add(@RequestBody Activity Activity) {
-		 return ActivityService.add(Activity);
+	public String add(@RequestBody Activity activity) {
+		 /*TripPlan tp = trp.findById(tripPlanId).orElse(null);*/
+		 /*activity.setTripPlan(tp);*/
+		 //ar.save(activity);
+		 return ActivityService.add(activity);
 	}
 	
 	@ApiOperation(value = "getById")
@@ -52,11 +64,13 @@ public class ActivityController {
 	}
 	
 	@ApiOperation(value = "updateActivity")
-	@PutMapping("/update")
+	@PutMapping("/update/{tripPlanId}")
 	@ResponseBody
-	public void update() {
-		 ActivityService.update();
+	public void update(@PathVariable("tripPlanId") Long tripPlanId) {
+		 ActivityService.update(tripPlanId);
 	}
+	
+	
 	
 	
 	/*@ApiOperation(value = "deleteActivity")
@@ -81,4 +95,11 @@ public class ActivityController {
 			return ActivityService.listActivityByTripPlanId(tripPlanid);
 	
 	}
+		
+		@ApiOperation(value = "makeActivityDone")
+		@PutMapping("/done/{idActivity}")
+		@ResponseBody
+		public String makeActivityDone(@PathVariable("idActivity") Long idActivity) {
+			 return ActivityService.makeDoneActivity(idActivity);
+		}
 }

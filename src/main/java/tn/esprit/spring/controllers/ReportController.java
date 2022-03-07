@@ -42,7 +42,22 @@ public class ReportController {
 	@PostMapping("/add-Report")
 	public Report addReport(@RequestBody Report r)
 	{
-		return ReportService.addReclamation(r);
+		  String ACCOUNT_SID = "AC39b3348ddc32e1b8ea10dab06afc1f9a";
+	        String AUTH_TOKEN = "03506d35b5d6b2a8f3c54acaa4036f0e";
+	        Report report = ReportService.addReclamation(r);
+	        
+	        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+	        Message message = Message.creator(
+	                new com.twilio.type.PhoneNumber("whatsapp:+21652135404"),
+	                new com.twilio.type.PhoneNumber("whatsapp:+14155238886"),
+	                report.getResponse())
+	        		
+	        		
+	                .create();
+
+	        System.out.println(message.getSid());
+		return report;
+		
 	}
 	
 	@GetMapping("/get-Reclamation")
@@ -101,11 +116,12 @@ public class ReportController {
 	}
 	
 	@ApiOperation(value = "updateReport")
-	@PutMapping("/update")
+	@PutMapping("/update/{idReclam}")
 	@ResponseBody
-	public void update() {
+	public void update(@PathVariable("idReclam") int idReclam) {
 		
-		Report r = ReportService.updateReclamation(33);
+		
+		Report r = ReportService.updateReclamation(idReclam);
 	
 		  String ACCOUNT_SID = "AC39b3348ddc32e1b8ea10dab06afc1f9a";
 	        String AUTH_TOKEN = "03506d35b5d6b2a8f3c54acaa4036f0e";

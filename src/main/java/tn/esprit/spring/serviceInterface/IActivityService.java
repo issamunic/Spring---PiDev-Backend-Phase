@@ -12,7 +12,7 @@ public List<Activity> getAll();
 	
 	public String add(Activity Activity);
 	
-	public void update();
+	public void update(long idTripPlan);
 	
 	public void delete();
 	
@@ -21,4 +21,8 @@ public List<Activity> getAll();
 	public List<Activity> listActivityByTripPlanId(long id);
 
 	void addActivityToTripPlan(long idTripPlan, long idActivity);
+	
+	public String makeDoneActivity(long id);
+	public void makeNotDoneActivity();
+	
 }
