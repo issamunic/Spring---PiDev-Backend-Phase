@@ -26,13 +26,6 @@ import tn.esprit.spring.entities.csv;
 @EnableBatchProcessing
 @Component
 public class SpringBatchConfig {
-	String pathffff="";
-	public String getPathffff() {
-		return pathffff;
-	}
-	public void setPathffff(String pathffff) {
-		this.pathffff = pathffff;
-	}
 	@Bean
 	    public Job job(JobBuilderFactory jobBuilderFactory,
 	                   StepBuilderFactory stepBuilderFactory,
@@ -58,7 +51,7 @@ public class SpringBatchConfig {
 	    public FlatFileItemReader<csv> itemReader() {
 	    	
 	        FlatFileItemReader<csv> flatFileItemReader = new FlatFileItemReader<>();
-	    	flatFileItemReader.setResource(new ClassPathResource(getPathffff()));
+	    	flatFileItemReader.setResource(new ClassPathResource("csv.csv"));
 	        flatFileItemReader.setName("CSV-Reader");
 	        flatFileItemReader.setLinesToSkip(1);
 	        flatFileItemReader.setLineMapper(lineMapper());

@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,7 +41,7 @@ public class HistorySubcriptionCompany implements Serializable{
 	@Temporal(TemporalType.DATE)
 	Date DateHistorySubcriptionCompany;
 	
-	
+	@JsonIgnore
 	Long CompanyId;
 	
 	

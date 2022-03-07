@@ -93,6 +93,7 @@ public class CodeInvitationCompanyServiceImpl implements ICodeInvitationCompanyS
 					return null;
 					}
 				}
+				CodeInvitationCompanytest.setDateCreationCodeInvitationCompany(new Date());
 				CodeInvitationCompanyRepo.save(CodeInvitationCompanytest);
 				return CodeInvitationCompanytest;
 

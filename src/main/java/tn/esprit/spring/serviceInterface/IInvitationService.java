@@ -19,8 +19,11 @@ public interface IInvitationService {
 	
 	public Invitation getById(Long Invitationid);
 
+	List<Invitation> getByCompany(User Company);
+
+
 	Invitation SetinvitationAccepted(Long Invitationid);
 
-	List<Invitation> getByCompany(User Company);
+	Invitation getByEmailAndUser(String email, User comapny);
 
 }

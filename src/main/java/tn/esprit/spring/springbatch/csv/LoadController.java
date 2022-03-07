@@ -10,8 +10,16 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.annotations.ApiOperation;
+import tn.esprit.spring.entities.CodeInvitationCompany;
+import tn.esprit.spring.entities.Invitation;
+import tn.esprit.spring.entities.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,12 +37,18 @@ public class LoadController {
     @Autowired
     SpringBatchConfig SpringBatchConfig;
     
+    @Autowired
+    DBWriter dbWriter;
+    
     
 
-    @GetMapping
-    public BatchStatus load() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-    	SpringBatchConfig.setPathffff("users.csv");
-        Map<String, JobParameter> maps = new HashMap<>();
+	@ApiOperation(value = "csv")
+	@PostMapping("/csv")
+	@ResponseBody
+    public BatchStatus load(@RequestBody User user) throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+       
+		dbWriter.setUser(user);
+		Map<String, JobParameter> maps = new HashMap<>();
         maps.put("time", new JobParameter(System.currentTimeMillis()));
         JobParameters parameters = new JobParameters(maps);
         JobExecution jobExecution = jobLauncher.run(job, parameters);

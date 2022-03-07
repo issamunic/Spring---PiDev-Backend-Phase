@@ -1,5 +1,7 @@
 package tn.esprit.spring.service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.HistorySubcriptionCompany;
+import tn.esprit.spring.entities.Invitation;
 import tn.esprit.spring.repository.HistorySubcriptionCompanyRepository;
 import tn.esprit.spring.serviceInterface.IHistorySubcriptionCompanyService;
 
@@ -36,6 +39,7 @@ public class HistorySubcriptionCompanyImpl  implements IHistorySubcriptionCompan
 	@Override
 	public HistorySubcriptionCompany add(HistorySubcriptionCompany HistorySubcriptionCompanynew) {
 		try {
+			HistorySubcriptionCompanynew.setDateHistorySubcriptionCompany(new Date());
 			HistorySubcriptionCompanyRepo.save(HistorySubcriptionCompanynew);
 			return HistorySubcriptionCompanynew;
 		} catch (Exception e) {
@@ -79,17 +83,20 @@ public class HistorySubcriptionCompanyImpl  implements IHistorySubcriptionCompan
 	@Override
 	public List<HistorySubcriptionCompany> getByCompany(Long id) {
 		try {
-			List<HistorySubcriptionCompany> HistorySubcriptionCompanysCompany = null ;
+			List<HistorySubcriptionCompany> historySubcriptionCompaniesfinal  = new ArrayList();			
 			List<HistorySubcriptionCompany> HistorySubcriptionCompanys = (List<HistorySubcriptionCompany>) HistorySubcriptionCompanyRepo.findAll();
-			for (HistorySubcriptionCompany HistorySubcriptionCompany : HistorySubcriptionCompanys) {
-				if (HistorySubcriptionCompany.getCompanyId().equals(id)) {
-				HistorySubcriptionCompanysCompany.add(HistorySubcriptionCompany);
-				log.info(" HistorySubcriptionCompany : " + HistorySubcriptionCompany);
+			for (HistorySubcriptionCompany HistorySubcriptionCompanyfor : HistorySubcriptionCompanys) {
+				if(id.equals(HistorySubcriptionCompanyfor.getCompanyId())) {
+					historySubcriptionCompaniesfinal.add(HistorySubcriptionCompanyfor);
 				}
 			}
-			return HistorySubcriptionCompanys;
-		} catch (Exception e) {
-			return null;
-		}
+			return historySubcriptionCompaniesfinal;
+			
 	}
+		catch (Exception e) {
+			System.out.println(e);
+		return null;
+	}
+	}
+
 }

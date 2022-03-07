@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.HistorySubcriptionCompany;
+import tn.esprit.spring.entities.User;
 import tn.esprit.spring.serviceInterface.IHistorySubcriptionCompanyService;
 
 @RestController
@@ -70,5 +71,12 @@ public class HistorySubcriptionCompanyRestController {
 	@ResponseBody
 	public void delete(@PathVariable("HistorySubcriptionCompany-id") Long id) {
 		HistorySubcriptionCompanyService.delete(id);
+	}
+	
+	@ApiOperation(value = "getByIdCompany")
+	@GetMapping("/getByIdCompany/{id}")
+	@ResponseBody
+	public List<HistorySubcriptionCompany> getByIdCompany(@PathVariable("id") Long id) {
+		return HistorySubcriptionCompanyService.getByCompany(id);
 	}
 }

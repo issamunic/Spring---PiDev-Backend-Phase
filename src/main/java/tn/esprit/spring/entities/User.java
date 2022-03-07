@@ -14,6 +14,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -59,12 +61,15 @@ public class User implements Serializable{
 	List<Trip> trips;
 	
 
-	
+	@JsonIgnore
 	@OneToOne(mappedBy="UserSender")
 	Invitation Invitation;
+	
+	@JsonIgnore
 	@OneToOne(mappedBy="UserCompany")
 	CodeInvitationCompany CodeInvitationCompany;
 	
+	@JsonIgnore
 	@OneToOne(mappedBy="Company")
 	SubscriptionCompany SubscriptionCompany;
 	

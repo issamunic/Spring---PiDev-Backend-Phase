@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import tn.esprit.spring.serviceInterface.IInvitationService;
 import tn.esprit.spring.entities.csv;
 import tn.esprit.spring.entities.Invitation;
+import tn.esprit.spring.entities.User;
 import tn.esprit.spring.fileupload.*;
 
 @Component
@@ -28,6 +29,19 @@ public class DBWriter implements ItemWriter<csv>{
         this.csvRepository = csvRepository;
     }
 	
+    User user;
+    
+    
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+
 	@Override
 	public void write(List<? extends csv> items) throws Exception {
 		System.out.println("Data Saved for items" + items);
@@ -35,10 +49,13 @@ public class DBWriter implements ItemWriter<csv>{
 			item.setIdsender("sender");
 			Invitation invitation = new Invitation();
 			invitation.setMailEmployee(item.getEmail());
+			invitation.setUserSender(getUser());
 			IInvitationService.add(invitation);
 			
 		}		
-		FilesStorageService.deleteFile("users.csv");
+	FilesStorageService.deleteFile("csv.csv");
 	}
+	
+	
 
 }

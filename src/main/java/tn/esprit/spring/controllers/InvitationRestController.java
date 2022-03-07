@@ -50,7 +50,6 @@ public class InvitationRestController {
 	@GetMapping("/getById/{invitation-id}")
 	@ResponseBody
 	public Invitation getById(@PathVariable("invitation-id") Long id) {
-		System.out.println("********************"+id+"**********");
 		return invitationService.getById(id);
 	}
 	
@@ -78,16 +77,22 @@ public class InvitationRestController {
 	@PutMapping("/SetinvitationAccepted/{invitation-id}")
 	@ResponseBody
 	public Invitation SetinvitationAccepted(@PathVariable("invitation-id") Long id) {
-		System.out.println("********************"+id+"**********");
 		return invitationService.SetinvitationAccepted(id);
 	}
 	
 	@ApiOperation(value = "getByCompany")
-	@GetMapping("/getByCompany")
+	@PostMapping("/getByCompany")
 	@ResponseBody
 	public List<Invitation> getByCompany(@RequestBody User Company) {
 		return invitationService.getByCompany(Company);
 		
 	}	
+	
+	@ApiOperation(value = "getByEmailAndUser")
+	@PutMapping("/getByEmailAndUser/{email}")
+	@ResponseBody
+	public Invitation SetinvitationAcceptedemail(@PathVariable("email") String email,@RequestBody User Company) {
+		 return invitationService.getByEmailAndUser(email,Company);
+	}
 	
 }

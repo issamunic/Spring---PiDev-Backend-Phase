@@ -1,6 +1,7 @@
 package tn.esprit.spring.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import tn.esprit.spring.entities.CodeInvitationCompany;
+import tn.esprit.spring.entities.HistorySubcriptionCompany;
 import tn.esprit.spring.entities.Invitation;
 import tn.esprit.spring.entities.StatusInvitation;
 import tn.esprit.spring.entities.User;
@@ -47,7 +50,9 @@ public class InvitationServiceImpl  implements IInvitationService{
 			
 			SimpleEmailExampleController.sendSimpleEmail(invitation.getMailEmployee(),
 					"invitation to Vinder From "
-					,"invitation to Vinder From ");
+			+invitation.getUserSender().getNameCompany()
+					,"Your code is : "
+			+invitation.getUserSender().getCodeInvitationCompany().getCodeInvitation());
 			return InvitationRepo.save(invitation);
 		} catch (Exception e) {
 			log.info(e.getMessage());
@@ -86,6 +91,7 @@ public class InvitationServiceImpl  implements IInvitationService{
 			return null;
 		}
 	}
+	
 	@Override
 	public Invitation SetinvitationAccepted(Long Invitationid) {
 		try {
@@ -102,18 +108,33 @@ public class InvitationServiceImpl  implements IInvitationService{
 	@Override
 	public List<Invitation> getByCompany(User Company) {
 		try {
-			List<Invitation> invitationsComapny = null ;		
-			List<Invitation> invitations = (List<Invitation>) InvitationRepo.findAll();
-			for (Invitation invitation : invitations) {
-				if(Company.equals(invitation.getUserSender())) {
-					invitationsComapny.add(invitation);
-				log.info(" invitation : " + invitation);
+			List<Invitation> Invitationfinal  = new ArrayList();			
+			List<Invitation> Invitations = (List<Invitation>) InvitationRepo.findAll();
+			for (Invitation Invitationfor : Invitations) {
+				if(Company.getIdUser().equals(Invitationfor.getUserSender().getIdUser())) {
+					Invitationfinal.add(Invitationfor);
 				}
 			}
-			return invitationsComapny;
-		} catch (Exception e) {
-			return null;
+			return Invitationfinal;
+			
+	}
+		catch (Exception e) {
+			System.out.println(e);
+		return null;
+	}
+	}
+	
+	
+	@Override
+	public Invitation getByEmailAndUser(String email,User comapny) {
+		List<Invitation> Invitations = (List<Invitation>) InvitationRepo.findAll();
+		for (Invitation invitation : Invitations) {
+			if(invitation.getMailEmployee().equals(email) && invitation.getUserSender().getIdUser().equals(comapny.getIdUser())){
+				return invitation;
+			}
 		}
+		
+		return null;
 	}
 	
 

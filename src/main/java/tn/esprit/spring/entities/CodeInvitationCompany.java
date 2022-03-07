@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,10 +40,9 @@ private static final long serialVersionUID = 1L;
 	
 	@Temporal(TemporalType.DATE)
 	Date DateCreationCodeInvitationCompany;
-
-	@Temporal(TemporalType.DATE)
-	Date DateExpiredCodeInvitationCompany;
 	
+	
+	@JsonIgnore
 	@OneToOne
 	User UserCompany; 
 }
