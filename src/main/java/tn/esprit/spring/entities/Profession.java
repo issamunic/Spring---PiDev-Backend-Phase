@@ -41,4 +41,15 @@ public class Profession implements Serializable{
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "profession")
 	List<User> users;
 	
+	public Profession(String name) {
+		this.name=name;
+	}
+	
+	public boolean equals(String wordVal) {
+        return name.equalsIgnoreCase(wordVal);
+    }
+	
+	public boolean like(String wordVal) {
+        return name.toLowerCase().contains(wordVal.toLowerCase());
+    }
 }
