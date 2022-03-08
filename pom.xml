@@ -95,7 +95,7 @@
 <dependency>
     <groupId>org.springframework.batch</groupId>
     <artifactId>spring-batch-core</artifactId>
-    <version>4.3.5</version>
+    <version>4.3.5</version><!--$NO-MVN-MAN-VER$-->
 </dependency>
 		
 	</dependencies>
