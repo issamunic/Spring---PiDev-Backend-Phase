@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import tn.esprit.spring.entities.User;
+import tn.esprit.spring.repository.UserRepository;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter{
@@ -25,6 +27,10 @@ public class JwtRequestFilter extends OncePerRequestFilter{
 
     @Autowired
     private JwtService jwtService;
+    
+    User user=null;
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -48,7 +54,9 @@ public class JwtRequestFilter extends OncePerRequestFilter{
         }*/
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
+        	
+        	user=userRepository.findByLogin(username);
+        	
             UserDetails userDetails = jwtService.loadUserByUsername(username);
 
             if (jwtUtil.validateToken(jwtToken, userDetails)) {
@@ -60,6 +68,10 @@ public class JwtRequestFilter extends OncePerRequestFilter{
         }
         filterChain.doFilter(request, response);
 
+    }
+    
+    public User getCurrentUser() {
+    	return user;
     }
 
 }
