@@ -1,5 +1,8 @@
 package tn.esprit.spring.controllers;
 
+import  tn.esprit.spring.security.*;
+
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,6 +25,9 @@ public class TripRestController {
 	ITripService tripService;
     //http://localhost:8087/SpringMVC/swagger-ui/index.html
 	
+	@Autowired
+	JwtRequestFilter JwtRequestFilter;
+	
 	
 	@ApiOperation(value = "getAllTrips")
 	@GetMapping("/getAll")
@@ -30,6 +36,11 @@ public class TripRestController {
 
 		
 		tripService.apiCall();
+	    System.out.println("**************************");
+
+	    System.out.println(JwtRequestFilter.getCurrentUser().getLogin());
+	    System.out.println("**************************");
+
 
 		return tripService.getAll();
 	}
