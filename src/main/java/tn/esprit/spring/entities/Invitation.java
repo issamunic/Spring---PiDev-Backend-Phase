@@ -48,7 +48,8 @@ public class Invitation implements Serializable{
 	
 	String MailEmployee;
 	
-	@JsonIgnore
+	String Number;
+	
 	@OneToOne
 	User UserSender; 
 

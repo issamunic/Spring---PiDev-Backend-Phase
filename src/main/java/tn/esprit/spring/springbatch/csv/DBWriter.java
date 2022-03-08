@@ -49,11 +49,12 @@ public class DBWriter implements ItemWriter<csv>{
 			item.setIdsender("sender");
 			Invitation invitation = new Invitation();
 			invitation.setMailEmployee(item.getEmail());
+			invitation.setNumber(item.getNumber());
 			invitation.setUserSender(getUser());
 			IInvitationService.add(invitation);
 			
 		}		
-	FilesStorageService.deleteFile("csv.csv");
+	//FilesStorageService.deleteFile("csv.csv");
 	}
 	
 	

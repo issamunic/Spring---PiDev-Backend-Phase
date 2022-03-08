@@ -65,7 +65,6 @@ public class User implements Serializable{
 	@OneToOne(mappedBy="UserSender")
 	Invitation Invitation;
 	
-	@JsonIgnore
 	@OneToOne(mappedBy="UserCompany")
 	CodeInvitationCompany CodeInvitationCompany;
 	

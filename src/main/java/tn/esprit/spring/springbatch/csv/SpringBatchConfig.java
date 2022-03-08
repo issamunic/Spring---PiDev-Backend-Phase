@@ -66,7 +66,7 @@ public class SpringBatchConfig {
 
 	        lineTokenizer.setDelimiter(",");
 	        lineTokenizer.setStrict(false);
-	        lineTokenizer.setNames("id", "name", "email");
+	        lineTokenizer.setNames("name","email","number");
 
 	        BeanWrapperFieldSetMapper<csv> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
 	        fieldSetMapper.setTargetType(csv.class);

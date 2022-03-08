@@ -16,7 +16,7 @@ import tn.esprit.spring.entities.StatusInvitation;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.mail.mailsender.ISimpleEmailExampleController;
 import tn.esprit.spring.repository.InvitationRepository;
-
+import tn.esprit.spring.twillo.*;
 import tn.esprit.spring.serviceInterface.IInvitationService;
 
 @Service
@@ -27,6 +27,8 @@ public class InvitationServiceImpl  implements IInvitationService{
 	InvitationRepository InvitationRepo;
 	@Autowired
 	ISimpleEmailExampleController SimpleEmailExampleController;
+	@Autowired
+	SmsSender SmsSender;
 	
 	
 	@Override
@@ -47,13 +49,15 @@ public class InvitationServiceImpl  implements IInvitationService{
 		try {
 			invitation.setStatusInvitation(StatusInvitation.pending);
 			invitation.setDateCreationInvitation(new Date());
-			
 			SimpleEmailExampleController.sendSimpleEmail(invitation.getMailEmployee(),
 					"invitation to Vinder From "
 			+invitation.getUserSender().getNameCompany()
-					,"Your code is : "
+					," \n Your code is : "
 			+invitation.getUserSender().getCodeInvitationCompany().getCodeInvitation());
-			return InvitationRepo.save(invitation);
+			
+			SmsRequest Sms = new SmsRequest(invitation.getNumber(),"invitation to Vinder From "+invitation.getUserSender().getNameCompany()+"Your code is : "+invitation.getUserSender().getCodeInvitationCompany().getCodeInvitation());	
+			SmsSender.sendSms(Sms);
+			return InvitationRepo.save(invitation);			
 		} catch (Exception e) {
 			log.info(e.getMessage());
 			return null;
