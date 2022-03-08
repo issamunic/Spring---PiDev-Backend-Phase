@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Activity;
 import tn.esprit.spring.entities.Report;
 import tn.esprit.spring.entities.User;
-import tn.esprit.spring.repository.UserRepo;
+import tn.esprit.spring.repository.UserRepository;
 import tn.esprit.spring.serviceInterface.IReportService;
 
 @RestController
@@ -37,7 +37,7 @@ public class ReportController {
 	IReportService ReportService;
 	
 	@Autowired
-	UserRepo userRepo;
+	UserRepository userRepo;
 	
 	@PostMapping("/add-Report")
 	public Report addReport(@RequestBody Report r)

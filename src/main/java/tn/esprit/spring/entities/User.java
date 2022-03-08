@@ -88,4 +88,8 @@ public class User implements Serializable{
 	@JsonIgnore
 	@OneToOne
 	Image image;
+	
+	//Partie Anas
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="utilisateur")
+	private List<Report> reclamations;
 }

@@ -47,6 +47,9 @@ public class Trip implements Serializable {
 
 	public String image;
 
+	//Anas
+	@OneToOne
+	private TripPlan tripPlan;
 	
 
 	
