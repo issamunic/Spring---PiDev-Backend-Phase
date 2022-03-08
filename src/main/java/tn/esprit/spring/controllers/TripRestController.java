@@ -29,7 +29,7 @@ public class TripRestController {
 	public List<Trip> getAll() {
 
 		
-
+		tripService.apiCall();
 
 		return tripService.getAll();
 	}

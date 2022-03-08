@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -102,13 +104,27 @@ public class TripServiceImpl implements ITripService {
 
 	@Override
 	public void apiCall() {
-	    final String uri = "http://api.positionstack.com/v1/forward?access_key=7f7711b22c8b37548fd956a27e4ce17a&query=51.507822,-0.076702";
+	    final String uri = "http://api.positionstack.com/v1/reverse?access_key=7f7711b22c8b37548fd956a27e4ce17a&query=51.507822,-0.076702";
 
 	    RestTemplate restTemplate = new RestTemplate();
 	    String result = restTemplate.getForObject(uri, String.class);
+	    
 	    System.out.println("**************************");
 
-	    System.out.println(result);
+	    //System.out.println(result);
+	    
+	    JSONObject jo = new JSONObject(result);
+	    
+	    JSONArray ja = jo.getJSONArray("data");
+	    
+	    jo = ja.getJSONObject(0);
+
+	   
+	    System.out.println(jo.getString("region"));
+	    
+
+
+	    	
 	    System.out.println("**************************");
 
 		
@@ -140,6 +156,8 @@ public class TripServiceImpl implements ITripService {
 		parentList.add(childList);
 		return parentList;
 	}
+	
+	
 
 	
 
