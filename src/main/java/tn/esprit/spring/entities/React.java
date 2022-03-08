@@ -3,26 +3,21 @@ package tn.esprit.spring.entities;
 import static javax.persistence.FetchType.LAZY;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.util.Date;
-import java.util.List;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
@@ -34,33 +29,24 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @ToString
-public class Post implements Serializable {/**
+@Builder
+public class React implements Serializable {/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long idPost;
-	String description;
-	@ElementCollection
-	List<String> country;
-	@ElementCollection
-	List<String> city;
-	@ElementCollection
-	List<String> stateOrProvince;
-	@Temporal(TemporalType.DATE)
-	Date createdOn;
-	String url;
-	Integer reactCount;
-	@JsonIgnore
+	Long idReact;
+	ReactType reactType;
 	@ManyToOne(fetch = LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "idUser")
     private User user;
-	@JsonIgnore
+	@NonNull
 	@ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "communityId", referencedColumnName = "idCommunity")
-	Community community;
-
+	@JoinColumn(name = "postId", referencedColumnName = "idPost")
+	private Post post;
+	
 
 }
