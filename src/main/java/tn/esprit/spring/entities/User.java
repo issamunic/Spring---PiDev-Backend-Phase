@@ -88,10 +88,4 @@ public class User implements Serializable{
 	@JsonIgnore
 	@OneToOne
 	Image image;
-	
-	///////////////houssem////////////////////////////////////////////
-	@OneToOne(mappedBy="UserSender")
-	Invitation Invitation;
-	@OneToOne(mappedBy="UserCompany")
-	CodeInvitationCompany CodeInvitationCompany;
 }
