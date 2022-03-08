@@ -1,5 +1,8 @@
 package tn.esprit.spring.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,10 @@ public class TripRestController {
 	@GetMapping("/getAll")
 	@ResponseBody
 	public List<Trip> getAll() {
+
+		
+		tripService.apiCall();
+
 		return tripService.getAll();
 	}
 	
@@ -57,6 +64,44 @@ public class TripRestController {
 	public void delete(@PathVariable("trip-id") Long id) {
 		 tripService.delete(id);
 	}
+	
+	
+	@ApiOperation(value = "getTripsByStartDate")
+	@GetMapping("/getTripsByStartDate/{dateInf}/{dateSup}")
+	@ResponseBody
+	public List<Trip> getTripsByStartDate(@PathVariable("dateInf") String dateInf,
+			@PathVariable("dateSup") String dateSup)  throws ParseException{
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date dateDebut = dateFormat.parse(dateInf);
+		Date dateFin = dateFormat.parse(dateSup);
+		return tripService.getTripByDate(dateDebut, dateFin);
+	}
+	
+	@ApiOperation(value = "getTripsInPeriod")
+	@GetMapping("/getTripsInPeriod/{dateInf}/{dateSup}")
+	@ResponseBody
+	public List<Trip> getTripsInPeriod(@PathVariable("dateInf") String dateInf,
+			@PathVariable("dateSup") String dateSup) throws ParseException{
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date dateDebut = dateFormat.parse(dateInf);
+		Date dateFin = dateFormat.parse(dateSup);
+		
+		return tripService.getTripInPeriod(dateDebut, dateFin);
+	}
+	
+	@ApiOperation(value = "get Trips Grouped By Destination")
+	@GetMapping("/getGroupedByDestination")
+	@ResponseBody
+	public List<List<Trip>> getGroupedByDestination() {
+
+
+
+		return tripService.groupBy(tripService.getGroupedByDestination()) ;
+	}
+	
+	
+
+	
 	
 	
 	

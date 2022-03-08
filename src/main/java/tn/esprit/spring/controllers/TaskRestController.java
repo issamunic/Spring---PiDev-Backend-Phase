@@ -58,6 +58,20 @@ public class TaskRestController {
 		 taskService.delete(id);
 	}
 	
+	@ApiOperation(value = "getTaskById")
+	@GetMapping("/get/{task-id}")
+	@ResponseBody
+	public void delete1(@PathVariable("task-id") Long id) {
+		 
+	}
+	
+	@ApiOperation(value = "Change priority")
+	@PutMapping("/Priority/{task-id}")
+	@ResponseBody
+	public void lol(@PathVariable("task-id") Long id) {
+		 
+	}
+	
 	
 	
 	

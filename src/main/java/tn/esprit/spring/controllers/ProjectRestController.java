@@ -59,6 +59,23 @@ public class ProjectRestController {
 	}
 	
 	
+	@ApiOperation(value = "getByUser")
+	@GetMapping("/getByUser/{user-id}")
+	@ResponseBody
+	public Project getByUser(@PathVariable("user-id") Long id) {
+		System.out.println("********************"+id+"**********");
+		return projectService.getById(id);
+	}
+	
+	@ApiOperation(value = "getByDate")
+	@GetMapping("/getByDate/{date}")
+	@ResponseBody
+	public Project getBydate(@PathVariable("date") Long id) {
+		System.out.println("********************"+id+"**********");
+		return projectService.getById(id);
+	}
+	
+	
 	
 	
 
