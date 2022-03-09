@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import java.util.Map;
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -52,6 +55,7 @@ public class User implements Serializable{
 	Integer registrationNumberEmploye; 
 	String FirstNameEmploye;
 	String LastNameEmploye;
+	String username;
 	
 	@Temporal(TemporalType.DATE)
 	Date BirthDateEmploye;
@@ -60,6 +64,8 @@ public class User implements Serializable{
 	String profilePictureEmploye;
 	String nameCompany;
 	String logoCompany;
+	@ElementCollection
+    Map<Date, User> followers;
 	
 	@Enumerated(EnumType.STRING)
 	Role role;
