@@ -8,9 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,43 +28,21 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @ToString
-public class Trip implements Serializable {
+public class Location implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long TripId;
+	Long locationId;
 
+	String country;
+	String locality;
+	String region;
 	
-	String name;
-	
-	String destination ;
-	Integer duration ;
-	@Temporal(TemporalType.DATE)
-	Date startDate ;
-	
-	@Temporal(TemporalType.DATE)
-	Date endDate ;
-
-	String purpose ;
-
-	Long longitude;
-	Long latitude;
-	
-	String image;
-	
-	@JsonIgnore
-	@ManyToOne
-	User user;
-	
-	boolean isMatched;
-	
-	//Anas
 	@OneToOne
-	private TripPlan tripPlan;
+	Trip trip;
 	
-	@OneToOne(mappedBy="trip")
-	Location location;
+	
 	
 	
 }
