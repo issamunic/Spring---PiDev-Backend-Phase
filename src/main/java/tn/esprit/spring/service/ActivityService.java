@@ -65,7 +65,9 @@ public class ActivityService implements IActivityService {
 				System.out.println("linjib fiha : "+a.getEndActivity()+"li n7ot fiha : "+activity.getEndActivity());
 				
 				if(a.getStartActivity()!=null && a.getEndActivity()!=null) {
-				if ((activity.getStartActivity().equals(a.getStartActivity()) || activity.getStartActivity().after(a.getStartActivity())) && (activity.getEndActivity().equals(a.getEndActivity()) || activity.getStartActivity().before(a.getEndActivity()))) {
+				if ((activity.getStartActivity().equals(a.getStartActivity()) || activity.getStartActivity().after(a.getStartActivity())) && (activity.getEndActivity().equals(a.getEndActivity()) || activity.getStartActivity().before(a.getEndActivity()))
+						|| (a.getStartActivity().equals(activity.getStartActivity())&& a.getEndActivity().equals(activity.getEndActivity()))
+						) {
 						cpt = cpt + 1;
 				}
 				}
