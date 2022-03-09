@@ -39,6 +39,8 @@ public class Location implements Serializable {
 	String locality;
 	String region;
 	
+	
+	@JsonIgnore
 	@OneToOne
 	Trip trip;
 	
