@@ -47,7 +47,7 @@ public class ReportController {
 	public Report addReport(@RequestBody Report r)
 	{
 		  String ACCOUNT_SID = "AC39b3348ddc32e1b8ea10dab06afc1f9a";
-	        String AUTH_TOKEN = "03506d35b5d6b2a8f3c54acaa4036f0e";
+	        String AUTH_TOKEN = "b7f9943d4505fc3306445a749a5cc270";
 	        Report report = ReportService.addReclamation(r);
 	        
 	        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
@@ -128,7 +128,7 @@ public class ReportController {
 		Report r = ReportService.updateReclamation(idReclam);
 	
 		  String ACCOUNT_SID = "AC39b3348ddc32e1b8ea10dab06afc1f9a";
-	        String AUTH_TOKEN = "e36f1a526f6600865b19e55c9c455334";
+	        String AUTH_TOKEN = "b7f9943d4505fc3306445a749a5cc270";
 
 	        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 	        Message message = Message.creator(

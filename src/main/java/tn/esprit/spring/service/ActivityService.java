@@ -44,7 +44,13 @@ public class ActivityService implements IActivityService {
 	}
 
 	@Override
-	public String add(Activity activity) {
+	public String add(Activity activity, int idTripPlan) {
+		
+		TripPlan tp = tripPlanRepo.findById((long) idTripPlan).orElse(null);
+		
+		
+		
+		
 		List<Activity> Activitys = (List<Activity>) ActivityRepo.findAll();
 		int cpt = 0;
 		
@@ -72,19 +78,20 @@ public class ActivityService implements IActivityService {
 			}
 			System.out.println(	"cpt :"+cpt);
 			
-			if(cpt==0) {
-				
-		
-				
-				
-
-				
+			if(cpt==0 && activity.getStartActivity().before(tp.getTrip().getEndDate())) {
+				activity.setTripPlan(tp);
 				ActivityRepo.save(activity);
+				
 
-				return "Activité Valid";	
+				return "Activity is Valid";	
 				}
+			
+			if(activity.getStartActivity().after(tp.getTrip().getEndDate())) {
+				return "check the dates of your activity because they are outside the travel period !";
+			}
+			
 				else{
-				return "Date Réservé ! , Cherchez une autre date ou contacté le planificateur";
+				return " Date Reserved! , Look for another date or contact the planner";
 				}
 		}
 		return "";
@@ -116,7 +123,8 @@ public class ActivityService implements IActivityService {
 		calendar1.setTime(debut);
 		Date faza = calendar1.getTime();
 		Calendar calendar2 = Calendar.getInstance();   
-		   calendar2.setTime(debut); 	   
+		   calendar2.setTime(debut); 
+		   
 		for(Activity a  : Activitys) {	
 			if(a.getStartActivity()==null && a.getEndActivity()==null ) {
 				   if(calendar2.getTime().getHours()+a.getPeriod()<18) {

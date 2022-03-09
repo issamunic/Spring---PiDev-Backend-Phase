@@ -10,7 +10,7 @@ public interface IActivityService {
 public List<Activity> getAll();
 	
 	
-	public String add(Activity Activity);
+	public String add(Activity Activity, int idTripPlan);
 	
 	public void update(long idTripPlan);
 	

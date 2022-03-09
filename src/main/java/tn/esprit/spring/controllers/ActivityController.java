@@ -54,13 +54,13 @@ public class ActivityController {
 	}
 	
 	@ApiOperation(value = "addActivity")
-	@PostMapping("/add")
+	@PostMapping("/add/{idTripPlan}")
 	@ResponseBody
-	public String add(@RequestBody Activity activity) {
+	public String add(@RequestBody Activity activity, @PathVariable("idTripPlan") int idTripPlan) {
 		 /*TripPlan tp = trp.findById(tripPlanId).orElse(null);*/
 		 /*activity.setTripPlan(tp);*/
 		 //ar.save(activity);
-		 return ActivityService.add(activity);
+		 return ActivityService.add(activity,idTripPlan);
 	}
 	
 	@ApiOperation(value = "getById")
