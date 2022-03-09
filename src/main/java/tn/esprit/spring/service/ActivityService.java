@@ -161,8 +161,11 @@ public class ActivityService implements IActivityService {
 	//@Scheduled(fixedRate = 600000)
 	public void delete() {
 		List<Activity> Activitys = (List<Activity>) ActivityRepo.ListActivityInfCurentDate();
+		
 		for (Activity Activity : Activitys) {
+			if(Activity.getProgress().equals(Progress.done)) {
 			ActivityRepo.delete(Activity);
+			}
 			
 		}
 		
