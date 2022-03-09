@@ -66,8 +66,7 @@ public class Trip implements Serializable {
 	private TripPlan tripPlan;
 	
 	
-	@OneToOne(mappedBy="trip")
-	Location location;
+	
 	
 	
 }
