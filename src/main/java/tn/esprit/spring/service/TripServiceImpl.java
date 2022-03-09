@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Location;
 import tn.esprit.spring.entities.Task;
 import tn.esprit.spring.entities.Trip;
+import tn.esprit.spring.repository.LocationRepository;
 import tn.esprit.spring.repository.TripRepository;
 import tn.esprit.spring.serviceInterface.ITripService;
 
@@ -23,6 +24,10 @@ public class TripServiceImpl implements ITripService {
 
 	@Autowired
 	TripRepository tripRepo;
+	
+	
+	@Autowired
+	LocationRepository locaRepo;
 
 	@Override
 	public List<Trip> getAll() {
@@ -40,7 +45,14 @@ public class TripServiceImpl implements ITripService {
 	@Override
 	public Trip add(Trip trip) {
 		try {
-			return tripRepo.save(trip);
+			trip.setLocation(getLocation(trip.getLongitude(), trip.getLatitude()));
+			Location location = trip.getLocation();
+			location=locaRepo.save(trip.getLocation());
+			location.setTrip(trip);
+			trip.setLocation(location);
+			trip=tripRepo.save(trip);
+
+			return trip;
 		} catch (Exception e) {
 			log.info(e.getMessage());
 			return null;
@@ -148,7 +160,7 @@ public class TripServiceImpl implements ITripService {
 
 		    RestTemplate restTemplate = new RestTemplate();
 		    String result = restTemplate.getForObject(uri, String.class);
-		    
+		    System.out.println(uri);
 		   
 		    
 		    JSONObject jo = new JSONObject(result);
@@ -159,7 +171,7 @@ public class TripServiceImpl implements ITripService {
 		    
 		    location.setRegion(jo.getString("region")); 
 		    location.setRegion(jo.getString("country"));
-		    location.setRegion(jo.getString("locality"));
+		    //location.setRegion(jo.getString("locality"));
 		
 		return location;
 	}
