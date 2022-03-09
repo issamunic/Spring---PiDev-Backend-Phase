@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import lombok.extern.slf4j.Slf4j;
+import tn.esprit.spring.entities.Location;
 import tn.esprit.spring.entities.Task;
 import tn.esprit.spring.entities.Trip;
 import tn.esprit.spring.repository.TripRepository;
@@ -104,28 +105,11 @@ public class TripServiceImpl implements ITripService {
 
 	@Override
 	public void apiCall() {
-	    final String uri = "http://api.positionstack.com/v1/reverse?access_key=7f7711b22c8b37548fd956a27e4ce17a&query=51.507822,-0.076702";
-
-	    RestTemplate restTemplate = new RestTemplate();
-	    String result = restTemplate.getForObject(uri, String.class);
-	    
-	    System.out.println("**************************");
-
-	    //System.out.println(result);
-	    
-	    JSONObject jo = new JSONObject(result);
-	    
-	    JSONArray ja = jo.getJSONArray("data");
-	    
-	    jo = ja.getJSONObject(0);
+	   
 
 	   
-	    System.out.println(jo.getString("region"));
+	
 	    
-
-
-	    	
-	    System.out.println("**************************");
 
 		
 	}
@@ -155,6 +139,29 @@ public class TripServiceImpl implements ITripService {
 		}
 		parentList.add(childList);
 		return parentList;
+	}
+	
+	Location getLocation(String longitude, String latitude) {
+		Location location = new Location();
+		
+		  String uri = "http://api.positionstack.com/v1/reverse?access_key=7f7711b22c8b37548fd956a27e4ce17a&query="+longitude+",-"+latitude;
+
+		    RestTemplate restTemplate = new RestTemplate();
+		    String result = restTemplate.getForObject(uri, String.class);
+		    
+		   
+		    
+		    JSONObject jo = new JSONObject(result);
+		    
+		    JSONArray ja = jo.getJSONArray("data");
+		    
+		    jo = ja.getJSONObject(0);
+		    
+		    location.setRegion(jo.getString("region")); 
+		    location.setRegion(jo.getString("country"));
+		    location.setRegion(jo.getString("locality"));
+		
+		return location;
 	}
 	
 	

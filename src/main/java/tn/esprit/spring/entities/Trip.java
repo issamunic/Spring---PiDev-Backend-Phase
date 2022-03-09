@@ -49,8 +49,8 @@ public class Trip implements Serializable {
 
 	String purpose ;
 
-	Long longitude;
-	Long latitude;
+	String longitude;
+	String latitude;
 	
 	String image;
 	
@@ -61,8 +61,10 @@ public class Trip implements Serializable {
 	boolean isMatched;
 	
 	//Anas
+	@JsonIgnore
 	@OneToOne
 	private TripPlan tripPlan;
+	
 	
 	@OneToOne(mappedBy="trip")
 	Location location;
