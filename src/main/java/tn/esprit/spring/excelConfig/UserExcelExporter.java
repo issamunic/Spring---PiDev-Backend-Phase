@@ -81,13 +81,13 @@ public class UserExcelExporter {
             if(user.getProfession()!=null) {
             	createCell(row, columnCount++, user.getProfession().getName(), style);
             }else {
-            	createCell(row, columnCount++, "---", style);
+            	createCell(row, columnCount++, "----", style);
             }
             
             if(user.getDomain()!=null) {
             	createCell(row, columnCount++, user.getDomain().getName(), style);
             }else {
-            	createCell(row, columnCount++, "---", style);
+            	createCell(row, columnCount++, "----", style);
             }
              
         }
