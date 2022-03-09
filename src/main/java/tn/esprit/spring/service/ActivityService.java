@@ -56,13 +56,10 @@ public class ActivityService implements IActivityService {
 				System.out.println(	"dkhal lel boucle for thenya ");
 				//ActivityRepo.save(activity);
 				
+				System.out.println("linjib fiha : "+a.getEndActivity()+"li n7ot fiha : "+activity.getEndActivity());
+				
 				if(a.getStartActivity()!=null && a.getEndActivity()!=null) {
-				if(((activity.getStartActivity().equals(a.getStartActivity()))||
-						((activity.getStartActivity().after(a.getStartActivity()))))&&
-						((activity.getEndActivity().equals(a.getEndActivity()))||
-								((activity.getEndActivity().before(a.getEndActivity()))))) {
-				//if(activity.getStartActivity().after(a.getStartActivity()&&activity.getEndActivity().before(a.getEndActivity())) {
-					//if((activity.getStartActivity().after(a.getStartActivity())) && (activity.getEndActivity().before(a.getEndActivity()))){
+				if ((activity.getStartActivity().equals(a.getStartActivity()) || activity.getStartActivity().after(a.getStartActivity())) && (activity.getEndActivity().equals(a.getEndActivity()) || activity.getStartActivity().before(a.getEndActivity()))) {
 						cpt = cpt + 1;
 				}
 				}
@@ -75,18 +72,24 @@ public class ActivityService implements IActivityService {
 			}
 			System.out.println(	"cpt :"+cpt);
 			
-			if((cpt==0)&&(activity.getStartActivity().before(activity.getEndActivity()))) {
+			if(cpt==0) {
+				
+		
+				
+				
+
 				
 				ActivityRepo.save(activity);
+
 				return "Activité Valid";	
 				}
 				else{
 				return "Date Réservé ! , Cherchez une autre date ou contacté le planificateur";
 				}
 		}
-		
-		ActivityRepo.save(activity);
-		return "Activité Valid";
+		return "";
+		//ActivityRepo.save(activity);
+		//return "Activité Valid";
 			
 			
 		
@@ -175,6 +178,18 @@ public class ActivityService implements IActivityService {
 
 	}
 	
+	
+	public List<Activity> addActivityByResponsable(List<Activity> activities, int id) {
+		
+		TripPlan trp = tripPlanRepo.findById((long)id).orElse(null);
+		for(Activity a : activities ) {
+		a.setTripPlan(trp);
+		ActivityRepo.save(a);
+		}
+		return activities;
+		 
+	}
+
 	
 
 	@Override

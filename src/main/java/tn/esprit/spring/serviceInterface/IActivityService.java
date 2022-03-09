@@ -19,6 +19,7 @@ public List<Activity> getAll();
 	public Activity getById(Long Activityid);
 
 	public List<Activity> listActivityByTripPlanId(long id);
+	public List<Activity> addActivityByResponsable(List<Activity> activities, int id);
 
 	void addActivityToTripPlan(long idTripPlan, long idActivity);
 	

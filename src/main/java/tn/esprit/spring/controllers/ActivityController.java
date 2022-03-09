@@ -44,6 +44,14 @@ public class ActivityController {
 		return ActivityService.getAll();
 	}
 	
+	@ApiOperation(value = "addActivityByResponsable")
+	@PostMapping("/addbyResp/{idTripPlan}")
+	@ResponseBody
+	public List<Activity> addActivityByResponsable(@RequestBody List<Activity> activities,@PathVariable("idTripPlan") int idTripPlan) {
+		return ActivityService.addActivityByResponsable(activities, idTripPlan);
+		
+		
+	}
 	
 	@ApiOperation(value = "addActivity")
 	@PostMapping("/add")

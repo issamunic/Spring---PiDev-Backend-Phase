@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+
 //import com.twilio.Twilio;
 //import com.twilio.rest.api.v2010.account.Message;
 //aaaaaaaa
@@ -40,7 +43,7 @@ public class ReportController {
 	@Autowired
 	UserRepository userRepo;
 	
-	/*@PostMapping("/add-Report")
+	@PostMapping("/add-Report")
 	public Report addReport(@RequestBody Report r)
 	{
 		  String ACCOUNT_SID = "AC39b3348ddc32e1b8ea10dab06afc1f9a";
@@ -116,7 +119,7 @@ public class ReportController {
 		
 	}
 	
-	/*@ApiOperation(value = "updateReport")
+	@ApiOperation(value = "updateReport")
 	@PutMapping("/update/{idReclam}")
 	@ResponseBody
 	public void update(@PathVariable("idReclam") int idReclam) {
@@ -125,19 +128,19 @@ public class ReportController {
 		Report r = ReportService.updateReclamation(idReclam);
 	
 		  String ACCOUNT_SID = "AC39b3348ddc32e1b8ea10dab06afc1f9a";
-	        String AUTH_TOKEN = "03506d35b5d6b2a8f3c54acaa4036f0e";
+	        String AUTH_TOKEN = "e36f1a526f6600865b19e55c9c455334";
 
 	        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 	        Message message = Message.creator(
 	                new com.twilio.type.PhoneNumber("whatsapp:+21652135404"),
-	                new com.twilio.type.PhoneNumber("whatsapp:+14155238886"),"Bonjour Mr/Mme "+r.getUtilisateur().getFirstNameEmploye()+" "+r.getResponse())
-	                /*r.getResponse()+"qui est lié au"+r.getType()+r.getUtilisateur().getFirstNameEmploye())*/
-//	                .create();
+	                new com.twilio.type.PhoneNumber("whatsapp:+14155238886"),"Bonjour Mr/Mme "+r.getUtilisateur().getFirstNameEmploye()+" "+r.getResponse()+
+	                r.getResponse()+"qui est lié au"+r.getType()+r.getUtilisateur().getFirstNameEmploye())
+	                .create();
 
-	     //   System.out.println(message.getSid());
-	//}
+	        System.out.println(message.getSid());
+	}
 	
-	/*
+	
 	@GetMapping("/msg")
     public void sendMSG() {
         String ACCOUNT_SID = "AC39b3348ddc32e1b8ea10dab06afc1f9a";
@@ -153,7 +156,7 @@ public class ReportController {
         System.out.println(message.getSid());
 
     }
-	*/
+	
 	
 	
 	
