@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,42 +26,35 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Entity
 @ToString
-public class Trip implements Serializable {
+@Entity
+public class Report implements Serializable {
+	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long TripId;
-
+	private int reclamId;
+	@Enumerated(EnumType.STRING)
+	private ReclamType type;
+	@Enumerated(EnumType.STRING)
+	private ReclamStatus Staus;
+	private String other;
+	private int severity;
+	private Date dateReport;
+	private String Response;
 	
-	String name;
 	
-	String destination ;
-	Integer duration ;
-	@Temporal(TemporalType.DATE)
-	Date startDate ;
-	
-	@Temporal(TemporalType.DATE)
-	Date endDate ;
-
-	String purpose ;
-
-	Long longitude;
-	Long latitude;
-	
-	String image;
 	
 	@JsonIgnore
 	@ManyToOne
-	User user;
-	
-	boolean isMatched;
-	
-	//Anas
-	@OneToOne
-	private TripPlan tripPlan;
+	private User utilisateur;
 	
 	
+	
+	
+	
+
 }
