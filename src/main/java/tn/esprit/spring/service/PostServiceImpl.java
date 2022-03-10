@@ -150,6 +150,7 @@ public class PostServiceImpl implements IPostService {
 	public Post addPost(Post p) {
 		// TODO Auto-generated method stub
 		String description = p.getDescription();
+		description = description.replace(",", " ");
 		if (filterText(description).equals(description))		
 			{Date date = new Date(System.currentTimeMillis());
 			p.setCreatedOn(date);
@@ -158,20 +159,20 @@ public class PostServiceImpl implements IPostService {
 			List<CoreLabel> coreLabels = coreDocument.tokens();
 			for(CoreLabel coreLabel: coreLabels) {
 				String ner = coreLabel.get(CoreAnnotations.NamedEntityTagAnnotation.class);
-				if ((ner.equals("COUNTRY"))  )
+				if ((ner.contains("COUNTRY"))  )
 				{
 					p.getCountry().add(coreLabel.originalText());
 					postrepo.save(p);
 				}
-				if((ner.equals("LOCATION"))) {
+				else if((ner.contains("LOCATION"))) {
 					p.getCountry().add(coreLabel.originalText());
 					postrepo.save(p);
 				}
-				if((ner.equals("CITY"))) {
+				else if((ner.contains("CITY"))) {
 					p.getCity().add(coreLabel.originalText());
 					postrepo.save(p);
 				}
-				if((ner.equals("STATE_OR_PROVINCE"))) {
+				else if((ner.contains("STATE_OR_PROVINCE"))) {
 					p.getStateOrProvince().add(coreLabel.originalText());
 					postrepo.save(p);
 				}
@@ -199,20 +200,20 @@ public class PostServiceImpl implements IPostService {
 			List<CoreLabel> coreLabels = coreDocument.tokens();
 			for(CoreLabel coreLabel: coreLabels) {
 				String ner = coreLabel.get(CoreAnnotations.NamedEntityTagAnnotation.class);
-				if ((ner.equals("COUNTRY"))  )
+				if ((ner.contains("COUNTRY"))  )
 				{
 					p.getCountry().add(coreLabel.originalText());
 					postrepo.save(p);
 				}
-				if((ner.equals("LOCATION"))) {
+				if((ner.contains("LOCATION"))) {
 					p.getCountry().add(coreLabel.originalText());
 					postrepo.save(p);
 				}
-				if((ner.equals("CITY"))) {
+				if((ner.contains("CITY"))) {
 					p.getCity().add(coreLabel.originalText());
 					postrepo.save(p);
 				}
-				if((ner.equals("STATE_OR_PROVINCE"))) {
+				if((ner.contains("STATE_OR_PROVINCE"))) {
 					p.getStateOrProvince().add(coreLabel.originalText());
 					postrepo.save(p);
 				}

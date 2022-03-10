@@ -34,7 +34,7 @@ public class Advertisement implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long idComment;
+	Long idAdvertisement;
 	String text;
 	@ManyToOne(fetch = LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "idUser")
