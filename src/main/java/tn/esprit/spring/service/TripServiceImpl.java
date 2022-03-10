@@ -11,10 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import lombok.extern.slf4j.Slf4j;
-import tn.esprit.spring.entities.Location;
 import tn.esprit.spring.entities.Task;
 import tn.esprit.spring.entities.Trip;
-import tn.esprit.spring.repository.LocationRepository;
 import tn.esprit.spring.repository.TripRepository;
 import tn.esprit.spring.serviceInterface.ITripService;
 
@@ -44,9 +42,9 @@ public class TripServiceImpl implements ITripService {
 	@Override
 	public Trip add(Trip trip) {
 		try {
+			trip.setDestination(getDestination(trip.getLongitude(), trip.getLatitude()));
 
-
-			return trip;
+			return tripRepo.save(trip);
 		} catch (Exception e) {
 			log.info(e.getMessage());
 			return null;
@@ -147,7 +145,7 @@ public class TripServiceImpl implements ITripService {
 		return parentList;
 	}
 	
-	String getLocation(String longitude, String latitude) {
+	String getDestination(String longitude, String latitude) {
 		String destination="";
 		
 		  String uri = "http://api.positionstack.com/v1/reverse?access_key=7f7711b22c8b37548fd956a27e4ce17a&query="+longitude+",-"+latitude;
@@ -163,9 +161,15 @@ public class TripServiceImpl implements ITripService {
 		    
 		    jo = ja.getJSONObject(0);
 		    
-		    destination+=jo.getString("country");
+		    destination+=jo.getString("country");    
+		    destination+=" ";
+
 		    destination+=jo.getString("locality");
+		    destination+=" ";
+
 		    destination+=jo.getString("region");
+		    destination+=" ";
+
 
 		    
 		    
