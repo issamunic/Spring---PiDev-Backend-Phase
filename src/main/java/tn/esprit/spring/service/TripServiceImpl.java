@@ -26,8 +26,7 @@ public class TripServiceImpl implements ITripService {
 	TripRepository tripRepo;
 	
 	
-	@Autowired
-	LocationRepository locaRepo;
+
 
 	@Override
 	public List<Trip> getAll() {
@@ -45,12 +44,7 @@ public class TripServiceImpl implements ITripService {
 	@Override
 	public Trip add(Trip trip) {
 		try {
-			trip.setLocation(getLocation(trip.getLongitude(), trip.getLatitude()));
-			Location location = trip.getLocation();
-			location=locaRepo.save(trip.getLocation());
-			location.setTrip(trip);
-			trip.setLocation(location);
-			trip=tripRepo.save(trip);
+
 
 			return trip;
 		} catch (Exception e) {
@@ -153,8 +147,8 @@ public class TripServiceImpl implements ITripService {
 		return parentList;
 	}
 	
-	Location getLocation(String longitude, String latitude) {
-		Location location = new Location();
+	String getLocation(String longitude, String latitude) {
+		String destination;
 		
 		  String uri = "http://api.positionstack.com/v1/reverse?access_key=7f7711b22c8b37548fd956a27e4ce17a&query="+longitude+",-"+latitude;
 
@@ -169,11 +163,9 @@ public class TripServiceImpl implements ITripService {
 		    
 		    jo = ja.getJSONObject(0);
 		    
-		    location.setRegion(jo.getString("region")); 
-		    location.setRegion(jo.getString("country"));
-		    //location.setRegion(jo.getString("locality"));
+		    
 		
-		return location;
+		return destination;
 	}
 	
 	

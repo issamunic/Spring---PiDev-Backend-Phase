@@ -276,6 +276,12 @@ public class ActivityService implements IActivityService {
 			}
 	
 	}
+
+	@Override
+	public String add(Activity Activity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	
