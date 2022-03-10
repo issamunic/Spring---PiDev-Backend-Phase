@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import tn.esprit.spring.entities.ListEmployeePerCompany;
 import tn.esprit.spring.entities.User;
-import tn.esprit.spring.serviceInterface.IUserService;
+import tn.esprit.spring.serviceInterface.*;
 
 @RestController
 @Api(tags = "user management")
@@ -25,6 +26,14 @@ public class UserRestController {
 
 	@Autowired
 	IUserService userService;
+	@Autowired
+	ICodeInvitationCompanyService ICodeInvitationCompanyService;
+	@Autowired
+	IInvitationService IInvitationService;
+	@Autowired
+	IListEmployeePerCompany IListEmployeePerCompany;
+	@Autowired
+	ISubscriptionCompanyService ISubscriptionCompanyService;
 	
 	@ApiOperation(value = "get list users")
 	@GetMapping("/retrieve-all-users")
@@ -60,4 +69,34 @@ public class UserRestController {
 	public User updateUser(@RequestBody User user){
 		return userService.updateUser(user);
 	}
+	
+	@ApiOperation(value = "registrationEmployee")
+	@ResponseBody
+	@PostMapping("/process_register_employee/{code}")
+    public String processRegisterEmployee(@RequestBody User user,@PathVariable("code")String code) {
+		
+		try {
+			if(ICodeInvitationCompanyService.getByCode(code) == null || 
+					IInvitationService.getByEmailAndUser(user.getLogin(),ICodeInvitationCompanyService.getByCode(code).getUserCompany()) == null) {
+				return "no invitation";
+			}
+			if(ISubscriptionCompanyService.getByUser(ICodeInvitationCompanyService.getByCode(code).getUserCompany()) == null ||
+					ISubscriptionCompanyService.getByUser(ICodeInvitationCompanyService.getByCode(code).getUserCompany()).getNbrEmployeeMax() < 
+			IListEmployeePerCompany.getEmployees(ICodeInvitationCompanyService.getByCode(code).getUserCompany().getIdUser()).size()
+					) {
+				return "contact company";
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		IInvitationService.SetinvitationAccepted(ICodeInvitationCompanyService.getByCode(code).getIdCodeInvitationCompany());
+		userService.addUser(user);   
+		
+		ListEmployeePerCompany ListEmployeePerCompanyy = new ListEmployeePerCompany() ;
+		ListEmployeePerCompanyy.setEmployee(user.getIdUser());
+		ListEmployeePerCompanyy.setComany(ICodeInvitationCompanyService.getByCode(code).getUserCompany().getIdUser());
+		IListEmployeePerCompany.add(ListEmployeePerCompanyy);
+        return "register_success go check your email to activate your account";
+    }
 }

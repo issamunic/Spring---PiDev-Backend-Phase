@@ -78,8 +78,18 @@ public class SubscriptionCompanyRestController {
 	@ApiOperation(value = "UpgradeSubscriptionCompany")
 	@PutMapping("/UpgradeSubscriptionCompany")
 	@ResponseBody
-	public SubscriptionCompany UpgradeSubscriptionCompany(@RequestBody SubscriptionCompany SubscriptionCompany) {
-		return SubscriptionCompanyService.UpgradeSubscriptionCompany(SubscriptionCompany);
+	public String UpgradeSubscriptionCompany(@RequestBody SubscriptionCompany SubscriptionCompany) {
+		 SubscriptionCompanyService.UpgradeSubscriptionCompany(SubscriptionCompany);
+		 if(SubscriptionCompany.getNbrEmployeeMax()<50) {
+			 return "You have"+SubscriptionCompany.getNbrEmployeeMax()*0.2;
+		 }
+		 if(SubscriptionCompany.getNbrEmployeeMax()>50 && SubscriptionCompany.getNbrEmployeeMax()<100) {
+			 return"You have"+SubscriptionCompany.getNbrEmployeeMax()*0.1;
+		 }
+		 if(SubscriptionCompany.getNbrEmployeeMax()>100) {
+			 return"You have"+SubscriptionCompany.getNbrEmployeeMax()*0.05;
+		 }
+		 return null;
 	}
 	
 	@ApiOperation(value = "InitilainitializationOfSubscriptionCompany")

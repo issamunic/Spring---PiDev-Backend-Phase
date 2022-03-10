@@ -55,8 +55,8 @@ public class InvitationServiceImpl  implements IInvitationService{
 					," \n Your code is : "
 			+invitation.getUserSender().getCodeInvitationCompany().getCodeInvitation());
 			
-			SmsRequest Sms = new SmsRequest(invitation.getNumber(),"invitation to Vinder From "+invitation.getUserSender().getNameCompany()+"Your code is : "+invitation.getUserSender().getCodeInvitationCompany().getCodeInvitation());	
-			SmsSender.sendSms(Sms);
+			//SmsRequest Sms = new SmsRequest(invitation.getNumber(),"invitation to Vinder From "+invitation.getUserSender().getNameCompany()+"Your code is : "+invitation.getUserSender().getCodeInvitationCompany().getCodeInvitation());	
+			//SmsSender.sendSms(Sms);
 			return InvitationRepo.save(invitation);			
 		} catch (Exception e) {
 			log.info(e.getMessage());

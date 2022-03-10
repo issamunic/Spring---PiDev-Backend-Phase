@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.ManyToAny;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,6 +28,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -32,47 +36,19 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @ToString
-public class User implements Serializable{
+public class ListEmployeePerCompany  implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long idUser;
-	
-	String login;
-	String password;
-	Integer registrationNumberEmploye; 
-	String FirstNameEmploye;
-	String LastNameEmploye;
+	Long idInvitation;
 	
 	@Temporal(TemporalType.DATE)
-	Date BirthDateEmploye;
+	Date DateAdd;
 	
-	String socialStatusEmploye;
-	String profilePictureEmploye;
-	String nameCompany;
-	String logoCompany;
+	Long Employee;
 	
-	@ManyToOne
-	Profession profession;
+	Long Comany;
 	
-	@ManyToOne
-	Domain domain;
 	
-	@OneToMany
-	List<Trip> trips;
-	
+}	
 
-	@JsonIgnore
-	@OneToOne(mappedBy="UserSender")
-	Invitation Invitation;
-	
-	@OneToOne(mappedBy="UserCompany")
-	CodeInvitationCompany CodeInvitationCompany;
-	
-	@JsonIgnore
-	@OneToOne(mappedBy="Company")
-	SubscriptionCompany SubscriptionCompany;
-	
-	
-	
-}
