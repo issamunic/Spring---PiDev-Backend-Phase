@@ -148,7 +148,7 @@ public class TripServiceImpl implements ITripService {
 	}
 	
 	String getLocation(String longitude, String latitude) {
-		String destination;
+		String destination="";
 		
 		  String uri = "http://api.positionstack.com/v1/reverse?access_key=7f7711b22c8b37548fd956a27e4ce17a&query="+longitude+",-"+latitude;
 
@@ -162,6 +162,11 @@ public class TripServiceImpl implements ITripService {
 		    JSONArray ja = jo.getJSONArray("data");
 		    
 		    jo = ja.getJSONObject(0);
+		    
+		    destination+=jo.getString("country");
+		    destination+=jo.getString("locality");
+		    destination+=jo.getString("region");
+
 		    
 		    
 		
