@@ -7,5 +7,7 @@ import tn.esprit.spring.entities.Roles;
 
 @Repository
 public interface RolesRepository extends JpaRepository<Roles,Long>{
-
+	
+	public Roles findByRoleName(String roleName);
+	
 }

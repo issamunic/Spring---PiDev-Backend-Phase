@@ -58,7 +58,7 @@ public class UserServiceImpl implements IUserService{
     private JavaMailSender mailSender;
 	
 	
-	public void register(User user, String siteURL) throws UnsupportedEncodingException, MessagingException{
+	/*public void register(User user, String siteURL) throws UnsupportedEncodingException, MessagingException{
 		user.setPassword(getEncodedPassword(user.getPassword()));
 	    String randomCode = RandomString.make(64);
 	    user.setVerificationCode(randomCode);
@@ -67,8 +67,26 @@ public class UserServiceImpl implements IUserService{
 	    userRepository.save(user);
 	     
 	    sendVerificationEmail(user, siteURL);
+    }*/
+     
+	public void register(User user, String siteURL) throws UnsupportedEncodingException, MessagingException{
+		user.setPassword(getEncodedPassword(user.getPassword()));
+	    String randomCode = RandomString.make(64);
+	    user.setVerificationCode(randomCode);
+	    user.setActive(false);
+	    Roles roles=rolesRepository.findByRoleName("company");
+	    if(roles!=null) {
+	    	List<Roles> userRoles=new ArrayList<>();
+	    	userRoles.add(roles);
+	    	user.setRoles(userRoles);
+	    	user.setRole(Role.valueOf(roles.getRoleName()));
+	    }
+	    userRepository.save(user);
+	     
+	    sendVerificationEmail(user, siteURL);
     }
      
+	
 	private void sendVerificationEmail(User user, String siteURL)
 	        throws MessagingException, UnsupportedEncodingException {
 	    String toAddress = user.getLogin();
