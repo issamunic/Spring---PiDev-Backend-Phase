@@ -150,6 +150,19 @@ public class UserRestController {
 			@PathVariable("profession-id") Long idProfession) {
 		userService.assignUserToProfession(idUser, idProfession);
 	}
+	
+	@ApiOperation(value = "assign current user to profession")
+	@PutMapping("/assign-current-user-to-profession/{profession-id}")
+	@ResponseBody
+	public String assignCurrentUserToProfession(@PathVariable("profession-id") Long idProfession) {
+		try {
+			userService.assignUserToProfession(JwtRequestFilter.getCurrentUser().getIdUser(), idProfession);
+			return "success to assignUserToProfession";
+		}
+		catch(Exception e) {
+			return "cannot assignUserToProfession";
+		} 
+	}
 
 	@ApiOperation(value = "get users by role")
 	@GetMapping("/retrieve-users-with-role/{role}")
