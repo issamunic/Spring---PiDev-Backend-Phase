@@ -22,6 +22,8 @@ public interface IUserService {
 	public abstract void deleteUser(Long id);
 
 	public abstract User updateUser(User user);
+	
+	public abstract User modifyUser(User user);
 
 	public abstract User retrieveUser(Long id);
 	

@@ -36,6 +36,8 @@ import tn.esprit.spring.entities.Image;
 import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.imageConfig.ImageUtility;
+import tn.esprit.spring.security.JwtRequestFilter;
+import tn.esprit.spring.serviceInterface.IImageService;
 import tn.esprit.spring.serviceInterface.IUserService;
 
 @RestController
@@ -43,9 +45,15 @@ import tn.esprit.spring.serviceInterface.IUserService;
 @RequestMapping("/user")
 @CrossOrigin
 public class UserRestController {
-
+	
+	@Autowired
+	JwtRequestFilter JwtRequestFilter;
+	
 	@Autowired
 	IUserService userService;
+	
+	@Autowired
+	IImageService imageService;
 
 	@ApiOperation(value = "registration")
 	@ResponseBody
@@ -107,12 +115,32 @@ public class UserRestController {
 	public User updateUser(@RequestBody User user) {
 		return userService.updateUser(user);
 	}
+	
+	@ApiOperation(value = "update current user")
+	@PutMapping("/modifyCurrentUser")
+	@ResponseBody
+	public User modifyUser(@RequestBody User user) {
+		return userService.modifyUser(user);
+	}
 
 	@ApiOperation(value = "assign user to domain")
 	@PutMapping("/assign-user-to-domain/{user-id}/{domain-id}")
 	@ResponseBody
 	public void assignUserToDomain(@PathVariable("user-id") Long idUser, @PathVariable("domain-id") Long idDomain) {
 		userService.assignUserToDomain(idUser, idDomain);
+	}
+	
+	@ApiOperation(value = "assign current user to domain")
+	@PutMapping("/assign-current-user-to-domain/{domain-id}")
+	@ResponseBody
+	public String assignCurrentUserToDomain(@PathVariable("domain-id") Long idDomain) {
+		try {
+			userService.assignUserToDomain(JwtRequestFilter.getCurrentUser().getIdUser(), idDomain);
+			return "success to assignUserToDomain";
+		}
+		catch(Exception e) {
+			return "cannot assignUserToDomain";
+		} 
 	}
 
 	@ApiOperation(value = "assign user to profession")
@@ -183,7 +211,7 @@ public class UserRestController {
 		return userService.assignRolesToUser(idRole, idUser);
 	}
 	
-	@GetMapping(path = {"/image/get/{user-id}"})
+	/*@GetMapping(path = {"/image/get/{user-id}"})
     public ResponseEntity<byte[]> getImageUser(@PathVariable("user-id") Long idUser) throws IOException {
 
         final Optional<Image> dbImage = userService.retrieveImageUser(idUser);
@@ -194,5 +222,45 @@ public class UserRestController {
                     .body(ImageUtility.decompressImage(dbImage.get().getImage()));
         }
         return null;
+    }*/
+	@GetMapping(path = {"/image/get/{user-id}"})
+    public ResponseEntity<byte[]> getImageUser(@PathVariable("user-id") Long idUser) throws IOException {
+
+    	if(userService.retrieveUser(idUser)==null) {
+    		return null;
+    	}
+    	else {
+    		try {
+    			final Optional<Image> dbImage = userService.retrieveImageUser(idUser);
+                if(dbImage.get()!=null) {
+                	return ResponseEntity
+                            .ok()
+                            .contentType(MediaType.valueOf(dbImage.get().getType()))
+                            .body(ImageUtility.decompressImage(dbImage.get().getImage()));
+                }
+    		}
+    		catch(Exception e) {
+    			return null;
+    		}
+            return null;
+    	}
+        
+    }
+    
+    @GetMapping(path = {"/image/getObject/{user-id}"})
+    public Image getObjectImageForUser(@PathVariable("user-id") Long idUser) throws IOException {
+    	User user=userService.retrieveUser(idUser);
+    	if(user==null) {
+    		return null;
+    	}
+    	else {
+    		try {
+    			return imageService.getImageDetailsById(user.getImage().getIdImage());
+    		}
+    		catch(Exception e) {
+    			return null;
+    		}
+    	}
+        
     }
 }

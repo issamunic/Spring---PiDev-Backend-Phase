@@ -61,6 +61,4 @@ public class ProfessionRestController {
 		return professionService.updateProfession(profession);
 	}
 	
-	
-	
 }

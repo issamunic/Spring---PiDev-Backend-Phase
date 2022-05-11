@@ -65,12 +65,10 @@ public class User implements Serializable{
 	Role role;
 	
 	@ToString.Exclude
-	@JsonIgnore
 	@ManyToOne
 	Profession profession;
 	
 	@ToString.Exclude
-	@JsonIgnore
 	@ManyToOne
 	Domain domain;
 	
@@ -81,7 +79,8 @@ public class User implements Serializable{
 	
 	@ToString.Exclude
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	//@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER)
 	List<Roles> roles;
 	
 	@ToString.Exclude

@@ -30,11 +30,15 @@ import tn.esprit.spring.repository.ImageRepository;
 import tn.esprit.spring.repository.ProfessionRepository;
 import tn.esprit.spring.repository.RolesRepository;
 import tn.esprit.spring.repository.UserRepository;
+import tn.esprit.spring.security.JwtRequestFilter;
 import tn.esprit.spring.serviceInterface.IUserService;
 
 @Service
 @Slf4j
 public class UserServiceImpl implements IUserService{
+	
+	@Autowired
+	JwtRequestFilter JwtRequestFilter;
 	
 	@Autowired
 	UserRepository userRepository;
@@ -170,6 +174,31 @@ public class UserServiceImpl implements IUserService{
 			user.setPassword(getEncodedPassword(user.getPassword()));
 			User u=userRepository.save(user);
 			log.info("user update : "+u);
+			return u;
+		}
+		catch(Exception e) {
+			log.info("erreur user update : "+e.getMessage());
+			return null;
+		}
+	}
+	
+	@Override
+	public User modifyUser(User user) {
+		User u=null;
+		try {
+			User currentUser=JwtRequestFilter.getCurrentUser();
+			if(currentUser.getRole().toString().equals("employe") || currentUser.getRole().toString().equals("admin")) {
+				currentUser.setFirstNameEmploye(user.getFirstNameEmploye());
+				currentUser.setLastNameEmploye(user.getLastNameEmploye());
+				currentUser.setBirthDateEmploye(user.getBirthDateEmploye());
+				u=userRepository.save(currentUser);
+				log.info("user update : "+u);
+			}
+			else if(currentUser.getRole().toString().equals("company")) {
+				currentUser.setNameCompany(user.getNameCompany());
+				u=userRepository.save(currentUser);
+				log.info("user update : "+u);
+			}
 			return u;
 		}
 		catch(Exception e) {

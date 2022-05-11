@@ -22,9 +22,9 @@ public class ImageServiceImpl implements IImageService{
 
 
 	@Override
-	public void addImage(MultipartFile file) throws IOException {
+	public Image addImage(MultipartFile file) throws IOException {
 		// TODO Auto-generated method stub
-		imageRepository.save(Image.builder()
+		return imageRepository.save(Image.builder()
                 .name(file.getOriginalFilename())
                 .type(file.getContentType())
                 .image(ImageUtility.compressImage(file.getBytes())).build());
@@ -38,6 +38,15 @@ public class ImageServiceImpl implements IImageService{
 	@Override
 	public Image getImageDetailsByName(String name) {
 		final Optional<Image> dbImage = imageRepository.findByName(name);
+        return Image.builder()
+                .name(dbImage.get().getName())
+                .type(dbImage.get().getType())
+                .image(ImageUtility.decompressImage(dbImage.get().getImage())).build();
+	}
+	
+	@Override
+	public Image getImageDetailsById(Long id) {
+		final Optional<Image> dbImage = imageRepository.findById(id);
         return Image.builder()
                 .name(dbImage.get().getName())
                 .type(dbImage.get().getType())

@@ -2,9 +2,13 @@ package tn.esprit.spring.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import tn.esprit.spring.entities.User;
+
+@CrossOrigin
 @RestController
 public class MyController {
 	
@@ -33,5 +37,10 @@ public class MyController {
 	@PreAuthorize("hasAnyRole('company','admin')")
 	public String forCompanyAndAdmin() {
 		return "hello company , admin";
+	}
+	
+	@GetMapping("/getCurrentUserAuth")
+	public User getCurrentUserAuth() {
+		return JwtRequestFilter.getCurrentUser();
 	}
 }
