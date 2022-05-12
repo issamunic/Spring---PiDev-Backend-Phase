@@ -32,6 +32,7 @@ import tn.esprit.spring.repository.RolesRepository;
 import tn.esprit.spring.repository.UserRepository;
 import tn.esprit.spring.security.JwtRequestFilter;
 import tn.esprit.spring.serviceInterface.IUserService;
+import tn.esprit.spring.statistics.UserByDomain;
 import tn.esprit.spring.statistics.UserByRole;
 
 @Service
@@ -447,5 +448,12 @@ public class UserServiceImpl implements IUserService{
 	public List<UserByRole> numberOfUsersWithRole() {
 		// TODO Auto-generated method stub
 		return userRepository.numberOfUsersWithRole();
+	}
+
+
+	@Override
+	public List<UserByDomain> numberOfUsersWithDomain() {
+		// TODO Auto-generated method stub
+		return domainRepository.numberOfUsersWithDomain();
 	}
 }

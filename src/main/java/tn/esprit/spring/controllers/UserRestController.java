@@ -39,6 +39,7 @@ import tn.esprit.spring.imageConfig.ImageUtility;
 import tn.esprit.spring.security.JwtRequestFilter;
 import tn.esprit.spring.serviceInterface.IImageService;
 import tn.esprit.spring.serviceInterface.IUserService;
+import tn.esprit.spring.statistics.UserByDomain;
 import tn.esprit.spring.statistics.UserByRole;
 
 @RestController
@@ -283,5 +284,12 @@ public class UserRestController {
 	@ResponseBody
     public List<UserByRole> numberOfUsersWithRole() {
     	return userService.numberOfUsersWithRole();
+    }
+    
+    @ApiOperation(value = "number Of Users With domain for stat")
+	@GetMapping("/numberOfUsersWithDomain")
+	@ResponseBody
+    public List<UserByDomain> numberOfUsersWithDomain() {
+    	return userService.numberOfUsersWithDomain();
     }
 }
