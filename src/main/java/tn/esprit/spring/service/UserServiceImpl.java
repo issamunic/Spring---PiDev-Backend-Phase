@@ -32,6 +32,7 @@ import tn.esprit.spring.repository.RolesRepository;
 import tn.esprit.spring.repository.UserRepository;
 import tn.esprit.spring.security.JwtRequestFilter;
 import tn.esprit.spring.serviceInterface.IUserService;
+import tn.esprit.spring.statistics.UserByRole;
 
 @Service
 @Slf4j
@@ -439,5 +440,12 @@ public class UserServiceImpl implements IUserService{
 			return true;
 		}
 		return false;
+	}
+
+
+	@Override
+	public List<UserByRole> numberOfUsersWithRole() {
+		// TODO Auto-generated method stub
+		return userRepository.numberOfUsersWithRole();
 	}
 }

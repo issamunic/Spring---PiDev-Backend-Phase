@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.spring.entities.Image;
 import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.User;
+import tn.esprit.spring.statistics.UserByRole;
 
 public interface IUserService {
 	
@@ -56,4 +57,7 @@ public interface IUserService {
 	boolean testActiveAccount(String login);
 	
 	boolean checkEmailUsed(String login);
+	
+	List<UserByRole> numberOfUsersWithRole();
+	
 }

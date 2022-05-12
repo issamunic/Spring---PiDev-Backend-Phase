@@ -39,6 +39,7 @@ import tn.esprit.spring.imageConfig.ImageUtility;
 import tn.esprit.spring.security.JwtRequestFilter;
 import tn.esprit.spring.serviceInterface.IImageService;
 import tn.esprit.spring.serviceInterface.IUserService;
+import tn.esprit.spring.statistics.UserByRole;
 
 @RestController
 @Api(tags = "user management")
@@ -275,5 +276,12 @@ public class UserRestController {
     		}
     	}
         
+    }
+    
+    @ApiOperation(value = "number Of Users With Role for stat")
+	@GetMapping("/numberOfUsersWithRole")
+	@ResponseBody
+    public List<UserByRole> numberOfUsersWithRole() {
+    	return userService.numberOfUsersWithRole();
     }
 }
